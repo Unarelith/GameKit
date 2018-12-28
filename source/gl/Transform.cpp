@@ -11,7 +11,9 @@
  *
  * =====================================================================================
  */
-#include "Transform.hpp"
+#include "gk/gl/Transform.hpp"
+
+namespace gk {
 
 const Transform Transform::Identity;
 
@@ -42,5 +44,7 @@ Transform operator*(const Transform& left, const Transform &right) {
 
 Transform& operator*=(Transform &left, const Transform &right) {
 	return left.combine(right);
+}
+
 }
 

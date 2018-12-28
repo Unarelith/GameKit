@@ -11,8 +11,10 @@
  *
  * =====================================================================================
  */
-#include "GameClock.hpp"
-#include "SDLHeaders.hpp"
+#include "gk/core/SDLHeaders.hpp"
+#include "gk/system/GameClock.hpp"
+
+namespace gk {
 
 u32 GameClock::ticks = 0;
 
@@ -68,4 +70,6 @@ void GameClock::waitForNextFrame() {
 
 	measureLastFrameDuration();
 }
+
+} // namespace gk
 

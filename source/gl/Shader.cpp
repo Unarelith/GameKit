@@ -17,9 +17,11 @@
 #define GLM_FORCE_RADIANS
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Exception.hpp"
-#include "Shader.hpp"
-#include "Transform.hpp"
+#include "gk/gl/Shader.hpp"
+#include "gk/gl/Transform.hpp"
+#include "gk/system/Exception.hpp"
+
+namespace gk {
 
 Shader::Shader(const std::string &vertexFilename, const std::string &fragmentFilename) {
 	loadFromFile(vertexFilename, fragmentFilename);
@@ -172,4 +174,6 @@ void Shader::bind(const Shader *shader) {
 		glUseProgram(0);
 	}
 }
+
+} // namespace gk
 

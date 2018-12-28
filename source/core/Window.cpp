@@ -11,9 +11,11 @@
  *
  * =====================================================================================
  */
-#include "OpenGL.hpp"
-#include "Exception.hpp"
-#include "Window.hpp"
+#include "gk/core/Window.hpp"
+#include "gk/gl/OpenGL.hpp"
+#include "gk/system/Exception.hpp"
+
+namespace gk {
 
 void Window::open(const std::string &caption, u16 width, u16 height) {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
@@ -81,3 +83,6 @@ void Window::initOpenGL() {
 
 	glClearColor(0.196078, 0.6, 0.8, 1.0); // Skyblue
 }
+
+} // namespace gk
+

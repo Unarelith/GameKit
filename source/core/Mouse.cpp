@@ -11,8 +11,10 @@
  *
  * =====================================================================================
  */
-#include "SDLHeaders.hpp"
-#include "Mouse.hpp"
+#include "gk/core/Mouse.hpp"
+#include "gk/core/SDLHeaders.hpp"
+
+namespace gk {
 
 Window *Mouse::s_window = nullptr;
 
@@ -27,4 +29,6 @@ void Mouse::setCursorGrabbed(bool grabbed) {
 void Mouse::setCursorVisible(bool visible) {
 	SDL_ShowCursor(visible);
 }
+
+} // namespace gk
 

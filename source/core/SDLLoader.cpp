@@ -3,7 +3,7 @@
  *
  *       Filename:  SDLLoader.cpp
  *
- *    Description:  
+ *    Description:
  *
  *        Created:  15/09/2014 00:07:14
  *
@@ -11,9 +11,11 @@
  *
  * =====================================================================================
  */
-#include "Exception.hpp"
-#include "SDLHeaders.hpp"
-#include "SDLLoader.hpp"
+#include "gk/system/Exception.hpp"
+#include "gk/core/SDLHeaders.hpp"
+#include "gk/core/SDLLoader.hpp"
+
+namespace gk {
 
 SDLLoader::~SDLLoader() {
 	if(m_mixInitialized) Mix_CloseAudio();
@@ -27,23 +29,25 @@ void SDLLoader::load() {
 	} else {
 		m_sdlInitialized = true;
 	}
-	
+
 	int imgFlags = IMG_INIT_PNG;
 	if((!IMG_Init(imgFlags)) & imgFlags) {
 		throw EXCEPTION("SDL image init error:", IMG_GetError());
 	} else {
 		m_imgInitialized = true;
 	}
-	
+
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) {
 		throw EXCEPTION("SDL mixer init error:", Mix_GetError());
 	} else {
 		m_mixInitialized = true;
 	}
-	
+
 	Mix_AllocateChannels(32);
-	
+
 	Mix_VolumeMusic(MIX_MAX_VOLUME / 3);
 	Mix_Volume(-1, MIX_MAX_VOLUME);
 }
+
+} // namespace gk
 

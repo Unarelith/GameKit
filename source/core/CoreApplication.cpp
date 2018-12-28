@@ -13,10 +13,11 @@
  */
 #include <ctime>
 
-#include "CoreApplication.hpp"
-#include "Exception.hpp"
-#include "GamePad.hpp"
-#include "Mouse.hpp"
+#include "gk/core/CoreApplication.hpp"
+#include "gk/core/Mouse.hpp"
+#include "gk/system/Exception.hpp"
+
+namespace gk {
 
 CoreApplication::CoreApplication(int, char **) {
 	// if (argc > 1 && argv[1] == std::string("--no-sound"))
@@ -27,8 +28,6 @@ void CoreApplication::init() {
 	std::srand(std::time(nullptr));
 
 	Mouse::setWindow(&m_window);
-
-	GamePad::init(m_keyboardHandler);
 
 	ApplicationStateStack::setInstance(m_stateStack);
 	ResourceHandler::setInstance(m_resourceHandler);
@@ -94,4 +93,6 @@ void CoreApplication::mainLoop() {
 		});
 	}
 }
+
+} // namespace gk
 

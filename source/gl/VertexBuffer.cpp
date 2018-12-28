@@ -11,7 +11,9 @@
  *
  * =====================================================================================
  */
-#include "VertexBuffer.hpp"
+#include "gk/gl/VertexBuffer.hpp"
+
+namespace gk {
 
 VertexBuffer::VertexBuffer() {
 	glGenBuffers(1, &m_id);
@@ -45,4 +47,6 @@ void VertexBuffer::bind(const VertexBuffer *vertexBuffer) {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 }
+
+} // namespace gk
 

@@ -11,8 +11,10 @@
  *
  * =====================================================================================
  */
-#include "GameClock.hpp"
-#include "Timer.hpp"
+#include "gk/core/Timer.hpp"
+#include "gk/system/GameClock.hpp"
+
+namespace gk {
 
 Timer::Timer(bool useRealTime) {
 	m_useRealTime = useRealTime;
@@ -54,4 +56,6 @@ void Timer::setTime(u32 time) {
 		m_tick = time;
 	}
 }
+
+} // namespace gk
 

@@ -11,9 +11,11 @@
  *
  * =====================================================================================
  */
-#include "Exception.hpp"
-#include "SDLHeaders.hpp"
-#include "Texture.hpp"
+#include "gk/core/SDLHeaders.hpp"
+#include "gk/gl/Texture.hpp"
+#include "gk/system/Exception.hpp"
+
+namespace gk {
 
 Texture::Texture(const std::string &filename) {
 	loadFromFile(filename);
@@ -71,4 +73,6 @@ void Texture::bind(const Texture *texture) {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }
+
+} // namespace gk
 

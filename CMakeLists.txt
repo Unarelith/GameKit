@@ -13,12 +13,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 # Get source files
 #------------------------------------------------------------------------------
 file(GLOB_RECURSE SOURCE_FILES source/*.cpp external/*.cpp)
-file(GLOB_RECURSE HEADER_FILES include/*.hpp external/*.hpp)
 
-foreach(HEADER_FILE ${HEADER_FILES})
-	get_filename_component(HEADER_DIRECTORY ${HEADER_FILE} DIRECTORY)
-	include_directories(${HEADER_DIRECTORY})
-endforeach(HEADER_FILE)
+include_directories(include/)
 
 #------------------------------------------------------------------------------
 # Add executables
@@ -27,9 +23,17 @@ add_library(${CMAKE_PROJECT_NAME} STATIC
             ${SOURCE_FILES})
 
 #------------------------------------------------------------------------------
+# Setup install rule
+#------------------------------------------------------------------------------
+include(GNUInstallDirs)
+
+install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(DIRECTORY include/gk DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+#------------------------------------------------------------------------------
 # Compiler flags
 #------------------------------------------------------------------------------
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++14")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wfatal-errors")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-variadic-macros")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")

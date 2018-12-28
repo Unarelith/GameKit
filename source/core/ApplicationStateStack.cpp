@@ -11,7 +11,9 @@
  *
  * =====================================================================================
  */
-#include "ApplicationStateStack.hpp"
+#include "gk/core/ApplicationStateStack.hpp"
+
+namespace gk {
 
 ApplicationStateStack *ApplicationStateStack::s_instance = nullptr;
 
@@ -24,4 +26,6 @@ void ApplicationStateStack::clearDeletedStates() {
 	while (!m_trash.empty())
 		m_trash.pop();
 }
+
+} // namespace gk
 

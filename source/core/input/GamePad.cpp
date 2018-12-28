@@ -11,7 +11,9 @@
  *
  * =====================================================================================
  */
-#include "GamePad.hpp"
+#include "gk/core/input/GamePad.hpp"
+
+namespace gk {
 
 InputHandler *GamePad::inputHandler = nullptr;
 
@@ -25,5 +27,7 @@ bool GamePad::isKeyPressedOnce(GameKey key) {
 
 bool GamePad::isKeyPressedWithDelay(GameKey key, u16 delay) {
 	return (inputHandler) ? inputHandler->isKeyPressedWithDelay(key, delay) : false;
+}
+
 }
 

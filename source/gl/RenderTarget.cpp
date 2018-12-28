@@ -11,12 +11,14 @@
  *
  * =====================================================================================
  */
-#include "IDrawable.hpp"
-#include "RenderTarget.hpp"
-#include "Shader.hpp"
-#include "Texture.hpp"
-#include "Vertex.hpp"
-#include "VertexBuffer.hpp"
+#include "gk/gl/IDrawable.hpp"
+#include "gk/gl/RenderTarget.hpp"
+#include "gk/gl/Shader.hpp"
+#include "gk/gl/Texture.hpp"
+#include "gk/gl/Vertex.hpp"
+#include "gk/gl/VertexBuffer.hpp"
+
+namespace gk {
 
 const RenderStates RenderStates::Default{};
 
@@ -90,4 +92,6 @@ void RenderTarget::draw(const VertexBuffer &vertexBuffer, GLenum mode, std::size
 
 	Shader::bind(nullptr);
 }
+
+} // namespace gk
 

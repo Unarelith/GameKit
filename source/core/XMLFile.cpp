@@ -11,8 +11,8 @@
  *
  * =====================================================================================
  */
-#include "Exception.hpp"
-#include "XMLFile.hpp"
+#include "gk/core/XMLFile.hpp"
+#include "gk/system/Exception.hpp"
 
 XMLFile::XMLFile(const std::string &filename) {
 	load(filename);

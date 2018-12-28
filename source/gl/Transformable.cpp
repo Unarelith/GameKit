@@ -13,7 +13,9 @@
  */
 #include <cmath>
 
-#include "Transformable.hpp"
+#include "gk/gl/Transformable.hpp"
+
+namespace gk {
 
 void Transformable::setPosition(float x, float y, float z) {
 	m_position.x = x;
@@ -106,4 +108,6 @@ const Transform& Transformable::getInverseTransform() const {
 
 	return m_inverseTransform;
 }
+
+} // namespace gk
 

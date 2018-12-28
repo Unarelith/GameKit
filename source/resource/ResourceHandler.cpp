@@ -11,7 +11,9 @@
  *
  * =====================================================================================
  */
-#include "ResourceHandler.hpp"
+#include "gk/resource/ResourceHandler.hpp"
+
+namespace gk {
 
 ResourceHandler *ResourceHandler::instance = nullptr;
 
@@ -21,5 +23,7 @@ ResourceHandler &ResourceHandler::getInstance() {
 
 void ResourceHandler::setInstance(ResourceHandler &handler) {
 	instance = &handler;
+}
+
 }
 
