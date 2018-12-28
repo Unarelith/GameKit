@@ -1,0 +1,36 @@
+# Temporary editor files
+\#*#
+.#*
+*~
+.ycm_extra_conf.py
+
+# Compiled files
+*.o
+*.a
+*.d
+*.so
+a.out
+
+# Debug stuff
+vgcore.*
+.gdb_history
+.valgrind_suppressions
+
+# CMake temporary files
+CMakeFiles
+CMakeCache.txt
+CTestTestfile.cmake
+cmake_install.cmake
+compile_commands.json
+Makefile
+
+# Doxygen generated files
+doc/html
+doc/latex
+
+# Binaries
+*.exe
+
+# Misc
+*.zip
+
