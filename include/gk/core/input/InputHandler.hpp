@@ -16,10 +16,11 @@
 
 #include <map>
 
-#include "gk/core/input/GameKey.hpp"
 #include "gk/core/IntTypes.hpp"
 
 namespace gk {
+
+using GameKey = u32;
 
 class InputHandler {
 	public:
