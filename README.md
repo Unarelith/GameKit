@@ -18,5 +18,5 @@
 
 ## License
 
-The code is under LGPL v2.1.
+The code is licensed under LGPL v2.1.
 

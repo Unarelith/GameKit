@@ -1,4 +1,38 @@
 TODO
 
-• TODO: Use this in `ZeldaOOL`, `CloneBand`, `CubeLand`, `Asylia` and `cpp_rtype`
+# General
+
+• WIP: Use this in older projects
+   ◦ DONE: `ZeldaOOL`
+   ◦ TODO: `CloneBand`
+   ◦ TODO: `cpp_rtype`
+   ◦ TODO: `CubeLand`
+   ◦ TODO: `Asylia`
+• WIP: Add documentation
+   ◦ DONE: `gk::ApplicationStateStack`
+   ◦ TODO: `gk::AudioPlayer`
+   ◦ TODO: `gk::CoreApplication`
+   ◦ TODO: `gk::GamePad`
+   ◦ TODO: `gk::ResourceHandler`
+
+# Features
+
+• TODO: Add `Scene` system
+• TODO: Add basic network support via `SDL_net`
+
+## Network
+
+• TODO: Add basic classes like:
+   ◦ TODO: `gk::TcpListener`
+   ◦ TODO: `gk::TcpSocket`
+   ◦ TODO: `gk::UdpSocket`
+   ◦ TODO: `gk::Packet`
+• TODO: Add high-level features like:
+   ◦ TODO: A game room system
+   ◦ TODO: Easier server handling
+
+## Scene system
+
+• TODO: Handle OS events
+• TODO: Store related entities in `Controller`s/`View`s and stop checking for their components
 
