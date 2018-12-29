@@ -13,15 +13,16 @@
  */
 #include <ctime>
 
+#include "gk/audio/AudioPlayer.hpp"
 #include "gk/core/CoreApplication.hpp"
 #include "gk/core/Mouse.hpp"
 #include "gk/system/Exception.hpp"
 
 namespace gk {
 
-CoreApplication::CoreApplication(int, char **) {
-	// if (argc > 1 && argv[1] == std::string("--no-sound"))
-	// 	AudioPlayer::setMuteState(true);
+CoreApplication::CoreApplication(int argc, char **argv) {
+	if (argc > 1 && argv[1] == std::string("--no-sound"))
+		AudioPlayer::setMuteState(true);
 }
 
 void CoreApplication::init() {

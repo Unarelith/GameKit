@@ -99,6 +99,7 @@ endif(NOT SDL2MIXER_FOUND)
 include_directories(${SDL2_INCLUDE_DIRS}
                     ${SDL2IMAGE_INCLUDE_DIRS}
                     ${SDL2MIXER_INCLUDE_DIRS})
+
 #------------------------------------------------------------------------------
 # Link options
 #------------------------------------------------------------------------------
