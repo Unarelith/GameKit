@@ -45,6 +45,7 @@ class Shader {
 		void disableVertexAttribArray(const std::string &name) const;
 
 		void setUniform(const std::string &name, int n) const;
+		void setUniform(const std::string &name, float x, float y) const;
 		void setUniform(const std::string &name, const glm::mat4 &matrix) const;
 		void setUniform(const std::string &name, const Transform &transform) const;
 

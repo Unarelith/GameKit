@@ -39,19 +39,20 @@ class Image : public IDrawable, public Transformable {
 
 		void setColor(const Color &color) { m_color = color; updateVertexBuffer(); }
 
-	private:
+	protected:
 		void updateVertexBuffer() const;
 
 		void draw(RenderTarget &target, RenderStates states) const override;
 
 		const Texture *m_texture = nullptr;
 
+		VertexBuffer m_vbo;
+
+	private:
 		u16 m_width = 0;
 		u16 m_height = 0;
 
 		FloatRect m_clipRect;
-
-		VertexBuffer m_vbo;
 
 		Color m_color = Color::white;
 };

@@ -41,8 +41,6 @@ class Window : public RenderTarget {
 		SDL_Window *window() const { return m_window.get(); }
 
 	private:
-		void initOpenGL();
-
 		using SDL_WindowPtr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;
 		using SDL_GLContextPtr = std::unique_ptr<void, decltype(&SDL_GL_DeleteContext)>;
 

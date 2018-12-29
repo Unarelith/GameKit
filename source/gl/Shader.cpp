@@ -159,6 +159,10 @@ void Shader::setUniform(const std::string &name, int n) const {
 	glUniform1i(uniform(name), n);
 }
 
+void Shader::setUniform(const std::string &name, float x, float y) const {
+	glUniform2f(uniform(name), x, y);
+}
+
 void Shader::setUniform(const std::string &name, const glm::mat4 &matrix) const {
 	glUniformMatrix4fv(uniform(name), 1, GL_FALSE, glm::value_ptr(matrix));
 }

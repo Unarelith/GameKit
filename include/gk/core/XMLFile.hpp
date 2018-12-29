@@ -11,19 +11,19 @@
  *
  * =====================================================================================
  */
-#ifndef XMLFILE_HPP_
-#define XMLFILE_HPP_
+#ifndef GK_XMLFILE_HPP_
+#define GK_XMLFILE_HPP_
 
 #include <string>
 
 #include <tinyxml2.h>
 
+namespace gk {
+
 class XMLFile {
 	public:
 		XMLFile() = default;
 		XMLFile(const std::string &filename);
-		XMLFile(const XMLFile &) = default;
-		XMLFile(XMLFile &&) = default;
 
 		void load(const std::string &filename);
 
@@ -34,4 +34,6 @@ class XMLFile {
 		tinyxml2::XMLHandle m_doc{m_xml};
 };
 
-#endif // XMLFILE_HPP_
+} // namespace gk
+
+#endif // GK_XMLFILE_HPP_

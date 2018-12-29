@@ -62,9 +62,6 @@ void RectangleShape::draw(RenderTarget &target, RenderStates states) const {
 	if(m_wireframeMode) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	target.draw(m_vbo, GL_QUADS, 0, 4, states);
 	if(m_wireframeMode) glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
 }
 
 } // namespace gk

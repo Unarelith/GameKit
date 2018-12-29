@@ -33,11 +33,12 @@ install(DIRECTORY include/gk DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 #------------------------------------------------------------------------------
 # Compiler flags
 #------------------------------------------------------------------------------
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++14")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wfatal-errors")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-variadic-macros")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libstdc++")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDEBUG_ENABLED -DDEBUG_COLOR")
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -g)
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall -Wextra -Wfatal-errors)
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wno-variadic-macros)
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -static-libstdc++)
+target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -DDEBUG_ENABLED -DDEBUG_COLOR)
+target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_14)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc")

@@ -60,12 +60,16 @@ void CoreApplication::createWindow(u16 screenWidth, u16 screenHeight, const char
 	m_window.open(windowTitle, screenWidth, screenHeight);
 }
 
+void CoreApplication::onEvent(const SDL_Event &event) {
+	if (event.type == SDL_QUIT) {
+		m_window.close();
+	}
+}
+
 void CoreApplication::handleEvents() {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
- 		if (event.type == SDL_QUIT) {
-			m_window.close();
-		}
+		onEvent(event);
 
 		if (!m_stateStack.empty())
 			m_stateStack.top().onEvent(event);
@@ -87,7 +91,7 @@ void CoreApplication::mainLoop() {
 			m_window.clear();
 
 			if(!m_stateStack.empty())
-				m_window.draw(m_stateStack.top());
+				m_window.draw(m_stateStack.top(), m_renderStates);
 
 			m_window.display();
 		});

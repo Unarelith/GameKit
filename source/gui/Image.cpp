@@ -43,7 +43,7 @@ void Image::load(const Texture &texture) {
 }
 
 void Image::setClipRect(float x, float y, u16 width, u16 height) {
-	m_clipRect = FloatRect(x, y, width, height);
+	m_clipRect.reset(x, y, width, height);
 
 	updateVertexBuffer();
 }
@@ -95,16 +95,11 @@ void Image::draw(RenderTarget &target, RenderStates states) const {
 	states.texture = m_texture;
 	states.vertexAttributes = VertexAttribute::Only2d;
 
-	// glDisable(GL_BLEND);
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
 	// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
 	target.draw(m_vbo, GL_QUADS, 0, 4, states);
-
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	// glEnable(GL_BLEND);
 }
 
 }

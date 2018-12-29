@@ -33,6 +33,11 @@ class CoreApplication {
 	protected:
 		void createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle);
 
+		virtual void onEvent(const SDL_Event &event);
+
+		void handleEvents();
+		void mainLoop();
+
 		ApplicationStateStack m_stateStack;
 
 		GameClock m_clock;
@@ -43,10 +48,7 @@ class CoreApplication {
 
 		Window m_window;
 
-	private:
-		void handleEvents();
-
-		void mainLoop();
+		RenderStates m_renderStates = RenderStates::Default;
 };
 
 } // namespace gk

@@ -14,6 +14,8 @@
 #include "gk/core/XMLFile.hpp"
 #include "gk/system/Exception.hpp"
 
+namespace gk {
+
 XMLFile::XMLFile(const std::string &filename) {
 	load(filename);
 }
@@ -72,4 +74,6 @@ void XMLFile::load(const std::string &filename) {
 		throw EXCEPTION("Failed to load", filename, "\nError", code, ":", errorString);
 	}
 }
+
+} // namespace gk
 

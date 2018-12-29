@@ -26,11 +26,14 @@ namespace gk {
 class Exception {
 	public:
 		template<typename... Args>
-		Exception(u16 line, std::string filename, Args... args) throw() {
-			m_errorMsg = Debug::textColor(Debug::TextColor::Red, true) + "at " + filename + ":" + std::to_string(line) + ": " + Debug::textColor(0, true) + Debug::makeString(args...) + Debug::textColor();
+		Exception(u16 line, std::string filename, Args... args) noexcept {
+			m_errorMsg = Debug::textColor(Debug::TextColor::Red, true);
+			m_errorMsg += "at " + filename + ":" + std::to_string(line) + ": ";
+			m_errorMsg += Debug::makeString(std::forward<Args>(args)...);
+			m_errorMsg += Debug::textColor();
 		}
 
-		virtual std::string what() const noexcept {
+		virtual const char *what() const noexcept {
 			return m_errorMsg.c_str();
 		}
 
