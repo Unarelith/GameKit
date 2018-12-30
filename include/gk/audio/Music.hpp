@@ -11,8 +11,8 @@
  *
  * =====================================================================================
  */
-#ifndef BACKGROUNDMUSIC_HPP_
-#define BACKGROUNDMUSIC_HPP_
+#ifndef GK_MUSIC_HPP_
+#define GK_MUSIC_HPP_
 
 #include <memory>
 #include <string>
@@ -21,19 +21,23 @@
 
 namespace gk {
 
-class BackgroundMusic {
+class Music {
 	public:
-		BackgroundMusic() = default;
-		BackgroundMusic(const std::string &filename);
+		Music() = default;
+		Music(const std::string &filename);
 
-		void load(const std::string &filename);
+		void openFromFile(const std::string &filename);
 
 		void play();
+
+		void setVolume(int volume) { m_volume = volume; }
 
 	private:
 		using Mix_MusicPtr = std::unique_ptr<Mix_Music, decltype(&Mix_FreeMusic)>;
 
 		Mix_MusicPtr m_music{nullptr, Mix_FreeMusic};
+
+		int m_volume = MIX_MAX_VOLUME;
 };
 
 } // namespace gk

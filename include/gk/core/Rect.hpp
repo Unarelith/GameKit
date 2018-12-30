@@ -16,7 +16,7 @@
 
 #include <algorithm>
 
-#include "Vector2.hpp"
+#include "gk/core/Vector2.hpp"
 
 namespace gk {
 
@@ -48,6 +48,19 @@ class Rect {
 
 		void move(T _x, T _y) { x += _x; y += _y; }
 		void move(Vector2<T> d) { move(d.x, d.y); }
+
+		bool contains(T _x, T _y) const {
+			T minX = std::min(x, static_cast<T>(x + width));
+			T maxX = std::max(x, static_cast<T>(x + width));
+			T minY = std::min(y, static_cast<T>(y + height));
+			T maxY = std::max(y, static_cast<T>(y + height));
+
+			return (_x >= minX) && (_x < maxX) && (_y >= minY) && (_y < maxY);
+		}
+
+		bool contains(const Vector2<T> &point) const {
+			return contains(point.x, point.y);
+		}
 
 		bool intersects(const Rect<T> &rect) const {
 			T r1MinX = std::min(x, static_cast<T>(x + width));

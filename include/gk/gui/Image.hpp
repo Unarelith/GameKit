@@ -28,14 +28,15 @@ class Image : public IDrawable, public Transformable {
 		Image(const std::string &textureName);
 		Image(const Texture &texture);
 
+		void load(const Image &image);
 		void load(const std::string &textureName);
 		void load(const Texture &texture);
 
 		const FloatRect &clipRect() const { return m_clipRect; }
 		void setClipRect(float x, float y, u16 width, u16 height);
 
-		u16 width() const { return m_width; }
-		u16 height() const { return m_height; }
+		u16 width() const { return m_width * getScale().x; }
+		u16 height() const { return m_height * getScale().y; }
 
 		void setColor(const Color &color) { m_color = color; updateVertexBuffer(); }
 
@@ -54,7 +55,7 @@ class Image : public IDrawable, public Transformable {
 
 		FloatRect m_clipRect;
 
-		Color m_color = Color::white;
+		Color m_color;
 };
 
 } // namespace gk

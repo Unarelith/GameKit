@@ -11,23 +11,24 @@
  *
  * =====================================================================================
  */
-#include "gk/audio/BackgroundMusic.hpp"
+#include "gk/audio/Music.hpp"
 #include "gk/system/Exception.hpp"
 
 namespace gk {
 
-BackgroundMusic::BackgroundMusic(const std::string &filename) {
-	load(filename);
+Music::Music(const std::string &filename) {
+	openFromFile(filename);
 }
 
-void BackgroundMusic::load(const std::string &filename) {
+void Music::openFromFile(const std::string &filename) {
 	m_music.reset(Mix_LoadMUS(filename.c_str()));
 	if(!m_music) {
 		throw EXCEPTION("Unable to load music:", filename, ":", Mix_GetError());
 	}
 }
 
-void BackgroundMusic::play() {
+void Music::play() {
+	Mix_VolumeMusic(m_volume);
 	Mix_PlayMusic(m_music.get(), -1);
 }
 

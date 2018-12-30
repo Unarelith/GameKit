@@ -29,6 +29,19 @@ Image::Image(const Texture &texture) {
 	load(texture);
 }
 
+void Image::load(const Image &image) {
+	m_texture = image.m_texture;
+
+	m_width = image.m_width;
+	m_height = image.m_height;
+
+	m_clipRect = image.m_clipRect;
+
+	m_color = image.m_color;
+
+	updateVertexBuffer();
+}
+
 void Image::load(const std::string &textureName) {
 	load(ResourceHandler::getInstance().get<Texture>(textureName));
 }

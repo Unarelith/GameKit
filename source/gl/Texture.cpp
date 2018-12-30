@@ -11,7 +11,6 @@
  *
  * =====================================================================================
  */
-#include "gk/core/SDLHeaders.hpp"
 #include "gk/gl/Texture.hpp"
 #include "gk/system/Exception.hpp"
 
@@ -19,6 +18,10 @@ namespace gk {
 
 Texture::Texture(const std::string &filename) {
 	loadFromFile(filename);
+}
+
+Texture::Texture(SDL_Surface *surface) {
+	loadFromSurface(surface);
 }
 
 Texture::Texture(Texture &&texture) {
@@ -36,13 +39,19 @@ Texture::~Texture() noexcept {
 }
 
 void Texture::loadFromFile(const std::string &filename) {
-	SDL_Surface *surface = IMG_Load(filename.c_str());
+	m_filename = filename;
+
+	SDL_Surface *surface = IMG_Load(m_filename.c_str());
 	if(!surface) {
 		throw EXCEPTION("Failed to load texture:", filename);
 	}
 
-	m_filename = filename;
+	loadFromSurface(surface);
 
+	SDL_FreeSurface(surface);
+}
+
+void Texture::loadFromSurface(SDL_Surface *surface) {
 	m_width = surface->w;
 	m_height = surface->h;
 
@@ -50,9 +59,19 @@ void Texture::loadFromFile(const std::string &filename) {
 
 	bind(this);
 
-	GLenum format = (surface->format->BytesPerPixel == 4) ? GL_RGBA : GL_RGB;
-	glTexImage2D(GL_TEXTURE_2D, 0, format, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
+	// GLenum format = (surface->format->BytesPerPixel == 4) ? GL_RGBA : GL_RGB;
+	// glTexImage2D(GL_TEXTURE_2D, 0, format, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
 
+	GLenum format;
+	if (surface->format->BytesPerPixel == 4) {
+		format = (surface->format->Rmask = 0x000000ff) ? GL_RGBA : GL_BGRA_EXT;
+	} else {
+		format = GL_RGB;
+	}
+
+	glTexImage2D(GL_TEXTURE_2D, 0, surface->format->BytesPerPixel, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
+
+	// FIXME: Move these lines to OpenMiner's TextureLoader
 	glGenerateMipmap(GL_TEXTURE_2D);
 
 	// FIXME: GL_NEAREST_MIPMAP_LINEAR causes blue shadows on trees, probably due to blending..
@@ -62,8 +81,6 @@ void Texture::loadFromFile(const std::string &filename) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 4);
 
 	bind(nullptr);
-
-	SDL_FreeSurface(surface);
 }
 
 void Texture::bind(const Texture *texture) {

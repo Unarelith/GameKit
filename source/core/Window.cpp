@@ -47,6 +47,11 @@ void Window::open(const std::string &caption, u16 width, u16 height) {
 	}
 #endif
 #endif
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_TEXTURE_2D);
 }
 
 void Window::clear() {

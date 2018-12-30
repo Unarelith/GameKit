@@ -14,9 +14,8 @@
 #ifndef GK_MOUSE_HPP_
 #define GK_MOUSE_HPP_
 
-#include "IntTypes.hpp"
-#include "Vector2.hpp"
-#include "Window.hpp"
+#include "gk/core/Rect.hpp"
+#include "gk/core/Window.hpp"
 
 namespace gk {
 
@@ -28,6 +27,10 @@ class Mouse {
 
 		static void setCursorVisible(bool isVisible);
 		static void setCursorGrabbed(bool isGrabbed);
+
+		static Vector2i getPosition();
+
+		static bool isInRect(const IntRect &rect);
 
 	private:
 		static Window *s_window;

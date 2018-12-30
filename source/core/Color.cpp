@@ -15,10 +15,19 @@
 
 namespace gk {
 
-Color Color::black(0, 0, 0);
-Color Color::white(255, 255, 255);
-Color Color::blue(32, 168, 248);
-Color Color::red(232, 8, 24);
+// FIXME: Move to ZeldaOOL
+// Color Color::Blue(32, 168, 248);
+// Color Color::Red(232, 8, 24);
+
+const Color Color::Black(0, 0, 0);
+const Color Color::White(255, 255, 255);
+const Color Color::Red(255, 0, 0);
+const Color Color::Green(0, 255, 0);
+const Color Color::Blue(0, 0, 255);
+const Color Color::Yellow(255, 255, 0);
+const Color Color::Magenta(255, 0, 255);
+const Color Color::Cyan(0, 255, 255);
+const Color Color::Transparent(0, 0, 0, 0);
 
 Color::Color(u8 _r, u8 _g, u8 _b, u8 _a) {
 	r = _r / 255.0f;

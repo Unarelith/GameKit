@@ -21,7 +21,11 @@ namespace gk {
 
 class Sprite : public Image {
 	public:
+		Sprite() = default;
 		Sprite(const std::string &textureName, u16 frameWidth, u16 frameHeight, bool isAnimated = false);
+
+		void load(const Sprite &sprite);
+		void load(const std::string &textureName, u16 frameWidth, u16 frameHeight, bool isAnimated = false);
 
 		void updateAnimations();
 
@@ -56,6 +60,6 @@ class Sprite : public Image {
 		bool m_isAnimated = false;
 };
 
-}
+} // namespace gk
 
 #endif // GK_SPRITE_HPP_

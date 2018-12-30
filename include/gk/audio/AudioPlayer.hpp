@@ -24,8 +24,8 @@ class AudioPlayer {
 	public:
 		static void playMusic(const std::string &resourceName);
 
-		static void playEffect(const std::string &resourceName, s8 channel = -1);
-		static void repeatEffect(const std::string &resourceName, u8 delay = 0);
+		static void playSound(const std::string &resourceName);
+		static void repeatSound(const std::string &resourceName, u8 delay = 0);
 
 		static void pauseMusic();
 		static void resumeMusic();

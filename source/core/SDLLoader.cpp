@@ -19,6 +19,7 @@ namespace gk {
 
 SDLLoader::~SDLLoader() {
 	if(m_mixInitialized) Mix_CloseAudio();
+	if(m_ttfInitialized) TTF_Quit();
 	if(m_imgInitialized) IMG_Quit();
 	if(m_sdlInitialized) SDL_Quit();
 }
@@ -32,13 +33,19 @@ void SDLLoader::load() {
 
 	int imgFlags = IMG_INIT_PNG;
 	if((!IMG_Init(imgFlags)) & imgFlags) {
-		throw EXCEPTION("SDL image init error:", IMG_GetError());
+		throw EXCEPTION("SDL_image init error:", IMG_GetError());
 	} else {
 		m_imgInitialized = true;
 	}
 
+	if(TTF_Init() < 0) {
+		throw EXCEPTION("SDL_ttf init error:", TTF_GetError());
+	} else {
+		m_ttfInitialized = true;
+	}
+
 	if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) {
-		throw EXCEPTION("SDL mixer init error:", Mix_GetError());
+		throw EXCEPTION("SDL_mixer init error:", Mix_GetError());
 	} else {
 		m_mixInitialized = true;
 	}

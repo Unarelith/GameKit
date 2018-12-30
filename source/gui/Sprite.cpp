@@ -16,7 +16,29 @@
 
 namespace gk {
 
-Sprite::Sprite(const std::string &textureName, u16 frameWidth, u16 frameHeight, bool isAnimated) : Image(textureName) {
+Sprite::Sprite(const std::string &textureName, u16 frameWidth, u16 frameHeight, bool isAnimated) {
+	load(textureName, frameWidth, frameHeight, isAnimated);
+}
+
+void Sprite::load(const Sprite &sprite) {
+	Image::load(sprite);
+
+	m_animations = sprite.m_animations;
+
+	m_currentAnimation = sprite.m_currentAnimation;
+	m_previousAnimation = sprite.m_previousAnimation;
+
+	m_frameWidth = sprite.m_frameWidth;
+	m_frameHeight = sprite.m_frameHeight;
+
+	m_isAnimated = sprite.m_isAnimated;
+
+	setCurrentFrame(sprite.m_currentFrame);
+}
+
+void Sprite::load(const std::string &textureName, u16 frameWidth, u16 frameHeight, bool isAnimated) {
+	Image::load(textureName);
+
 	m_frameWidth = frameWidth;
 	m_frameHeight = frameHeight;
 
@@ -56,5 +78,5 @@ void Sprite::setCurrentAnimation(u16 currentAnimation) {
 	m_currentAnimation = currentAnimation;
 }
 
-}
+} // namespace gk
 

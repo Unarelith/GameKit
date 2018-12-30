@@ -31,6 +31,7 @@ class SDLLoader {
 	private:
 		bool m_sdlInitialized = false;
 		bool m_imgInitialized = false;
+		bool m_ttfInitialized = false;
 		bool m_mixInitialized = false;
 };
 

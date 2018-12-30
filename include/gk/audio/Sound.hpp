@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  SoundEffect.hpp
+ *       Filename:  Sound.hpp
  *
  *    Description:
  *
@@ -11,8 +11,8 @@
  *
  * =====================================================================================
  */
-#ifndef GK_SOUNDEFFECT_HPP_
-#define GK_SOUNDEFFECT_HPP_
+#ifndef GK_SOUND_HPP_
+#define GK_SOUND_HPP_
 
 #include <memory>
 #include <string>
@@ -22,25 +22,33 @@
 
 namespace gk {
 
-class SoundEffect {
+class Sound {
 	public:
-		SoundEffect() = default;
-		SoundEffect(const std::string &filename);
+		Sound() = default;
+		Sound(const std::string &filename);
 
-		void load(const std::string &filename);
+		void openFromFile(const std::string &filename);
 
-		void play(s8 channel = -1);
+		void play();
 
-		void repeat(u16 delay, s8 channel = -1);
+		void repeat(u16 delay);
+
+		void setChannel(int channel) { m_channel = channel; }
+		void setVolume(int volume) { m_volume = volume; }
 
 	private:
+		static int s_lastUsedChannel;
+
 		using Mix_ChunkPtr = std::unique_ptr<Mix_Chunk, decltype(&Mix_FreeChunk)>;
 
 		Mix_ChunkPtr m_sfx{nullptr, Mix_FreeChunk};
 
 		gk::Timer m_timer;
+
+		int m_channel = -1;
+		int m_volume = MIX_MAX_VOLUME;
 };
 
 } // namespace gk
 
-#endif // GK_SOUNDEFFECT_HPP_
+#endif // GK_SOUND_HPP_

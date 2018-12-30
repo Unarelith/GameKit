@@ -38,10 +38,15 @@ class Color {
 		float b = 1.0f;
 		float a = 1.0f;
 
-		static Color black;
-		static Color white;
-		static Color blue;
-		static Color red;
+		static const Color Black;
+		static const Color White;
+		static const Color Red;
+		static const Color Green;
+		static const Color Blue;
+		static const Color Yellow;
+		static const Color Magenta;
+		static const Color Cyan;
+		static const Color Transparent;
 };
 
 } // namespace gk

@@ -12,8 +12,8 @@
  * =====================================================================================
  */
 #include "gk/audio/AudioPlayer.hpp"
-#include "gk/audio/BackgroundMusic.hpp"
-#include "gk/audio/SoundEffect.hpp"
+#include "gk/audio/Music.hpp"
+#include "gk/audio/Sound.hpp"
 #include "gk/resource/ResourceHandler.hpp"
 
 namespace gk {
@@ -22,17 +22,17 @@ bool AudioPlayer::s_muteState = false;
 
 void AudioPlayer::playMusic(const std::string &resourceName) {
 	if (!s_muteState)
-		ResourceHandler::getInstance().get<BackgroundMusic>(std::string("bgm-") + resourceName).play();
+		ResourceHandler::getInstance().get<Music>(resourceName).play();
 }
 
-void AudioPlayer::playEffect(const std::string &resourceName, s8 channel) {
+void AudioPlayer::playSound(const std::string &resourceName) {
 	if (!s_muteState)
-		ResourceHandler::getInstance().get<SoundEffect>(std::string("sfx-") + resourceName).play(channel);
+		ResourceHandler::getInstance().get<Sound>(resourceName).play();
 }
 
-void AudioPlayer::repeatEffect(const std::string &resourceName, u8 delay) {
+void AudioPlayer::repeatSound(const std::string &resourceName, u8 delay) {
 	if (!s_muteState)
-		ResourceHandler::getInstance().get<SoundEffect>(std::string("sfx-") + resourceName).repeat(delay);
+		ResourceHandler::getInstance().get<Sound>(resourceName).repeat(delay);
 }
 
 void AudioPlayer::pauseMusic() {

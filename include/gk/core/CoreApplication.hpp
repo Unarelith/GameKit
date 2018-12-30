@@ -38,13 +38,13 @@ class CoreApplication {
 		void handleEvents();
 		void mainLoop();
 
+		SDLLoader m_sdlLoader;
+
 		ApplicationStateStack m_stateStack;
 
 		GameClock m_clock;
 
 		ResourceHandler m_resourceHandler;
-
-		SDLLoader m_sdlLoader;
 
 		Window m_window;
 

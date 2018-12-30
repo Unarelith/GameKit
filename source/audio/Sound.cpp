@@ -1,7 +1,7 @@
 /*
  * =====================================================================================
  *
- *       Filename:  SoundEffect.cpp
+ *       Filename:  Sound.cpp
  *
  *    Description:
  *
@@ -11,16 +11,20 @@
  *
  * =====================================================================================
  */
-#include "gk/audio/SoundEffect.hpp"
+#include "gk/audio/Sound.hpp"
 #include "gk/system/Exception.hpp"
 
 namespace gk {
 
-SoundEffect::SoundEffect(const std::string &filename) {
-	load(filename);
+int Sound::s_lastUsedChannel = -1;
+
+Sound::Sound(const std::string &filename) {
+	openFromFile(filename);
 }
 
-void SoundEffect::load(const std::string &filename) {
+void Sound::openFromFile(const std::string &filename) {
+	m_channel = ++s_lastUsedChannel;
+
 	m_sfx.reset(Mix_LoadWAV(filename.c_str()));
 	if(!m_sfx) {
 		throw EXCEPTION("Unable to load sound effect:", filename, ":", Mix_GetError());
@@ -29,13 +33,14 @@ void SoundEffect::load(const std::string &filename) {
 	m_timer.start();
 }
 
-void SoundEffect::play(s8 channel) {
-	Mix_PlayChannel(channel, m_sfx.get(), 0);
+void Sound::play() {
+	Mix_Volume(m_channel, m_volume);
+	Mix_PlayChannel(m_channel, m_sfx.get(), 0);
 }
 
-void SoundEffect::repeat(u16 delay, s8 channel) {
+void Sound::repeat(u16 delay) {
 	if(m_timer.time() > delay) {
-		play(channel);
+		play();
 
 		m_timer.reset();
 		m_timer.start();

@@ -17,7 +17,8 @@
 #include <stdexcept>
 #include <utility>
 
-#include "IntTypes.hpp"
+#include "gk/core/IntTypes.hpp"
+#include "gk/core/Vector2.hpp"
 
 namespace gk {
 
@@ -25,8 +26,8 @@ template<typename T>
 class Vector3 {
 	public:
 		Vector3() = default;
-
 		Vector3(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
+		Vector3(const Vector2<T> &vector2, T _z) : x(vector2.x), y(vector2.y), z(_z) {}
 
 		template<typename U>
 		Vector3(const Vector3<U> &vector3) : x(vector3.x), y(vector3.y), z(vector3.z) {}
