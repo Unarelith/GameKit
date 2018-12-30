@@ -33,11 +33,14 @@ class Sprite : public Image {
 		u16 frameHeight() const { return m_frameHeight; }
 
 		bool hasAnimations() { return m_animations.size() != 0; }
-		const SpriteAnimation &currentAnimation() const { return m_animations[m_currentAnimation]; }
+
+		SpriteAnimation &currentAnimation() { return m_animations.at(m_currentAnimation); }
+		const SpriteAnimation &currentAnimation() const { return m_animations.at(m_currentAnimation); }
 
 		void setCurrentFrame(u16 currentFrame);
 		void setCurrentAnimation(u16 currentAnimation);
 
+		bool isAnimated() const { return m_isAnimated; }
 		void setAnimated(bool isAnimated) { m_isAnimated = isAnimated; }
 
 	private:
