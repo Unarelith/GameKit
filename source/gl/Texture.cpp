@@ -64,12 +64,12 @@ void Texture::loadFromSurface(SDL_Surface *surface) {
 
 	GLenum format;
 	if (surface->format->BytesPerPixel == 4) {
-		format = (surface->format->Rmask = 0x000000ff) ? GL_RGBA : GL_BGRA_EXT;
+		format = (surface->format->Rmask == 0x000000ff) ? GL_RGBA : GL_BGRA;
 	} else {
-		format = GL_RGB;
+		format = (surface->format->Rmask == 0x000000ff) ? GL_RGB : GL_BGR;
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, surface->format->BytesPerPixel, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
 
 	// FIXME: Move these lines to OpenMiner's TextureLoader
 	glGenerateMipmap(GL_TEXTURE_2D);

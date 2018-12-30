@@ -15,10 +15,6 @@
 
 namespace gk {
 
-// FIXME: Move to ZeldaOOL
-// Color Color::Blue(32, 168, 248);
-// Color Color::Red(232, 8, 24);
-
 const Color Color::Black(0, 0, 0);
 const Color Color::White(255, 255, 255);
 const Color Color::Red(255, 0, 0);

@@ -30,6 +30,15 @@ class Text : public IDrawable, public Transformable {
 
 		IntRect getLocalBounds();
 
+		enum Style {
+			Normal        = TTF_STYLE_NORMAL,
+			Bold          = TTF_STYLE_BOLD,
+			Italic        = TTF_STYLE_ITALIC,
+			Underline     = TTF_STYLE_UNDERLINE,
+			Strikethrough = TTF_STYLE_STRIKETHROUGH,
+		};
+
+		void setStyle(Style style) { m_style = style; update(); }
 		void setColor(const Color &color) { m_color = color; update(); }
 		void setFont(const Font &font) { m_font = &font; update(); }
 		void setString(const std::string &text) { m_text = text; update(); }
@@ -42,6 +51,7 @@ class Text : public IDrawable, public Transformable {
 
 		const Font *m_font = nullptr;
 
+		Style m_style = Style::Normal;
 		Color m_color;
 		Image m_image;
 		Texture m_texture;

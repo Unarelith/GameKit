@@ -24,7 +24,7 @@ namespace gk {
 class RectangleShape : public IDrawable, public Transformable {
 	public:
 		RectangleShape() = default;
-		RectangleShape(float width, float height, const Color &color = Color::Black);
+		RectangleShape(float width, float height, const Color &color = Color::White);
 
 		const Color &color() const { return m_color; }
 		void setColor(const Color &color) { m_color = color; updateVertexBuffer(); }
@@ -43,7 +43,7 @@ class RectangleShape : public IDrawable, public Transformable {
 
 		void draw(RenderTarget &target, RenderStates states) const override;
 
-		Color m_color = Color::Black;
+		Color m_color;
 
 		bool m_wireframeMode = false;
 

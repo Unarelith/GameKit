@@ -24,14 +24,16 @@ void Text::update() {
 	if (m_text.empty()) return;
 
 	// FIXME: Add a conversion function between gk::Color and SDL_Color
-	// FIXME: Find why red and blue are inverted
 	SDL_Color color;
-	color.r = m_color.b * 255.0f;
+	color.r = m_color.r * 255.0f;
 	color.g = m_color.g * 255.0f;
-	color.b = m_color.r * 255.0f;
+	color.b = m_color.b * 255.0f;
 	color.a = m_color.a * 255.0f;
 
-	SDL_Surface* surface = TTF_RenderUTF8_Blended(m_font->getFont(m_size), m_text.c_str(), color);
+	TTF_Font *font = m_font->getFont(m_size);
+	TTF_SetFontStyle(font, m_style);
+
+	SDL_Surface* surface = TTF_RenderUTF8_Blended(font, m_text.c_str(), color);
 	if (surface) {
 		m_texture.loadFromSurface(surface);
 		SDL_FreeSurface(surface);
@@ -40,6 +42,8 @@ void Text::update() {
 	}
 	else
 		DEBUG("Unable to create text image for '" + m_text + "':", TTF_GetError());
+
+	TTF_SetFontStyle(font, Style::Normal);
 }
 
 void Text::draw(RenderTarget &target, RenderStates states) const {
