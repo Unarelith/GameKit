@@ -21,9 +21,10 @@ TTF_Font *Font::getFont(int ptsize) const {
 	if (it == m_fonts.end()) {
 		TTF_FontPtr font{TTF_OpenFont(m_filename.c_str(), ptsize), TTF_CloseFont};
 		if (font) {
-			// TTF_SetFontHinting(font.get(), TTF_HINTING_NONE);
-			// TTF_SetFontKerning(font.get(), 0);
-			// TTF_SetFontOutline(font.get(), 1);
+			TTF_SetFontKerning(font.get(), m_kerning);
+			TTF_SetFontHinting(font.get(), m_hinting);
+			TTF_SetFontOutline(font.get(), m_outline);
+
 			m_fonts.insert(std::pair<int, TTF_FontPtr>(ptsize, std::move(font)));
 		}
 		else
@@ -32,6 +33,14 @@ TTF_Font *Font::getFont(int ptsize) const {
 	}
 
 	return m_fonts.at(ptsize).get();
+}
+
+void Font::update() {
+	for (auto &it : m_fonts) {
+		TTF_SetFontKerning(it.second.get(), m_kerning);
+		TTF_SetFontHinting(it.second.get(), m_hinting);
+		TTF_SetFontOutline(it.second.get(), m_outline);
+	}
 }
 
 } // namespace gk

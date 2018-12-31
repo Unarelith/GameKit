@@ -29,12 +29,22 @@ class Font {
 
 		void loadFromFile(const std::string &filename) { m_filename = filename; }
 
+		void setFontKerning(int kerning) { m_kerning = kerning; update(); }
+		void setFontHinting(int hinting) { m_hinting = hinting; update(); }
+		void setFontOutline(int outline) { m_outline = outline; update(); }
+
 		TTF_Font *getFont(int ptsize) const;
 
 	private:
+		void update();
+
 		using TTF_FontPtr = std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)>;
 
 		std::string m_filename;
+
+		int m_kerning = 1;
+		int m_hinting = TTF_HINTING_NORMAL;
+		int m_outline = 0;
 
 		mutable std::unordered_map<int, TTF_FontPtr> m_fonts;
 };
