@@ -30,6 +30,12 @@ class Text : public IDrawable, public Transformable {
 
 		IntRect getLocalBounds();
 
+		void setFont(const Font &font) { m_font = &font; update(); }
+		void setFont(const std::string &resourceName);
+
+		const std::string &string() const { return m_string; }
+		void setString(const std::string &str) { m_string = str; update(); }
+
 		enum Style {
 			Normal        = TTF_STYLE_NORMAL,
 			Bold          = TTF_STYLE_BOLD,
@@ -40,8 +46,6 @@ class Text : public IDrawable, public Transformable {
 
 		void setStyle(Style style) { m_style = style; update(); }
 		void setColor(const Color &color) { m_color = color; update(); }
-		void setFont(const Font &font) { m_font = &font; update(); }
-		void setString(const std::string &text) { m_text = text; update(); }
 		void setCharacterSize(int size) { m_size = size; update(); }
 
 	private:
@@ -56,8 +60,8 @@ class Text : public IDrawable, public Transformable {
 		Image m_image;
 		Texture m_texture;
 
-		std::string m_text;
-		int m_size = -1;
+		std::string m_string;
+		int m_size = Font::defaultSize;
 };
 
 } // namespace gk

@@ -25,7 +25,7 @@ namespace gk {
 class Font {
 	public:
 		Font() = default;
-		Font(const std::string &filename) : m_filename(filename) {}
+		Font(const std::string &filename) : m_filename(filename) { getFont(defaultSize); }
 
 		void loadFromFile(const std::string &filename) { m_filename = filename; }
 
@@ -34,6 +34,8 @@ class Font {
 		void setFontOutline(int outline) { m_outline = outline; update(); }
 
 		TTF_Font *getFont(int ptsize) const;
+
+		static const int defaultSize = 14;
 
 	private:
 		void update();
