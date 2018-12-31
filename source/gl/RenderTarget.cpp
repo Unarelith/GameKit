@@ -27,11 +27,23 @@ void RenderTarget::draw(const IDrawable &drawable, const RenderStates &states) {
 }
 
 void RenderTarget::draw(const VertexBuffer &vertexBuffer, GLenum mode, std::size_t firstVertex, std::size_t vertexCount, const RenderStates &states) {
+	VertexBuffer::bind(&vertexBuffer);
+	beginDrawing(states);
+	glDrawArrays(mode, firstVertex, vertexCount);
+	endDrawing(states);
+}
+
+void RenderTarget::drawElements(const VertexBuffer &vertexBuffer, GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, const RenderStates &states) {
+	VertexBuffer::bind(&vertexBuffer);
+	beginDrawing(states);
+	glDrawElements(mode, count, type, indices);
+	endDrawing(states);
+}
+
+void RenderTarget::beginDrawing(const RenderStates &states) {
 	if (!states.shader) return;
 
 	Shader::bind(states.shader);
-
-	VertexBuffer::bind(&vertexBuffer);
 
 	states.shader->setUniform("u_projectionMatrix", states.projectionMatrix);
 	states.shader->setUniform("u_modelMatrix", states.transform);
@@ -67,14 +79,21 @@ void RenderTarget::draw(const VertexBuffer &vertexBuffer, GLenum mode, std::size
 		glVertexAttribPointer(states.shader->attrib("blockType"), 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, blockType)));
 	}
 
+	if (states.vertexAttributes & VertexAttribute::AmbientOcclusion) {
+		states.shader->enableVertexAttribArray("ambientOcclusion");
+		glVertexAttribPointer(states.shader->attrib("ambientOcclusion"), 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, ambientOcclusion)));
+	}
+
 
 	if (states.texture)
 		Texture::bind(states.texture);
+}
 
-	glDrawArrays(mode, firstVertex, vertexCount);
-
+void RenderTarget::endDrawing(const RenderStates &states) {
 	Texture::bind(nullptr);
 
+	if (states.vertexAttributes & VertexAttribute::AmbientOcclusion)
+		states.shader->disableVertexAttribArray("ambientOcclusion");
 	if (states.vertexAttributes & VertexAttribute::BlockType)
 		states.shader->disableVertexAttribArray("blockType");
 	if (states.vertexAttributes & VertexAttribute::LightValue)

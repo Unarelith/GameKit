@@ -92,11 +92,6 @@ void Image::updateVertexBuffer() const {
 		vertices[i].color[3] = m_color.a;
 	}
 
-	// GLubyte indices[] = {
-	// 	0, 1, 3,
-	// 	3, 1, 2
-	// };
-
 	VertexBuffer::bind(&m_vbo);
 	m_vbo.setData(sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 	VertexBuffer::bind(nullptr);
@@ -111,8 +106,13 @@ void Image::draw(RenderTarget &target, RenderStates states) const {
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
-	// glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices);
-	target.draw(m_vbo, GL_QUADS, 0, 4, states);
+	static const GLubyte indices[] = {
+		0, 1, 3,
+		3, 1, 2
+	};
+
+	target.drawElements(m_vbo, GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices, states);
+	// target.draw(m_vbo, GL_QUADS, 0, 4, states);
 }
 
 }

@@ -19,12 +19,13 @@
 namespace gk {
 
 struct Vertex {
-	GLfloat coord3d[4]    = {0, 0, 0, 1};
-	GLfloat texCoord[2]   = {-1, -1};
-	GLfloat color[4]      = {0, 0, 0, 1};
-	GLfloat normal[3]     = {0, 0, 0};
-	GLfloat lightValue[2] = {-1, -1}; // FIXME
-	GLfloat blockType     = -1; // FIXME
+	GLfloat coord3d[4]      = {0, 0, 0, 1};
+	GLfloat texCoord[2]     = {-1, -1};
+	GLfloat color[4]        = {0, 0, 0, 1};
+	GLfloat normal[3]       = {0, 0, 0};
+	GLfloat lightValue[2]   = {-1, -1}; // FIXME
+	GLfloat blockType       = -1; // FIXME
+	GLfloat ambientOcclusion = 5; // FIXME
 };
 
 } // namespace gk

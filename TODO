@@ -23,6 +23,7 @@ TODO
 
 # Features
 
+• TODO: Add more generic `Vertex`, `RenderStates` and `RenderTarget` classes
 • TODO: Add `Scene` system
 • TODO: Add basic network support via `SDL_net`
 

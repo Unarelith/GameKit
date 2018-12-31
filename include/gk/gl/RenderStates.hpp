@@ -26,12 +26,13 @@ class Texture;
 
 namespace VertexAttribute {
 	enum {
-		Coord3d     = 1,
-		Normal      = 2,
-		TexCoord    = 4,
-		Color       = 8,
-		LightValue  = 16,
-		BlockType   = 32,
+		Coord3d          = 1,
+		Normal           = 2,
+		TexCoord         = 4,
+		Color            = 8,
+		LightValue       = 16,
+		BlockType        = 32,
+		AmbientOcclusion = 64,
 
 		Only2d      = Coord3d | TexCoord | Color,
 		All         = 0xff,
