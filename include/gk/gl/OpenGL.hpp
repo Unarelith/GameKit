@@ -11,8 +11,8 @@
  *
  * =====================================================================================
  */
-#ifndef OPENGL_HPP_
-#define OPENGL_HPP_
+#ifndef GK_OPENGL_HPP_
+#define GK_OPENGL_HPP_
 
 #define GL_GLEXT_PROTOTYPES
 #define GL3_PROTOTYPES 1
@@ -31,4 +31,4 @@
 	#endif
 #endif
 
-#endif // OPENGL_HPP_
+#endif // GK_OPENGL_HPP_

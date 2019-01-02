@@ -11,8 +11,8 @@
  *
  * =====================================================================================
  */
-#ifndef SDLHEADERS_HPP_
-#define SDLHEADERS_HPP_
+#ifndef GK_SDLHEADERS_HPP_
+#define GK_SDLHEADERS_HPP_
 
 #ifdef __ANDROID__
 	#include "SDL.h"
@@ -26,4 +26,4 @@
 	#include <SDL2/SDL_ttf.h>
 #endif
 
-#endif // SDLHEADERS_HPP_
+#endif // GK_SDLHEADERS_HPP_
