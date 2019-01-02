@@ -6,7 +6,7 @@ TODO
    ◦ DONE: `ZeldaOOL`
    ◦ DONE: `CloneBand`
    ◦ DONE: `cpp_rtype`
-   ◦ TODO: `CubeLand`
+   ◦ DONE: `CubeLand`
    ◦ TODO: `Asylia`
 • WIP: Add documentation
    ◦ DONE: `gk::ApplicationStateStack`
@@ -23,6 +23,7 @@ TODO
 
 # Features
 
+• TODO: `Camera` should inherit from `View` but it causes issues in `OpenMiner` and `CloneBand`
 • TODO: Add more generic `Vertex`, `RenderStates` and `RenderTarget` classes
 • TODO: Add `Scene` system
 • TODO: Add basic network support via `SDL_net`

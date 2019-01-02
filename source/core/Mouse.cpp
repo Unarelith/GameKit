@@ -19,7 +19,7 @@ namespace gk {
 Window *Mouse::s_window = nullptr;
 
 void Mouse::resetToWindowCenter() {
-	SDL_WarpMouseInWindow(s_window->window(), s_window->width() / 2, s_window->height() / 2);
+	SDL_WarpMouseInWindow(s_window->window(), s_window->getSize().x / 2, s_window->getSize().y / 2);
 }
 
 void Mouse::setCursorGrabbed(bool grabbed) {

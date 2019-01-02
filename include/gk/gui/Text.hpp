@@ -27,14 +27,15 @@ namespace gk {
 class Text : public IDrawable, public Transformable {
 	public:
 		Text() { update(); }
+		Text(const std::string &text, const Font &font, int ptsize);
 
 		IntRect getLocalBounds();
 
 		void setFont(const Font &font) { m_font = &font; update(); }
 		void setFont(const std::string &resourceName);
 
-		const std::string &string() const { return m_string; }
-		void setString(const std::string &str) { m_string = str; update(); }
+		const std::string &text() const { return m_text; }
+		void setText(const std::string &text) { m_text = text; update(); }
 
 		enum Style {
 			Normal        = TTF_STYLE_NORMAL,
@@ -60,7 +61,7 @@ class Text : public IDrawable, public Transformable {
 		Image m_image;
 		Texture m_texture;
 
-		std::string m_string;
+		std::string m_text;
 		int m_size = Font::defaultSize;
 };
 

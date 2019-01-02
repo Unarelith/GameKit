@@ -45,9 +45,14 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 
 	Shader::bind(states.shader);
 
-	states.shader->setUniform("u_projectionMatrix", states.projectionMatrix);
+	if (!m_view) {
+		states.shader->setUniform("u_projectionMatrix", states.projectionMatrix);
+		states.shader->setUniform("u_viewMatrix", states.viewMatrix);
+	}
+	else if (m_viewChanged)
+		applyCurrentView(states);
+
 	states.shader->setUniform("u_modelMatrix", states.transform);
-	states.shader->setUniform("u_viewMatrix", states.viewMatrix);
 
 	if (states.vertexAttributes & VertexAttribute::Coord3d) {
 		states.shader->enableVertexAttribArray("coord3d");
@@ -90,6 +95,8 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 }
 
 void RenderTarget::endDrawing(const RenderStates &states) {
+	if (!states.shader) return;
+
 	Texture::bind(nullptr);
 
 	if (states.vertexAttributes & VertexAttribute::AmbientOcclusion)
@@ -110,6 +117,32 @@ void RenderTarget::endDrawing(const RenderStates &states) {
 	VertexBuffer::bind(nullptr);
 
 	Shader::bind(nullptr);
+}
+
+IntRect RenderTarget::getViewport(const View& view) const
+{
+    float width  = static_cast<float>(getSize().x);
+    float height = static_cast<float>(getSize().y);
+    const FloatRect& viewport = view.getViewport();
+
+    return IntRect(static_cast<int>(0.5f + width  * viewport.x),
+                   static_cast<int>(0.5f + height * viewport.y),
+                   static_cast<int>(width  * viewport.width),
+                   static_cast<int>(height * viewport.height));
+}
+
+void RenderTarget::applyCurrentView(const RenderStates &states) {
+	IntRect viewport = getViewport(*m_view);
+	if (viewport != m_previousViewport) {
+		int top = getSize().y - (viewport.y + viewport.height);
+		glViewport(viewport.x, top, viewport.width, viewport.height);
+		m_previousViewport = viewport;
+	}
+
+	states.shader->setUniform("u_projectionMatrix", m_view->getTransform());
+	states.shader->setUniform("u_viewMatrix", m_view->getViewTransform());
+
+	m_viewChanged = false;
 }
 
 } // namespace gk

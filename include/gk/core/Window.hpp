@@ -32,13 +32,14 @@ class Window : public RenderTarget {
 
 		void setVerticalSyncEnabled(bool enabled);
 
-		u16 width() const { return m_width; }
-		u16 height() const { return m_height; }
+		Vector2u getSize() const override { return m_size; }
 
 		void close() { m_isOpen = false; }
 		bool isOpen() const { return m_isOpen; }
 
 		SDL_Window *window() const { return m_window.get(); }
+
+		const View &getDefaultView() const override { return m_defaultView; }
 
 	private:
 		using SDL_WindowPtr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;
@@ -47,10 +48,11 @@ class Window : public RenderTarget {
 		SDL_WindowPtr m_window{nullptr, SDL_DestroyWindow};
 		SDL_GLContextPtr m_context{nullptr, SDL_GL_DeleteContext};
 
-		u16 m_width;
-		u16 m_height;
+		Vector2u m_size;
 
 		bool m_isOpen;
+
+		View m_defaultView;
 };
 
 } // namespace gk

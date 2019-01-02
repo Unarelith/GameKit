@@ -118,6 +118,9 @@ class Rect {
 		Rect &operator+=(const Vector2<T> &vector2) { *this = operator+(vector2); return *this; }
 		Rect &operator-=(const Vector2<T> &vector2) { *this = operator-(vector2); return *this; }
 
+		bool operator==(const Rect<T> &rect) const { return x == rect.x && y == rect.y && width == rect.width && height == rect.height; }
+		bool operator!=(const Rect<T> &rect) const { return !operator==(rect); }
+
 		T x = 0;
 		T y = 0;
 		T width = 0;

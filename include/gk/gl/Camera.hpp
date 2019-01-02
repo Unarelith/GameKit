@@ -49,8 +49,8 @@ class Camera {
 		void setNearClippingPlane(float distance);
 		void setFarClippingPlane(float distance);
 
-		virtual const Transform &getProjectionMatrix() const;
-		virtual const Transform &getViewMatrix() const;
+		const Transform &getTransform() const;
+		const Transform &getViewTransform() const;
 
 	private:
 		Vector3f m_position{0, 0, 0};

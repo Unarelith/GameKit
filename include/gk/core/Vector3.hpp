@@ -27,7 +27,9 @@ class Vector3 {
 	public:
 		Vector3() = default;
 		Vector3(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
-		Vector3(const Vector2<T> &vector2, T _z) : x(vector2.x), y(vector2.y), z(_z) {}
+
+		template<typename U>
+		Vector3(const Vector2<U> &vector2, U _z) : x(vector2.x), y(vector2.y), z(_z) {}
 
 		template<typename U>
 		Vector3(const Vector3<U> &vector3) : x(vector3.x), y(vector3.y), z(vector3.z) {}
@@ -45,7 +47,7 @@ class Vector3 {
 			}
 		}
 
-		Vector3& operator=(T n)                     { x = n; y = n; z = n; return *this; }
+		Vector3 &operator=(T n)                     { x = n; y = n; z = n; return *this; }
 		Vector3 &operator+=(const Vector3 &vector3) { *this = operator+(vector3); return *this; }
 		Vector3 &operator-=(const Vector3 &vector3) { *this = operator-(vector3); return *this; }
 		Vector3 &operator*=(T n)                    { *this = operator*(n); return *this; }
@@ -57,6 +59,8 @@ class Vector3 {
 		// Needed if Vector3 is used as a key in a std::map
 		bool operator<(const Vector3<T> &vector3) const { return x < vector3.x && y <= vector3.y && z <= vector3.z; }
 		bool operator>(const Vector3<T> &vector3) const { return x > vector3.x && y >= vector3.y && z >= vector3.z; }
+
+		Vector2<T> xy() const { return Vector2<T>(x, y); }
 
 		T x;
 		T y;

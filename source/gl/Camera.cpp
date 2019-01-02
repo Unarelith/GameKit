@@ -66,7 +66,7 @@ void Camera::setFarClippingPlane(float distance) {
 	m_transformUpdated = false;
 }
 
-const Transform& Camera::getProjectionMatrix() const {
+const Transform& Camera::getTransform() const {
 	if (!m_transformUpdated) {
 		m_transform = glm::perspective(m_fieldOfView, m_aspect, m_nearPlane, m_farPlane);
 
@@ -76,7 +76,7 @@ const Transform& Camera::getProjectionMatrix() const {
 	return m_transform;
 }
 
-const Transform& Camera::getViewMatrix() const {
+const Transform& Camera::getViewTransform() const {
 	if (!m_viewTransformUpdated) {
 		m_viewTransform = glm::lookAt(glm::vec3{getPosition().x, getPosition().y, getPosition().z},
 		                              glm::vec3{getPosition().x + m_direction.x, getPosition().y + m_direction.y, getPosition().z + m_direction.z},
