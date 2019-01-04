@@ -21,19 +21,20 @@
 namespace gk {
 
 void CollisionHelper::checkCollision(SceneObject &object1, SceneObject &object2) {
-	bool inCollision = CollisionHelper::inCollision(object1, object2);
+	bool collision = inCollision(object1, object2);
 
 	if(object1.has<CollisionComponent>()) {
-		object1.get<CollisionComponent>().collisionActions(object1, object2, inCollision);
+		object1.get<CollisionComponent>().collisionActions(object1, object2, collision);
 	}
 
 	if(object2.has<CollisionComponent>()) {
-		object2.get<CollisionComponent>().collisionActions(object2, object1, inCollision);
+		object2.get<CollisionComponent>().collisionActions(object2, object1, collision);
 	}
 }
 
 bool CollisionHelper::inCollision(SceneObject &object1, SceneObject &object2) {
-	if(object1.has<HitboxComponent>() && object2.has<HitboxComponent>()) {
+	if(object1.has<PositionComponent>() && object1.has<HitboxComponent>()
+	&& object2.has<PositionComponent>() && object2.has<HitboxComponent>()) {
 		auto &hitbox1 = object1.get<HitboxComponent>();
 		auto &hitbox2 = object2.get<HitboxComponent>();
 

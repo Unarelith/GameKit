@@ -4,6 +4,10 @@
 
 - GameKit is a library I made to avoid duplicating a lot of code in my projects.
 
+## Linux packages
+
+- **ArchLinux:** `gamekit-git` (AUR)
+
 ## How to compile
 
 - Dependencies:
@@ -14,7 +18,7 @@
     - [tinyxml2](http://leethomason.github.io/tinyxml2/)
     - _Linux users: Check your distribution repositories for packages._
 - Run `mkdir build && cd build` at the root of the project folder
-- Run `cmake .. && make`
+- Run `cmake .. && make && sudo make install`
 
 ## License
 

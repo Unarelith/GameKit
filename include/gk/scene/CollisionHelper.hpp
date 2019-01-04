@@ -20,9 +20,9 @@ namespace gk {
 
 class CollisionHelper {
 	public:
-		static void checkCollision(SceneObject &object1, SceneObject &object2);
+		void checkCollision(SceneObject &object1, SceneObject &object2);
 
-		static bool inCollision(SceneObject &object1, SceneObject &object2);
+		virtual bool inCollision(SceneObject &object1, SceneObject &object2);
 };
 
 } // namespace gk

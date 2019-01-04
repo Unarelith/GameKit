@@ -28,7 +28,7 @@ class CoreApplication {
 
 		virtual void init();
 
-		int run();
+		int run(bool isProtected = true);
 
 	protected:
 		void createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle);

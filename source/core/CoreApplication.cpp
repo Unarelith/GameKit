@@ -34,25 +34,34 @@ void CoreApplication::init() {
 	ResourceHandler::setInstance(m_resourceHandler);
 }
 
-int CoreApplication::run() {
-	try {
+int CoreApplication::run(bool isProtected) {
+	auto runGame = [&]() {
 		m_sdlLoader.load();
 
 		init();
 		mainLoop();
+	};
+
+	if (isProtected) {
+		try {
+			runGame();
+		}
+		catch(const Exception &e) {
+			std::cerr << "Fatal error " << e.what() << std::endl;
+			return 1;
+		}
+		// catch(const std::exception &e) {
+		// 	std::cerr << "Exception caught: " << e.what() << std::endl;
+		// 	return 1;
+		// }
+		// catch(...) {
+		// 	std::cerr << "Fatal error: Unknown error." << std::endl;
+		// 	return 1;
+		// }
 	}
-	catch(const Exception &e) {
-		std::cerr << "Fatal error " << e.what() << std::endl;
-		return 1;
+	else {
+		runGame();
 	}
-	// catch(const std::exception &e) {
-	// 	std::cerr << "Exception caught: " << e.what() << std::endl;
-	// 	return 1;
-	// }
-	// catch(...) {
-	// 	std::cerr << "Fatal error: Unknown error." << std::endl;
-	// 	return 1;
-	// }
 
 	return 0;
 }

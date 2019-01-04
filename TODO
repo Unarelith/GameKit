@@ -2,19 +2,19 @@ TODO
 
 # General
 
-• WIP: Use this in older projects
+• DONE: Use this in older projects
    ◦ DONE: `ZeldaOOL`
    ◦ DONE: `CloneBand`
    ◦ DONE: `cpp_rtype`
    ◦ DONE: `CubeLand`
-   ◦ TODO: `Asylia`
 • WIP: Add documentation
    ◦ DONE: `gk::ApplicationStateStack`
    ◦ TODO: `gk::AudioPlayer`
    ◦ TODO: `gk::CoreApplication`
    ◦ TODO: `gk::GamePad`
    ◦ TODO: `gk::ResourceHandler`
-• WIP: Add unit tests
+   ◦ TODO: `gk::Scene`
+• TODO: Add unit tests
 
 • DONE: Capitalize color names
 • TODO: Rename `gui/` to `graphics/`
@@ -23,10 +23,11 @@ TODO
 
 # Features
 
+• DONE: Add `Scene` system
 • TODO: `Camera` should inherit from `View` but it causes issues in `OpenMiner` and `CloneBand`
 • TODO: Add more generic `Vertex`, `RenderStates` and `RenderTarget` classes
-• TODO: Add `Scene` system
 • TODO: Add basic network support via `SDL_net`
+• TODO: Replace `DEBUG` macro by a real log system
 
 ## Network
 

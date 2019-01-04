@@ -20,6 +20,7 @@
 #include "gk/gl/IDrawable.hpp"
 #include "gk/scene/controller/AbstractController.hpp"
 #include "gk/scene/view/AbstractView.hpp"
+#include "gk/scene/CollisionHelper.hpp"
 #include "gk/scene/SceneObject.hpp"
 #include "gk/scene/SceneObjectList.hpp"
 
@@ -27,8 +28,13 @@ namespace gk {
 
 class Scene : public IDrawable {
 	public:
+		Scene();
+
 		void reset();
 		void update();
+
+		void reset(SceneObject &object);
+		void update(SceneObject &object);
 
 		SceneObject &addObject(SceneObject &&object);
 
@@ -41,16 +47,24 @@ class Scene : public IDrawable {
 		template<typename T, typename... Args>
 		auto addController(Args &&...args) -> typename std::enable_if<std::is_base_of<AbstractController, T>::value, T&>::type {
 			m_controllerList.emplace_back(new T(std::forward<Args>(args)...));
-			return *dynamic_cast<T*>(m_controllerList.back().get());
+			return *static_cast<T*>(m_controllerList.back().get());
 		}
 
 		template<typename T, typename... Args>
 		auto addView(Args &&...args) -> typename std::enable_if<std::is_base_of<AbstractView, T>::value, T&>::type {
 			m_viewList.emplace_back(new T(std::forward<Args>(args)...));
-			return *dynamic_cast<T*>(m_viewList.back().get());
+			return *static_cast<T*>(m_viewList.back().get());
+		}
+
+		template<typename T, typename... Args>
+		auto setCollisionHelper(Args &&...args) -> typename std::enable_if<std::is_base_of<CollisionHelper, T>::value, T&>::type {
+			m_collisionHelper.reset(new T(std::forward<Args>(args)...));
+			return *static_cast<T*>(m_collisionHelper.get());
 		}
 
 		bool isActive() { return !m_controllerList.empty() || !m_viewList.empty(); }
+
+		void draw(const SceneObject &object, RenderTarget &target, RenderStates states) const;
 
 	private:
 		void draw(RenderTarget &target, RenderStates states) const override;
@@ -59,6 +73,8 @@ class Scene : public IDrawable {
 
 		std::list<std::unique_ptr<AbstractController>> m_controllerList;
 		std::list<std::unique_ptr<AbstractView>> m_viewList;
+
+		std::unique_ptr<CollisionHelper> m_collisionHelper;
 };
 
 } // namespace gk
