@@ -24,13 +24,44 @@ namespace gk {
 
 class CoreApplication {
 	public:
+		////////////////////////////////////////////////////////////
+		/// \brief Constructor
+		///
+		/// \param argc `main()` argument count
+		/// \param argv `main()` argument strings
+		///
+		////////////////////////////////////////////////////////////
 		CoreApplication(int argc, char **argv);
 
-		virtual void init();
-
+		////////////////////////////////////////////////////////////
+		/// \brief Run the application
+		///
+		/// \param isProtected Exceptions are catched if this parameter is set to `true` (default)
+		///
+		/// Loads SDL libraries, run `init()`, then `mainLoop()`
+		///
+		////////////////////////////////////////////////////////////
 		int run(bool isProtected = true);
 
 	protected:
+		////////////////////////////////////////////////////////////
+		/// \brief Initialization function
+		///
+		/// This function is used to init engine and singletons.
+		///
+		////////////////////////////////////////////////////////////
+		virtual void init();
+
+		////////////////////////////////////////////////////////////
+		/// \brief Open window
+		///
+		/// \param screenWidth Window width
+		/// \param screenHeight Window height
+		/// \param windowTitle Window caption
+		///
+		/// Opens a new window with defined size and title.
+		///
+		////////////////////////////////////////////////////////////
 		void createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle);
 
 		virtual void onEvent(const SDL_Event &event);
@@ -52,5 +83,15 @@ class CoreApplication {
 };
 
 } // namespace gk
+
+////////////////////////////////////////////////////////////
+/// \class gk::CoreApplication
+/// \ingroup core
+///
+/// This class provides an interface to create your own application.
+///
+/// You should add a class named `Application` that inherits from this class.
+///
+////////////////////////////////////////////////////////////
 
 #endif // GK_COREAPPLICATION_HPP_
