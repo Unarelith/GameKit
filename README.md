@@ -1,5 +1,8 @@
 # GameKit
 
+[![Documentation](https://codedocs.xyz/Quent42340/GameKit.svg)](https://codedocs.xyz/Quent42340/GameKit/)
+[![License](https://img.shields.io/badge/license-LGPLv2.1%2B-blue.svg)](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html)
+
 ### By Unarelith
 
 - GameKit is a library I made to avoid duplicating a lot of code in my projects.

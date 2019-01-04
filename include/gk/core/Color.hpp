@@ -25,11 +25,11 @@ class Color {
 
 		Color operator-(const Color &color);
 
-		bool operator==(const Color &color) {
+		bool operator==(const Color &color) const {
 			return r == color.r && g == color.g && b == color.b && a == color.a;
 		}
 
-		bool operator!=(const Color &color) {
+		bool operator!=(const Color &color) const {
 			return !(*this == color);
 		}
 
