@@ -12,7 +12,7 @@
  * =====================================================================================
  */
 #include "gk/audio/Sound.hpp"
-#include "gk/system/Exception.hpp"
+#include "gk/core/Exception.hpp"
 
 namespace gk {
 

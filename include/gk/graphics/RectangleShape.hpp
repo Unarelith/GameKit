@@ -14,7 +14,7 @@
 #ifndef GK_RECTANGLESHAPE_HPP_
 #define GK_RECTANGLESHAPE_HPP_
 
-#include "gk/core/Color.hpp"
+#include "gk/graphics/Color.hpp"
 #include "gk/gl/IDrawable.hpp"
 #include "gk/gl/Transformable.hpp"
 #include "gk/gl/VertexBuffer.hpp"

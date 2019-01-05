@@ -14,8 +14,8 @@
 #ifndef GK_SPRITE_HPP_
 #define GK_SPRITE_HPP_
 
-#include "gk/gui/Image.hpp"
-#include "gk/gui/SpriteAnimation.hpp"
+#include "gk/graphics/Image.hpp"
+#include "gk/graphics/SpriteAnimation.hpp"
 
 namespace gk {
 

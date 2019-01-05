@@ -18,7 +18,7 @@
 #include "gk/core/SDLLoader.hpp"
 #include "gk/core/Window.hpp"
 #include "gk/resource/ResourceHandler.hpp"
-#include "gk/system/GameClock.hpp"
+#include "gk/core/GameClock.hpp"
 
 namespace gk {
 

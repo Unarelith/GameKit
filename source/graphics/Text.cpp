@@ -11,9 +11,9 @@
  *
  * =====================================================================================
  */
-#include "gk/gui/Text.hpp"
+#include "gk/graphics/Text.hpp"
 #include "gk/resource/ResourceHandler.hpp"
-#include "gk/system/Debug.hpp"
+#include "gk/core/Debug.hpp"
 
 namespace gk {
 

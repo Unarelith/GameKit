@@ -14,7 +14,7 @@
 #ifndef GK_IMAGE_HPP_
 #define GK_IMAGE_HPP_
 
-#include "gk/core/Color.hpp"
+#include "gk/graphics/Color.hpp"
 #include "gk/core/Rect.hpp"
 #include "gk/gl/IDrawable.hpp"
 #include "gk/gl/Transformable.hpp"

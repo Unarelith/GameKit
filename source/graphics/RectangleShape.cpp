@@ -16,7 +16,7 @@
 
 #include "gk/gl/Shader.hpp"
 #include "gk/gl/Vertex.hpp"
-#include "gk/gui/RectangleShape.hpp"
+#include "gk/graphics/RectangleShape.hpp"
 
 namespace gk {
 

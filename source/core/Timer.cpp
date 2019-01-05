@@ -12,7 +12,7 @@
  * =====================================================================================
  */
 #include "gk/core/Timer.hpp"
-#include "gk/system/GameClock.hpp"
+#include "gk/core/GameClock.hpp"
 
 namespace gk {
 

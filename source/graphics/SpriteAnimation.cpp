@@ -11,7 +11,7 @@
  *
  * =====================================================================================
  */
-#include "gk/gui/SpriteAnimation.hpp"
+#include "gk/graphics/SpriteAnimation.hpp"
 
 namespace gk {
 

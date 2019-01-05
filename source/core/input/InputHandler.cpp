@@ -12,7 +12,7 @@
  * =====================================================================================
  */
 #include "gk/core/input/InputHandler.hpp"
-#include "gk/system/GameClock.hpp"
+#include "gk/core/GameClock.hpp"
 
 namespace gk {
 

@@ -11,9 +11,9 @@
  *
  * =====================================================================================
  */
-#include "gk/gui/Image.hpp"
-#include "gk/gui/RectangleShape.hpp"
-#include "gk/gui/Sprite.hpp"
+#include "gk/graphics/Image.hpp"
+#include "gk/graphics/RectangleShape.hpp"
+#include "gk/graphics/Sprite.hpp"
 #include "gk/scene/component/HitboxComponent.hpp"
 #include "gk/scene/component/LifetimeComponent.hpp"
 #include "gk/scene/component/PositionComponent.hpp"

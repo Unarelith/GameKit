@@ -14,13 +14,13 @@
 #ifndef GK_TEXT_HPP_
 #define GK_TEXT_HPP_
 
-#include "gk/core/Color.hpp"
+#include "gk/graphics/Color.hpp"
 #include "gk/core/Rect.hpp"
 #include "gk/gl/IDrawable.hpp"
 #include "gk/gl/Texture.hpp"
 #include "gk/gl/Transformable.hpp"
-#include "gk/gui/Font.hpp"
-#include "gk/gui/Image.hpp"
+#include "gk/graphics/Font.hpp"
+#include "gk/graphics/Image.hpp"
 
 namespace gk {
 

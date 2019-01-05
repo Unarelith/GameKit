@@ -12,7 +12,7 @@
  * =====================================================================================
  */
 #include "gk/gl/Texture.hpp"
-#include "gk/system/Exception.hpp"
+#include "gk/core/Exception.hpp"
 
 namespace gk {
 
@@ -71,14 +71,8 @@ void Texture::loadFromSurface(SDL_Surface *surface) {
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
 
-	// FIXME: Move these lines to OpenMiner's TextureLoader
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	// FIXME: GL_NEAREST_MIPMAP_LINEAR causes blue shadows on trees, probably due to blending..
-	// glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 4);
 
 	bind(nullptr);
 }

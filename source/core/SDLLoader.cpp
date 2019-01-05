@@ -11,7 +11,7 @@
  *
  * =====================================================================================
  */
-#include "gk/system/Exception.hpp"
+#include "gk/core/Exception.hpp"
 #include "gk/core/SDLHeaders.hpp"
 #include "gk/core/SDLLoader.hpp"
 

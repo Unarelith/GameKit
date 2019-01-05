@@ -7,19 +7,13 @@ TODO
    ◦ DONE: `CloneBand`
    ◦ DONE: `cpp_rtype`
    ◦ DONE: `CubeLand`
-• WIP: Add documentation
-   ◦ DONE: `gk::ApplicationStateStack`
-   ◦ TODO: `gk::AudioPlayer`
-   ◦ TODO: `gk::CoreApplication`
-   ◦ TODO: `gk::GamePad`
-   ◦ TODO: `gk::ResourceHandler`
-   ◦ TODO: `gk::Scene`
+• TODO: Add documentation in all the classes
 • TODO: Add unit tests
 
 • DONE: Capitalize color names
-• TODO: Rename `gui/` to `graphics/`
-• TODO: Move `Color` to `graphics/`
-• TODO: Merge `core/` and `system/`
+• DONE: Rename `gui/` to `graphics/`
+• DONE: Move `Color` to `graphics/`
+• DONE: Merge `core/` and `system/`
 
 # Features
 

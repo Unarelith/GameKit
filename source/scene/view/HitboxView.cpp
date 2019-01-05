@@ -11,7 +11,7 @@
  *
  * =====================================================================================
  */
-#include "gk/gui/RectangleShape.hpp"
+#include "gk/graphics/RectangleShape.hpp"
 #include "gk/scene/component/HitboxComponent.hpp"
 #include "gk/scene/view/HitboxView.hpp"
 #include "gk/scene/component/LifetimeComponent.hpp"

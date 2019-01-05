@@ -11,8 +11,8 @@
  *
  * =====================================================================================
  */
-#include "gk/gui/Font.hpp"
-#include "gk/system/Exception.hpp"
+#include "gk/graphics/Font.hpp"
+#include "gk/core/Exception.hpp"
 
 namespace gk {
 

@@ -16,7 +16,7 @@
 
 #include "gk/gl/Texture.hpp"
 #include "gk/gl/Vertex.hpp"
-#include "gk/gui/Image.hpp"
+#include "gk/graphics/Image.hpp"
 #include "gk/resource/ResourceHandler.hpp"
 
 namespace gk {

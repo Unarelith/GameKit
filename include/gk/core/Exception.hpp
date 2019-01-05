@@ -17,7 +17,7 @@
 #include <exception>
 #include <string>
 
-#include "gk/system/Debug.hpp"
+#include "gk/core/Debug.hpp"
 
 #define EXCEPTION(args...) (gk::Exception(__LINE__, _FILE, args))
 

@@ -11,7 +11,7 @@
  *
  * =====================================================================================
  */
-#include "gk/core/Color.hpp"
+#include "gk/graphics/Color.hpp"
 
 namespace gk {
 
