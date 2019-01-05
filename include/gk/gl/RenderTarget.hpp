@@ -34,6 +34,7 @@ class RenderTarget {
 
 		virtual const View &getDefaultView() const = 0;
 
+		const View *getView() const { return m_view; }
 		void setView(const View &view) { m_view = &view; m_viewChanged = true; }
 		void disableView() { m_view = nullptr; }
 

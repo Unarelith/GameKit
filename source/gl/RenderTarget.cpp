@@ -89,7 +89,6 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 		glVertexAttribPointer(states.shader->attrib("ambientOcclusion"), 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, ambientOcclusion)));
 	}
 
-
 	if (states.texture)
 		Texture::bind(states.texture);
 }

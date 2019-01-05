@@ -2,13 +2,14 @@ TODO
 
 # General
 
+• TODO: Merge `gl` and `graphics`
 • TODO: Try to use this in `Asylia`
 • TODO: Add documentation in all the classes
 • TODO: Add unit tests
 
 # Features
 
-• TODO: `Camera` should inherit from `View` but it causes issues in `OpenMiner` and `CloneBand`
+• DONE: `Camera` should inherit from `View` but it causes issues in `OpenMiner` and `CloneBand`
 • TODO: Add more generic `Vertex`, `RenderStates` and `RenderTarget` classes
 • TODO: Add basic network support via `SDL_net`
 • TODO: Replace `DEBUG` macro by a real log system

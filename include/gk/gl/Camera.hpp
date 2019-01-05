@@ -14,16 +14,22 @@
 #ifndef GK_CAMERA_HPP_
 #define GK_CAMERA_HPP_
 
-#include "gk/gl/Transformable.hpp"
+#include "gk/gl/View.hpp"
 
 namespace gk {
 
-class Camera {
+////////////////////////////////////////////////////////////
+/// \brief 3D camera that defines what is shown on screen
+///
+/// Code inspired by SFML `3dee`
+///
+////////////////////////////////////////////////////////////
+class Camera : public View {
 	public:
 		Camera(float fov, float near, float far);
 		virtual ~Camera() = default;
 
-		const Vector3f &getPosition() const { return m_position; }
+		const Vector3f &getPosition() const override { return m_position; }
 		const Vector3f &getDirection() const { return m_direction; }
 		const Vector3f &getUpVector() const { return m_upVector; }
 
@@ -49,8 +55,8 @@ class Camera {
 		void setNearClippingPlane(float distance);
 		void setFarClippingPlane(float distance);
 
-		const Transform &getTransform() const;
-		const Transform &getViewTransform() const;
+		const Transform &getTransform() const override;
+		const Transform &getViewTransform() const override;
 
 	private:
 		Vector3f m_position{0, 0, 0};
@@ -61,12 +67,6 @@ class Camera {
 		float m_aspect = 1.0f;
 		float m_nearPlane = 0.1f;
 		float m_farPlane = 1000.0f;
-
-		mutable Transform m_transform;
-		mutable Transform m_viewTransform;
-
-		mutable bool m_transformUpdated = false;
-		mutable bool m_viewTransformUpdated = false;
 };
 
 } // namespace gk
