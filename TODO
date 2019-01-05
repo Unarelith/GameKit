@@ -2,26 +2,20 @@ TODO
 
 # General
 
-• DONE: Use this in older projects
-   ◦ DONE: `ZeldaOOL`
-   ◦ DONE: `CloneBand`
-   ◦ DONE: `cpp_rtype`
-   ◦ DONE: `CubeLand`
+• TODO: Try to use this in `Asylia`
 • TODO: Add documentation in all the classes
 • TODO: Add unit tests
 
-• DONE: Capitalize color names
-• DONE: Rename `gui/` to `graphics/`
-• DONE: Move `Color` to `graphics/`
-• DONE: Merge `core/` and `system/`
-
 # Features
 
-• DONE: Add `Scene` system
 • TODO: `Camera` should inherit from `View` but it causes issues in `OpenMiner` and `CloneBand`
 • TODO: Add more generic `Vertex`, `RenderStates` and `RenderTarget` classes
 • TODO: Add basic network support via `SDL_net`
 • TODO: Replace `DEBUG` macro by a real log system
+
+## Audio
+
+• TODO: Add a `getPlaybackPosition()` function by creating a custom music player
 
 ## Network
 
