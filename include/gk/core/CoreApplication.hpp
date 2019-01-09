@@ -66,8 +66,8 @@ class CoreApplication {
 
 		virtual void onEvent(const SDL_Event &event);
 
-		void handleEvents();
-		void mainLoop();
+		virtual void handleEvents();
+		virtual void mainLoop();
 
 		SDLLoader m_sdlLoader;
 
