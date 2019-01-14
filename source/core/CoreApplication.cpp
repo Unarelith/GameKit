@@ -36,7 +36,8 @@ void CoreApplication::init() {
 
 int CoreApplication::run(bool isProtected) {
 	auto runGame = [&]() {
-		m_sdlLoader.load();
+		if (m_loadSDL)
+			m_sdlLoader.load();
 
 		init();
 		mainLoop();

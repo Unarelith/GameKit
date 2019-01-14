@@ -70,6 +70,7 @@ class CoreApplication {
 		virtual void mainLoop();
 
 		SDLLoader m_sdlLoader;
+		bool m_loadSDL = true;
 
 		ApplicationStateStack m_stateStack;
 
