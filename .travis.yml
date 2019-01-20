@@ -1,0 +1,33 @@
+os: linux
+dist: trusty
+language: cpp
+
+compiler:
+  - clang
+
+addons:
+    apt:
+        sources:
+            - ubuntu-toolchain-r-test
+        packages:
+            - libegl1-mesa-dev
+            - libgles2-mesa-dev
+            - libtinyxml2-dev
+            - libsdl2-dev
+            - libsdl2-image-dev
+            - libsdl2-mixer-dev
+            - libsdl2-ttf-dev
+            - g++-8
+            - libglm-dev
+            - cmake
+            - cxxtest
+
+# before_install:
+
+script:
+  - cmake .
+  - make -j8
+
+notifications:
+  email: false
+

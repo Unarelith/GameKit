@@ -1,5 +1,6 @@
 # GameKit
 
+[![Build Status](https://travis-ci.com/Quent42340/GameKit.svg?branch=master)](https://travis-ci.com/Quent42340/GameKit)
 [![Documentation](https://codedocs.xyz/Quent42340/GameKit.svg)](https://codedocs.xyz/Quent42340/GameKit/)
 [![License](https://img.shields.io/badge/license-LGPLv2.1%2B-blue.svg)](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html)
 
