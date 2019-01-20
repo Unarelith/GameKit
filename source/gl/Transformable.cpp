@@ -22,7 +22,7 @@ void Transformable::setPosition(float x, float y, float z) {
 	m_position.y = y;
 	m_position.z = z;
 	m_transformNeedUpdate = true;
-	m_inverseTransformNeedUpdate = true;
+	// m_inverseTransformNeedUpdate = true;
 }
 
 void Transformable::setOrigin(float x, float y, float z) {
@@ -30,7 +30,7 @@ void Transformable::setOrigin(float x, float y, float z) {
 	m_origin.y = y;
 	m_origin.z = z;
 	m_transformNeedUpdate = true;
-	m_inverseTransformNeedUpdate = true;
+	// m_inverseTransformNeedUpdate = true;
 }
 
 void Transformable::setScale(float factorX, float factorY, float factorZ) {
@@ -38,7 +38,7 @@ void Transformable::setScale(float factorX, float factorY, float factorZ) {
 	m_scale.y = factorY;
 	m_scale.z = factorZ;
 	m_transformNeedUpdate = true;
-	m_inverseTransformNeedUpdate = true;
+	// m_inverseTransformNeedUpdate = true;
 }
 
 void Transformable::setRotation(float angle, const Vector3f &axis) {
@@ -50,7 +50,7 @@ void Transformable::setRotation(float angle, const Vector3f &axis) {
 	m_rotationTransform.rotate(m_rotation, axis);
 
 	m_transformNeedUpdate = true;
-	m_inverseTransformNeedUpdate = true;
+	// m_inverseTransformNeedUpdate = true;
 }
 
 void Transformable::move(float offsetX, float offsetY, float offsetZ) {
@@ -100,14 +100,14 @@ const Transform& Transformable::getTransform() const {
 	return m_transform;
 }
 
-const Transform& Transformable::getInverseTransform() const {
-	if (m_inverseTransformNeedUpdate) {
-		m_inverseTransform = getTransform().getInverse();
-		m_inverseTransformNeedUpdate = false;
-	}
-
-	return m_inverseTransform;
-}
+// const Transform& Transformable::getInverseTransform() const {
+// 	if (m_inverseTransformNeedUpdate) {
+// 		m_inverseTransform = getTransform().getInverse();
+// 		m_inverseTransformNeedUpdate = false;
+// 	}
+//
+// 	return m_inverseTransform;
+// }
 
 } // namespace gk
 

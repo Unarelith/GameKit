@@ -20,6 +20,8 @@ namespace gk {
 
 class AbstractController {
 	public:
+		virtual ~AbstractController() = default;
+
 		virtual void reset(SceneObject &) {}
 		virtual void update(SceneObject &object) = 0;
 

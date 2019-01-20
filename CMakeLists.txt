@@ -35,14 +35,15 @@ install(DIRECTORY include/gk DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 #------------------------------------------------------------------------------
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -g)
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall -Wextra -Wfatal-errors)
-target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wno-variadic-macros)
-target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -static-libstdc++)
 target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -DDEBUG_ENABLED -DDEBUG_COLOR)
-target_compile_features(${CMAKE_PROJECT_NAME} PRIVATE cxx_std_14)
+target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC -Wno-variadic-macros)
+target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC -std=c++14)
+# target_compile_features(${CMAKE_PROJECT_NAME} PUBLIC cxx_std_14)
 
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc")
-endif()
+# if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+# 	target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -static-libstdc++)
+# 	target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -static-libgcc)
+# endif()
 
 #------------------------------------------------------------------------------
 # Packages
@@ -98,7 +99,7 @@ if(NOT SDL2MIXER_FOUND)
 endif(NOT SDL2MIXER_FOUND)
 
 if(NOT SDL2TTF_FOUND)
-	message(FATAL_ERROR "SDL2_mixer not found!")
+	message(FATAL_ERROR "SDL2_ttf not found!")
 endif(NOT SDL2TTF_FOUND)
 
 include_directories(${SDL2_INCLUDE_DIRS}

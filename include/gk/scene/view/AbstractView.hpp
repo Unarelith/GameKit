@@ -21,6 +21,8 @@ namespace gk {
 
 class AbstractView {
 	public:
+		virtual ~AbstractView() = default;
+
 		virtual void draw(const SceneObject &object, RenderTarget &target, RenderStates states) = 0;
 
 		virtual void draw(const SceneObjectList &objectList, RenderTarget &target, RenderStates states) {

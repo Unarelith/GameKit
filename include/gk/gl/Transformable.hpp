@@ -49,7 +49,7 @@ class Transformable {
 		void rotate(float angle, const Vector3f &axis);
 
 		const Transform& getTransform() const;
-		const Transform& getInverseTransform() const;
+		// const Transform& getInverseTransform() const;
 
 	private:
 		Vector3f m_position{0, 0, 0};
@@ -58,11 +58,11 @@ class Transformable {
 		float m_rotation = 0;
 
 		mutable Transform m_transform;
-		mutable Transform m_inverseTransform;
+		// mutable Transform m_inverseTransform;
 		mutable Transform m_rotationTransform;
 
 		mutable bool m_transformNeedUpdate = true;
-		mutable bool m_inverseTransformNeedUpdate = true;
+		// mutable bool m_inverseTransformNeedUpdate = true;
 };
 
 } // namespace gk
