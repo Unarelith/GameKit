@@ -15,6 +15,7 @@
 #define GK_COREAPPLICATION_HPP_
 
 #include "gk/core/ApplicationStateStack.hpp"
+#include "gk/core/ArgumentParser.hpp"
 #include "gk/core/SDLLoader.hpp"
 #include "gk/core/Window.hpp"
 #include "gk/resource/ResourceHandler.hpp"
@@ -81,6 +82,8 @@ class CoreApplication {
 		Window m_window;
 
 		RenderStates m_renderStates = RenderStates::Default;
+
+		ArgumentParser m_argumentParser;
 };
 
 } // namespace gk

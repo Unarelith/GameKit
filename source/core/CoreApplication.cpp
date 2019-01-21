@@ -20,9 +20,7 @@
 
 namespace gk {
 
-CoreApplication::CoreApplication(int argc, char **argv) {
-	if (argc > 1 && argv[1] == std::string("--no-sound"))
-		AudioPlayer::setMuteState(true);
+CoreApplication::CoreApplication(int argc, char **argv) : m_argumentParser(argc, argv) {
 }
 
 void CoreApplication::init() {
@@ -32,6 +30,12 @@ void CoreApplication::init() {
 
 	ApplicationStateStack::setInstance(m_stateStack);
 	ResourceHandler::setInstance(m_resourceHandler);
+
+	m_argumentParser.addArgument("mute", {"", "--no-sound"});
+	m_argumentParser.parse();
+	if (m_argumentParser.getArgument("mute").isFound)
+		AudioPlayer::setMuteState(true);
+	// m_argumentParser.debug();
 }
 
 int CoreApplication::run(bool isProtected) {
