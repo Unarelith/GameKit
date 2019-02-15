@@ -39,6 +39,7 @@ class Image : public IDrawable, public Transformable {
 		u16 height() const { return m_height * getScale().y; }
 
 		void setColor(const Color &color) { m_color = color; updateVertexBuffer(); }
+		void setFlip(bool isFlipped) { m_isFlipped = isFlipped; }
 
 	protected:
 		void updateVertexBuffer() const;
@@ -56,6 +57,8 @@ class Image : public IDrawable, public Transformable {
 		FloatRect m_clipRect;
 
 		Color m_color;
+
+		bool m_isFlipped = false;
 };
 
 } // namespace gk

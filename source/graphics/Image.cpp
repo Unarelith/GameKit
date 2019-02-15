@@ -76,14 +76,26 @@ void Image::updateVertexBuffer() const {
 		m_clipRect.height / float(m_height)
 	};
 
-	vertices[0].texCoord[0] = texRect.x + texRect.width;
-	vertices[0].texCoord[1] = texRect.y;
-	vertices[1].texCoord[0] = texRect.x;
-	vertices[1].texCoord[1] = texRect.y;
-	vertices[2].texCoord[0] = texRect.x;
-	vertices[2].texCoord[1] = texRect.y + texRect.height;
-	vertices[3].texCoord[0] = texRect.x + texRect.width;
-	vertices[3].texCoord[1] = texRect.y + texRect.height;
+	if (!m_isFlipped) {
+		vertices[0].texCoord[0] = texRect.x + texRect.width;
+		vertices[0].texCoord[1] = texRect.y;
+		vertices[1].texCoord[0] = texRect.x;
+		vertices[1].texCoord[1] = texRect.y;
+		vertices[2].texCoord[0] = texRect.x;
+		vertices[2].texCoord[1] = texRect.y + texRect.height;
+		vertices[3].texCoord[0] = texRect.x + texRect.width;
+		vertices[3].texCoord[1] = texRect.y + texRect.height;
+	}
+	else {
+		vertices[0].texCoord[0] = texRect.x;
+		vertices[0].texCoord[1] = texRect.y;
+		vertices[1].texCoord[0] = texRect.x + texRect.width;
+		vertices[1].texCoord[1] = texRect.y;
+		vertices[2].texCoord[0] = texRect.x + texRect.width;
+		vertices[2].texCoord[1] = texRect.y + texRect.height;
+		vertices[3].texCoord[0] = texRect.x;
+		vertices[3].texCoord[1] = texRect.y + texRect.height;
+	}
 
 	for (u8 i = 0 ; i < 4 ; ++i) {
 		vertices[i].color[0] = m_color.r;
