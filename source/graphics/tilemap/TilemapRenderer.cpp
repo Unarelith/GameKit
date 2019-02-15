@@ -18,15 +18,17 @@
 
 namespace gk {
 
-void TilemapRenderer::init(Tilemap *map, u16 mapWidth, u16 mapHeight) {
+void TilemapRenderer::init(Tilemap *map, u16 mapWidth, u16 mapHeight, u8 mapLayers) {
 	m_map = map;
 
 	gk::VertexBuffer::bind(&m_vbo);
-	m_vbo.setData(sizeof(gk::Vertex) * mapWidth * mapHeight * 6, nullptr, GL_DYNAMIC_DRAW);
+	m_vbo.setData(sizeof(gk::Vertex) * mapWidth * mapHeight * mapLayers * 6, nullptr, GL_DYNAMIC_DRAW);
 	gk::VertexBuffer::bind(nullptr);
 }
 
-void TilemapRenderer::updateTile(u16 tileX, u16 tileY, u16 id, Tilemap &map) {
+void TilemapRenderer::updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap &map) {
+	if (id == 0) return;
+
 	gk::VertexBuffer::bind(&m_vbo);
 
 	float tileWidth  = map.tileset().tileWidth();
@@ -50,7 +52,7 @@ void TilemapRenderer::updateTile(u16 tileX, u16 tileY, u16 id, Tilemap &map) {
 		{{x            , y + tileHeight, 0, 1}, {texTileX               , texTileY + texTileHeight}, {1.0f, 1.0f, 1.0f, 1.0f}}
 	};
 
-	m_vbo.updateData(sizeof(vertices) * (tileX + tileY * map.width()), sizeof(vertices), vertices);
+	m_vbo.updateData(sizeof(vertices) * (tileX + tileY * map.width() + layer * map.width() * map.height()), sizeof(vertices), vertices);
 
 	gk::VertexBuffer::bind(nullptr);
 }
@@ -64,7 +66,11 @@ void TilemapRenderer::draw(gk::RenderTarget &target, gk::RenderStates states) co
 	glDisable(GL_CULL_FACE);
 	glDisable(GL_DEPTH_TEST);
 
-	target.draw(m_vbo, GL_TRIANGLES, 0, 6 * m_map->width() * m_map->height(), states);
+	for (u8 i = 0 ; i < m_map->layerCount() ; ++i) {
+		target.draw(m_vbo, GL_TRIANGLES,
+			(6 * m_map->width() * m_map->height()) * (m_map->layerCount() - 1 - i),
+			6 * m_map->width() * m_map->height(), states);
+	}
 }
 
 } // namespace gk

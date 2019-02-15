@@ -23,7 +23,7 @@ namespace gk {
 
 class Tilemap : public gk::IDrawable, public gk::Transformable {
 	public:
-		Tilemap(u16 width, u16 height, Tileset &tileset, const std::vector<u16> &data);
+		Tilemap(u16 width, u16 height, Tileset &tileset, const std::vector<std::vector<u16>> &data);
 
 		void reset();
 
@@ -31,11 +31,13 @@ class Tilemap : public gk::IDrawable, public gk::Transformable {
 
 		void updateTiles();
 
-		u16 getTile(u16 tileX, u16 tileY);
+		u16 getTile(u16 tileX, u16 tileY, u8 layer = 0);
 		void setTile(u16 tileX, u16 tileY, u16 id, bool write = true, bool persistent = false);
 
 		u16 width() const { return m_width; }
 		u16 height() const { return m_height; }
+
+		u8 layerCount() const { return m_data.size(); }
 
 		Tileset &tileset() { return m_tileset; }
 
@@ -47,8 +49,8 @@ class Tilemap : public gk::IDrawable, public gk::Transformable {
 		u16 m_width = 0;
 		u16 m_height = 0;
 
-		std::vector<u16> m_baseData;
-		std::vector<u16> m_data;
+		std::vector<std::vector<u16>> m_baseData;
+		std::vector<std::vector<u16>> m_data;
 
 		TilemapAnimator m_animator;
 		TilemapRenderer m_renderer;

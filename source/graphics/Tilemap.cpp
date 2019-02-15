@@ -18,7 +18,7 @@
 
 namespace gk {
 
-Tilemap::Tilemap(u16 width, u16 height, Tileset &tileset, const std::vector<u16> &data) : m_tileset(tileset) {
+Tilemap::Tilemap(u16 width, u16 height, Tileset &tileset, const std::vector<std::vector<u16>> &data) : m_tileset(tileset) {
 	m_width = width;
 	m_height = height;
 
@@ -26,7 +26,7 @@ Tilemap::Tilemap(u16 width, u16 height, Tileset &tileset, const std::vector<u16>
 	m_data = m_baseData;
 
 	m_animator.init(*this);
-	m_renderer.init(this, m_width, m_height);
+	m_renderer.init(this, m_width, m_height, layerCount());
 
 	updateTiles();
 }
@@ -46,18 +46,20 @@ void Tilemap::draw(gk::RenderTarget &target, gk::RenderStates states) const {
 }
 
 void Tilemap::updateTiles() {
-	for(u16 tileY = 0 ; tileY < m_height ; tileY++) {
-		for(u16 tileX = 0 ; tileX < m_width ; tileX++) {
-			u16 tileID = getTile(tileX, tileY);
+	for (u8 layer = 0 ; layer < layerCount() ; ++layer) {
+		for (u16 tileY = 0 ; tileY < m_height ; tileY++) {
+			for (u16 tileX = 0 ; tileX < m_width ; tileX++) {
+				u16 tileID = getTile(tileX, tileY, layer);
 
-			m_renderer.updateTile(tileX, tileY, tileID, *this);
+				m_renderer.updateTile(layer, tileX, tileY, tileID, *this);
+			}
 		}
 	}
 }
 
-u16 Tilemap::getTile(u16 tileX, u16 tileY) {
+u16 Tilemap::getTile(u16 tileX, u16 tileY, u8 layer) {
 	if(tileX + tileY * m_width < m_width * m_height) {
-		return m_data[tileX + tileY * m_width];
+		return m_data[layerCount() - 1 - layer][tileX + tileY * m_width];
 	} else {
 		return 0;
 	}
@@ -65,12 +67,12 @@ u16 Tilemap::getTile(u16 tileX, u16 tileY) {
 
 void Tilemap::setTile(u16 tileX, u16 tileY, u16 id, bool write, bool persistent) {
 	if(write && tileX + tileY * m_width < m_width * m_height) {
-		m_data[tileX + tileY * m_width] = id;
+		m_data[layerCount() - 1][tileX + tileY * m_width] = id;
 
-		if (persistent) m_baseData[tileX + tileY * m_width] = id;
+		if (persistent) m_baseData[layerCount() - 1][tileX + tileY * m_width] = id;
 	}
 
-	m_renderer.updateTile(tileX, tileY, id, *this);
+	m_renderer.updateTile(layerCount() - 1, tileX, tileY, id, *this);
 }
 
 } // namespace gk

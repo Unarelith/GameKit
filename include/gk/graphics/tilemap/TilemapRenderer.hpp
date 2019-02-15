@@ -24,9 +24,9 @@ class Tilemap;
 
 class TilemapRenderer : public gk::IDrawable {
 	public:
-		void init(Tilemap *map, u16 mapWidth, u16 mapHeight);
+		void init(Tilemap *map, u16 mapWidth, u16 mapHeight, u8 mapLayers);
 
-		void updateTile(u16 tileX, u16 tileY, u16 id, Tilemap &map);
+		void updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap &map);
 
 	private:
 		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
