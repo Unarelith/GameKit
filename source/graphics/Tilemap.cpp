@@ -25,8 +25,6 @@ Tilemap::Tilemap(u16 width, u16 height, Tileset &tileset, const std::vector<u16>
 	m_baseData = data;
 	m_data = m_baseData;
 
-	setPosition(0, 16);
-
 	m_animator.init(*this);
 	m_renderer.init(this, m_width, m_height);
 
