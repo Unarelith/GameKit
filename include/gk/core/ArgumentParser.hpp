@@ -11,12 +11,14 @@
  *
  * =====================================================================================
  */
-#ifndef ARGUMENTPARSER_HPP_
-#define ARGUMENTPARSER_HPP_
+#ifndef GK_ARGUMENTPARSER_HPP_
+#define GK_ARGUMENTPARSER_HPP_
 
 #include <string>
 #include <unordered_map>
 #include <vector>
+
+namespace gk {
 
 struct Argument {
 	std::string shortName;
@@ -43,4 +45,6 @@ class ArgumentParser {
 		std::unordered_map<std::string, Argument> m_arguments;
 };
 
-#endif // ARGUMENTPARSER_HPP_
+} // namespace gk
+
+#endif // GK_ARGUMENTPARSER_HPP_

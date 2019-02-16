@@ -14,6 +14,8 @@
 #include "gk/core/ArgumentParser.hpp"
 #include "gk/core/Debug.hpp"
 
+namespace gk {
+
 ArgumentParser::ArgumentParser(int argc, char **argv) {
 	for (int i = 0 ; i < argc ; ++i) {
 		m_argv.emplace_back(argv[i]);
@@ -49,4 +51,6 @@ void ArgumentParser::debug() {
 		DEBUG(it.second.longName, "/", it.second.shortName, "=", it.second.isFound);
 	DEBUG("==========================");
 }
+
+} // namespace gk
 
