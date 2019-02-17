@@ -31,6 +31,7 @@ class ApplicationStateStack {
 		}
 
 		void pop();
+		void clear() { while(!empty()) pop(); }
 
 		void clearDeletedStates();
 

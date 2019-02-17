@@ -35,10 +35,15 @@ class ApplicationState : public IDrawable, public Transformable {
 		virtual void onEvent(const SDL_Event &) {}
 
 		virtual void update() = 0;
+		virtual void render() = 0; // FIXME: Temporarily added for Asylia
+
+		ApplicationState *parent() { return m_parent; }
 
 		void setStateStack(ApplicationStateStack *stateStack) { m_stateStack = stateStack; }
 
 	protected:
+		void draw(gk::RenderTarget &, gk::RenderStates) const override {}
+
 		ApplicationState *m_parent = nullptr;
 
 		ApplicationStateStack *m_stateStack = nullptr;
