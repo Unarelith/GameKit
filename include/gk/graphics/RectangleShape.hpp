@@ -14,6 +14,8 @@
 #ifndef GK_RECTANGLESHAPE_HPP_
 #define GK_RECTANGLESHAPE_HPP_
 
+#include <array>
+
 #include "gk/graphics/Color.hpp"
 #include "gk/gl/IDrawable.hpp"
 #include "gk/gl/Transformable.hpp"
@@ -23,7 +25,7 @@ namespace gk {
 
 class RectangleShape : public IDrawable, public Transformable {
 	public:
-		RectangleShape() = default;
+		RectangleShape();
 		RectangleShape(float width, float height, const Color &color = Color::White);
 
 		const Color &color() const { return m_color; }
@@ -58,7 +60,7 @@ class RectangleShape : public IDrawable, public Transformable {
 		Color m_outlineColor{Color::White};
 		int m_outlineThickness = 0;
 
-		GLubyte m_indices[6 * 5] = {
+		std::array<GLubyte, 6 * 5> m_indices{
 			0, 1, 3,
 			3, 1, 2
 		};

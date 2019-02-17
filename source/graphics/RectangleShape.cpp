@@ -20,16 +20,18 @@
 
 namespace gk {
 
-RectangleShape::RectangleShape(float width, float height, const Color &color) {
-	m_color = color;
-
-	setSize(width, height);
-
+RectangleShape::RectangleShape() {
 	for (u8 i = 1 ; i < 5 ; ++i) {
 		for (u8 j = 0 ; j < 6 ; ++j) {
 			m_indices[i * 6 + j] = m_indices[j] + 4 * i;
 		}
 	}
+}
+
+RectangleShape::RectangleShape(float width, float height, const Color &color) : RectangleShape() {
+	m_color = color;
+
+	setSize(width, height);
 }
 
 void RectangleShape::updateVertexBuffer() const {
@@ -94,7 +96,7 @@ void RectangleShape::draw(RenderTarget &target, RenderStates states) const {
 	glDisable(GL_DEPTH_TEST);
 
 	if(m_wireframeMode) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	target.drawElements(m_vbo, GL_TRIANGLES, 6 * 5, GL_UNSIGNED_BYTE, m_indices, states);
+	target.drawElements(m_vbo, GL_TRIANGLES, 6 * 5, GL_UNSIGNED_BYTE, m_indices.data(), states);
 	if(m_wireframeMode) glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
