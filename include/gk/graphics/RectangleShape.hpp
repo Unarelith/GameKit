@@ -38,6 +38,9 @@ class RectangleShape : public IDrawable, public Transformable {
 
 		void setSize(float width, float height) { m_width = width; m_height = height; updateVertexBuffer(); }
 
+		void setOutlineColor(const Color &color) { m_outlineColor = color; updateVertexBuffer(); }
+		void setOutlineThickness(int outlineThickness) { m_outlineThickness = outlineThickness; updateVertexBuffer(); }
+
 	private:
 		void updateVertexBuffer() const;
 
@@ -51,6 +54,14 @@ class RectangleShape : public IDrawable, public Transformable {
 		float m_height = 0;
 
 		VertexBuffer m_vbo;
+
+		Color m_outlineColor{Color::White};
+		int m_outlineThickness = 0;
+
+		GLubyte m_indices[6 * 5] = {
+			0, 1, 3,
+			3, 1, 2
+		};
 };
 
 } // namespace gk
