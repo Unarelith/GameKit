@@ -32,9 +32,5 @@ Color::Color(u8 _r, u8 _g, u8 _b, u8 _a) {
 	a = _a / 255.0f;
 }
 
-Color Color::operator-(const Color &color) {
-	return Color(r - color.r, g - color.g, b - color.b, a - color.a);
-}
-
 } // namespace gk
 

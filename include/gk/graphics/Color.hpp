@@ -23,7 +23,11 @@ class Color {
 		Color() = default;
 		Color(u8 _r, u8 _g, u8 _b, u8 _a = 255);
 
-		Color operator-(const Color &color);
+		// Only used in Asylia
+		void invert() { r = 1 - r; g = 1 - g; b = 1 - b; }
+
+		Color operator-(const Color &c) { return Color(r - c.r, g - c.g, b - c.b, a - c.a); }
+		Color operator+(const Color &c) { return Color(r + c.r, g + c.g, b + c.b, a + c.a); }
 
 		bool operator==(const Color &color) const {
 			return r == color.r && g == color.g && b == color.b && a == color.a;
@@ -32,6 +36,12 @@ class Color {
 		bool operator!=(const Color &color) const {
 			return !(*this == color);
 		}
+
+		// Only used in Asylia
+		u8 r255() const { return r * 255; }
+		u8 g255() const { return g * 255; }
+		u8 b255() const { return b * 255; }
+		u8 a255() const { return a * 255; }
 
 		float r = 1.0f;
 		float g = 1.0f;
