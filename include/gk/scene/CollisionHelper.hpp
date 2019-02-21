@@ -20,6 +20,8 @@ namespace gk {
 
 class CollisionHelper {
 	public:
+		virtual ~CollisionHelper() = default;
+
 		void checkCollision(SceneObject &object1, SceneObject &object2);
 
 		virtual bool inCollision(SceneObject &object1, SceneObject &object2);
