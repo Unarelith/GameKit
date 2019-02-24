@@ -42,6 +42,7 @@ class Image : public IDrawable, public Transformable {
 		u16 height() const { return m_height * getScale().y; }
 
 		void setColor(const Color &color) { m_color = color; updateVertexBuffer(); }
+		void setAlphaMod(u8 alpha) { m_color.a = alpha / 255.0f; updateVertexBuffer(); }
 		void setFlip(bool isFlipped) { m_isFlipped = isFlipped; }
 
 	protected:
