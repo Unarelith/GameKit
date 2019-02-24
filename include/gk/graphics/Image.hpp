@@ -35,6 +35,9 @@ class Image : public IDrawable, public Transformable {
 		const FloatRect &clipRect() const { return m_clipRect; }
 		void setClipRect(float x, float y, u16 width, u16 height);
 
+		const FloatRect &posRect() const { return m_posRect; }
+		void setPosRect(float x, float y, u16 width, u16 height);
+
 		u16 width() const { return m_width * getScale().x; }
 		u16 height() const { return m_height * getScale().y; }
 
@@ -55,6 +58,7 @@ class Image : public IDrawable, public Transformable {
 		u16 m_height = 0;
 
 		FloatRect m_clipRect;
+		FloatRect m_posRect;
 
 		Color m_color;
 

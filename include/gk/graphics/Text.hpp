@@ -27,6 +27,8 @@ namespace gk {
 class Text : public IDrawable, public Transformable {
 	public:
 		Text() { update(); }
+		Text(const std::string &fontResourceName, int ptsize);
+		Text(const std::string &text, const std::string &fontResourceName, int ptsize);
 		Text(const std::string &text, const Font &font, int ptsize);
 
 		IntRect getLocalBounds();

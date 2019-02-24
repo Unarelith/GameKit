@@ -17,6 +17,19 @@
 
 namespace gk {
 
+Text::Text(const std::string &fontResourceName, int ptsize) {
+	m_size = ptsize;
+
+	setFont(fontResourceName);
+}
+
+Text::Text(const std::string &text, const std::string &fontResourceName, int ptsize) {
+	m_text = text;
+	m_size = ptsize;
+
+	setFont(fontResourceName);
+}
+
 Text::Text(const std::string &text, const Font &font, int ptsize) {
 	m_text = text;
 	m_font = &font;

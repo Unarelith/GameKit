@@ -36,6 +36,7 @@ void Image::load(const Image &image) {
 	m_height = image.m_height;
 
 	m_clipRect = image.m_clipRect;
+	m_posRect = image.m_posRect;
 
 	m_color = image.m_color;
 
@@ -53,20 +54,30 @@ void Image::load(const Texture &texture) {
 	m_height = m_texture->height();
 
 	setClipRect(0, 0, m_width, m_height);
+	setPosRect(0, 0, m_width, m_height);
 }
 
 void Image::setClipRect(float x, float y, u16 width, u16 height) {
 	m_clipRect.reset(x, y, width, height);
+
+	m_posRect.width = width;
+	m_posRect.height = height;
+
+	updateVertexBuffer();
+}
+
+void Image::setPosRect(float x, float y, u16 width, u16 height) {
+	m_posRect.reset(x, y, width, height);
 
 	updateVertexBuffer();
 }
 
 void Image::updateVertexBuffer() const {
 	Vertex vertices[4] = {
-		{{m_clipRect.width, 0,                 0, -1}},
-		{{0,                0,                 0, -1}},
-		{{0,                m_clipRect.height, 0, -1}},
-		{{m_clipRect.width, m_clipRect.height, 0, -1}},
+		{{m_posRect.width, m_posRect.y,      0, -1}},
+		{{m_posRect.x,     m_posRect.y,      0, -1}},
+		{{m_posRect.x,     m_posRect.height, 0, -1}},
+		{{m_posRect.width, m_posRect.height, 0, -1}},
 	};
 
 	FloatRect texRect{

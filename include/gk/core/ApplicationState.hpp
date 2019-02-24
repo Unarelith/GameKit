@@ -35,7 +35,6 @@ class ApplicationState : public IDrawable, public Transformable {
 		virtual void onEvent(const SDL_Event &) {}
 
 		virtual void update() = 0;
-		virtual void render() {} // FIXME: Temporarily added for Asylia
 
 		ApplicationState *parent() { return m_parent; }
 
