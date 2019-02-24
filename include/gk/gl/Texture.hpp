@@ -31,7 +31,7 @@ class Texture : public NonCopyable {
 		Texture(Texture &&);
 		~Texture() noexcept;
 
-		Texture &operator=(Texture &&) = default;
+		Texture &operator=(Texture &&);
 
 		void loadFromFile(const std::string &filename);
 		void loadFromSurface(SDL_Surface *surface);

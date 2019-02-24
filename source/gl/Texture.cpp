@@ -38,6 +38,18 @@ Texture::~Texture() noexcept {
 	glDeleteTextures(1, &m_texture);
 }
 
+Texture &Texture::operator=(Texture &&texture) {
+	m_filename = texture.m_filename;
+
+	m_width = texture.m_width;
+	m_height = texture.m_height;
+
+	m_texture = texture.m_texture;
+	texture.m_texture = 0;
+
+	return *this;
+}
+
 void Texture::loadFromFile(const std::string &filename) {
 	m_filename = filename;
 

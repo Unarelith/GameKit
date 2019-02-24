@@ -74,10 +74,10 @@ void Image::setPosRect(float x, float y, u16 width, u16 height) {
 
 void Image::updateVertexBuffer() const {
 	Vertex vertices[4] = {
-		{{m_posRect.width, m_posRect.y,      0, -1}},
-		{{m_posRect.x,     m_posRect.y,      0, -1}},
-		{{m_posRect.x,     m_posRect.height, 0, -1}},
-		{{m_posRect.width, m_posRect.height, 0, -1}},
+		{{m_posRect.x + m_posRect.width, m_posRect.y,                    0, -1}},
+		{{m_posRect.x,                   m_posRect.y,                    0, -1}},
+		{{m_posRect.x,                   m_posRect.y + m_posRect.height, 0, -1}},
+		{{m_posRect.x + m_posRect.width, m_posRect.y + m_posRect.height, 0, -1}},
 	};
 
 	FloatRect texRect{
@@ -135,7 +135,6 @@ void Image::draw(RenderTarget &target, RenderStates states) const {
 	};
 
 	target.drawElements(m_vbo, GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices, states);
-	// target.draw(m_vbo, GL_QUADS, 0, 4, states);
 }
 
 }
