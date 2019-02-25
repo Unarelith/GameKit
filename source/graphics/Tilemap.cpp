@@ -51,7 +51,7 @@ void Tilemap::updateTiles() {
 			for (u16 tileX = 0 ; tileX < m_width ; tileX++) {
 				u16 tileID = getTile(tileX, tileY, layer);
 
-				m_renderer.updateTile(layer, tileX, tileY, tileID, *this);
+				m_renderer.updateTile(layer, tileX, tileY, std::max(0, tileID - m_tilesetOffset), *this);
 			}
 		}
 	}
@@ -72,7 +72,7 @@ void Tilemap::setTile(u16 tileX, u16 tileY, u16 id, bool write, bool persistent)
 		if (persistent) m_baseData[layerCount() - 1][tileX + tileY * m_width] = id;
 	}
 
-	m_renderer.updateTile(layerCount() - 1, tileX, tileY, id, *this);
+	m_renderer.updateTile(layerCount() - 1, tileX, tileY, std::max(0, id - m_tilesetOffset), *this);
 }
 
 } // namespace gk

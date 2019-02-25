@@ -40,11 +40,13 @@ class Tilemap : public gk::IDrawable, public gk::Transformable {
 		u8 layerCount() const { return m_data.size(); }
 
 		Tileset &tileset() { return m_tileset; }
+		void setTilesetOffset(u16 tilesetOffset) { m_tilesetOffset = tilesetOffset; }
 
 	private:
 		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
 		Tileset &m_tileset;
+		u16 m_tilesetOffset = 0; // FIXME
 
 		u16 m_width = 0;
 		u16 m_height = 0;
