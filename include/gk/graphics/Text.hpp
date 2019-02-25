@@ -24,6 +24,7 @@
 
 namespace gk {
 
+// FIXME: update() should be called only once before draw
 class Text : public IDrawable, public Transformable {
 	public:
 		Text() { update(); }
@@ -51,6 +52,11 @@ class Text : public IDrawable, public Transformable {
 		void setColor(const Color &color) { m_color = color; update(); }
 		void setCharacterSize(int size) { m_size = size; update(); }
 
+		void setSize(const gk::Vector2i &size) { m_size = size; update(); }
+		void setCentered(bool isCentered) { m_isCentered = isCentered; update(); }
+		void setScaled(bool isScaled) { m_isScaled = isScaled; update(); }
+		void setWrapped(bool isWrapped) { m_isWrapped = isWrapped; update(); }
+
 	private:
 		void update();
 
@@ -64,7 +70,12 @@ class Text : public IDrawable, public Transformable {
 		Texture m_texture;
 
 		std::string m_text;
-		int m_size = Font::defaultSize;
+		int m_characterSize = Font::defaultSize;
+
+		gk::Vector2i m_size{0, 0};
+		bool m_isCentered = false;
+		bool m_isScaled = false;
+		bool m_isWrapped = false;
 };
 
 } // namespace gk
