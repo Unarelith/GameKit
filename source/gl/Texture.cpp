@@ -67,7 +67,8 @@ void Texture::loadFromSurface(SDL_Surface *surface) {
 	m_width = surface->w;
 	m_height = surface->h;
 
-	glGenTextures(1, &m_texture);
+	if (m_texture == 0)
+		glGenTextures(1, &m_texture);
 
 	bind(this);
 
