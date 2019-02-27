@@ -75,6 +75,13 @@ void glCheckError(const char* file, unsigned int line, const char* expression)
 				break;
 			}
 
+			default:
+			{
+				error = "GK_UNKNOWN_ERROR";
+				description = "Unknown error: " + std::to_string(errorCode);
+				break;
+			}
+
 			// case GLEXT_GL_INVALID_FRAMEBUFFER_OPERATION:
 			// {
 			//     error = "GL_INVALID_FRAMEBUFFER_OPERATION";
