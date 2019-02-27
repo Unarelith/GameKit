@@ -17,6 +17,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm/gtc/type_ptr.hpp>
 
+#include "gk/gl/GLCheck.hpp"
 #include "gk/gl/Shader.hpp"
 #include "gk/gl/Transform.hpp"
 #include "gk/core/Exception.hpp"
@@ -29,16 +30,16 @@ Shader::Shader(const std::string &vertexFilename, const std::string &fragmentFil
 
 Shader::~Shader() {
 	while(m_vertexShaders.size() != 0) {
-		glDeleteShader(m_vertexShaders.back());
+		glCheck(glDeleteShader(m_vertexShaders.back()));
 		m_vertexShaders.pop_back();
 	}
 
 	while(m_fragmentShaders.size() != 0) {
-		glDeleteShader(m_fragmentShaders.back());
+		glCheck(glDeleteShader(m_fragmentShaders.back()));
 		m_fragmentShaders.pop_back();
 	}
 
-	glDeleteProgram(m_program);
+	glCheck(glDeleteProgram(m_program));
 }
 
 void Shader::loadFromFile(const std::string &vertexFilename, const std::string &fragmentFilename) {
@@ -51,34 +52,35 @@ void Shader::loadFromFile(const std::string &vertexFilename, const std::string &
 }
 
 void Shader::createProgram() {
-	m_program = glCreateProgram();
+	glCheck(m_program = glCreateProgram());
 }
 
 void Shader::linkProgram() {
-	glLinkProgram(m_program);
+	glCheck(glLinkProgram(m_program));
 
 	GLint linkOK = GL_FALSE;
-	glGetProgramiv(m_program, GL_LINK_STATUS, &linkOK);
+	glCheck(glGetProgramiv(m_program, GL_LINK_STATUS, &linkOK));
 	if(!linkOK){
 		GLint errorSize = 0;
-		glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &errorSize);
+		glCheck(glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &errorSize));
 
 		char *errorMsg = new char[errorSize + 1];
 
-		glGetProgramInfoLog(m_program, errorSize, &errorSize, errorMsg);
+		glCheck(glGetProgramInfoLog(m_program, errorSize, &errorSize, errorMsg));
 		errorMsg[errorSize] = '\0';
 
 		std::string error = std::string(errorMsg);
 
 		delete[] errorMsg;
-		glDeleteProgram(m_program);
+		glCheck(glDeleteProgram(m_program));
 
 		throw EXCEPTION("Program", m_program, "link failed:", error);
 	}
 }
 
 void Shader::addShader(GLenum type, const std::string &filename) {
-	GLuint shader = glCreateShader(type);
+	GLuint shader;
+	glCheck(shader = glCreateShader(type));
 
 	if(type == GL_VERTEX_SHADER) {
 		m_vertexShaders.push_back(shader);
@@ -88,7 +90,7 @@ void Shader::addShader(GLenum type, const std::string &filename) {
 
 	std::ifstream file(filename);
 	if(!file) {
-		glDeleteShader(shader);
+		glCheck(glDeleteShader(shader));
 
 		throw EXCEPTION("Failed to open", filename);
 	}
@@ -101,34 +103,35 @@ void Shader::addShader(GLenum type, const std::string &filename) {
 
 	const GLchar *sourceCodeString = sourceCode.c_str();
 
-	glShaderSource(shader, 1, &sourceCodeString, nullptr);
+	glCheck(glShaderSource(shader, 1, &sourceCodeString, nullptr));
 
-	glCompileShader(shader);
+	glCheck(glCompileShader(shader));
 
 	GLint compileOK = GL_FALSE;
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &compileOK);
+	glCheck(glGetShaderiv(shader, GL_COMPILE_STATUS, &compileOK));
 	if(!compileOK) {
 		GLint errorSize = 0;
-		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &errorSize);
+		glCheck(glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &errorSize));
 
 		char *errorMsg = new char[errorSize + 1];
 
-		glGetShaderInfoLog(shader, errorSize, &errorSize, errorMsg);
+		glCheck(glGetShaderInfoLog(shader, errorSize, &errorSize, errorMsg));
 		errorMsg[errorSize] = '\0';
 
 		std::string error = std::string(errorMsg);
 
 		delete[] errorMsg;
-		glDeleteShader(shader);
+		glCheck(glDeleteShader(shader));
 
 		throw EXCEPTION("Shader", filename, "compilation failed:", error);
 	}
 
-	glAttachShader(m_program, shader);
+	glCheck(glAttachShader(m_program, shader));
 }
 
 GLint Shader::attrib(const std::string &name) const {
-	GLint attrib = glGetAttribLocation(m_program, name.c_str());
+	GLint attrib;
+	glCheck(attrib = glGetAttribLocation(m_program, name.c_str()));
 
 	if(attrib == -1) {
 		DEBUG("Could not bind attribute:", name);
@@ -138,7 +141,8 @@ GLint Shader::attrib(const std::string &name) const {
 }
 
 GLint Shader::uniform(const std::string &name) const {
-	GLint uniform = glGetUniformLocation(m_program, name.c_str());
+	GLint uniform;
+	glCheck(uniform = glGetUniformLocation(m_program, name.c_str()));
 
 	if(uniform == -1) {
 		DEBUG("Could not bind uniform:", name);
@@ -148,34 +152,34 @@ GLint Shader::uniform(const std::string &name) const {
 }
 
 void Shader::enableVertexAttribArray(const std::string &name) const {
-	glEnableVertexAttribArray(attrib(name));
+	glCheck(glEnableVertexAttribArray(attrib(name)));
 }
 
 void Shader::disableVertexAttribArray(const std::string &name) const {
-	glDisableVertexAttribArray(attrib(name));
+	glCheck(glDisableVertexAttribArray(attrib(name)));
 }
 
 void Shader::setUniform(const std::string &name, int n) const {
-	glUniform1i(uniform(name), n);
+	glCheck(glUniform1i(uniform(name), n));
 }
 
 void Shader::setUniform(const std::string &name, float x, float y) const {
-	glUniform2f(uniform(name), x, y);
+	glCheck(glUniform2f(uniform(name), x, y));
 }
 
 void Shader::setUniform(const std::string &name, const glm::mat4 &matrix) const {
-	glUniformMatrix4fv(uniform(name), 1, GL_FALSE, glm::value_ptr(matrix));
+	glCheck(glUniformMatrix4fv(uniform(name), 1, GL_FALSE, glm::value_ptr(matrix)));
 }
 
 void Shader::setUniform(const std::string &name, const Transform &transform) const {
-	glUniformMatrix4fv(uniform(name), 1, GL_FALSE, transform.getRawMatrix());
+	glCheck(glUniformMatrix4fv(uniform(name), 1, GL_FALSE, transform.getRawMatrix()));
 }
 
 void Shader::bind(const Shader *shader) {
 	if(shader) {
-		glUseProgram(shader->m_program);
+		glCheck(glUseProgram(shader->m_program));
 	} else {
-		glUseProgram(0);
+		glCheck(glUseProgram(0));
 	}
 }
 

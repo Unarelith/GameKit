@@ -14,6 +14,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "gk/gl/GLCheck.hpp"
 #include "gk/gl/Shader.hpp"
 #include "gk/gl/Vertex.hpp"
 #include "gk/graphics/RectangleShape.hpp"
@@ -92,12 +93,12 @@ void RectangleShape::draw(RenderTarget &target, RenderStates states) const {
 
 	states.vertexAttributes = VertexAttribute::Only2d;
 
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
+	glCheck(glDisable(GL_CULL_FACE));
+	glCheck(glDisable(GL_DEPTH_TEST));
 
-	if(m_wireframeMode) glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	if(m_wireframeMode) glCheck(glPolygonMode(GL_FRONT_AND_BACK, GL_LINE));
 	target.drawElements(m_vbo, GL_TRIANGLES, 6 * 5, GL_UNSIGNED_BYTE, m_indices.data(), states);
-	if(m_wireframeMode) glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	if(m_wireframeMode) glCheck(glPolygonMode(GL_FRONT_AND_BACK, GL_FILL));
 }
 
 } // namespace gk

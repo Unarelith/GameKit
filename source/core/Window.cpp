@@ -12,6 +12,7 @@
  * =====================================================================================
  */
 #include "gk/core/Window.hpp"
+#include "gk/gl/GLCheck.hpp"
 #include "gk/gl/OpenGL.hpp"
 #include "gk/core/Exception.hpp"
 
@@ -51,14 +52,14 @@ void Window::open(const std::string &caption, u16 width, u16 height) {
 #endif
 #endif
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glCheck(glEnable(GL_BLEND));
+	glCheck(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-	glEnable(GL_TEXTURE_2D);
+	glCheck(glEnable(GL_TEXTURE_2D));
 }
 
 void Window::clear() {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glCheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 
 void Window::display() {

@@ -11,6 +11,7 @@
  *
  * =====================================================================================
  */
+#include "gk/gl/GLCheck.hpp"
 #include "gk/gl/Shader.hpp"
 #include "gk/gl/Vertex.hpp"
 #include "gk/graphics/tilemap/TilemapRenderer.hpp"
@@ -63,8 +64,8 @@ void TilemapRenderer::draw(gk::RenderTarget &target, gk::RenderStates states) co
 	states.texture = &m_map->tileset();
 	states.vertexAttributes = VertexAttribute::Only2d;
 
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
+	glCheck(glDisable(GL_CULL_FACE));
+	glCheck(glDisable(GL_DEPTH_TEST));
 
 	for (u8 i = 0 ; i < m_map->layerCount() ; ++i) {
 		target.draw(m_vbo, GL_TRIANGLES,

@@ -11,6 +11,7 @@
  *
  * =====================================================================================
  */
+#include "gk/gl/GLCheck.hpp"
 #include "gk/gl/IDrawable.hpp"
 #include "gk/gl/RenderTarget.hpp"
 #include "gk/gl/Shader.hpp"
@@ -29,14 +30,14 @@ void RenderTarget::draw(const IDrawable &drawable, const RenderStates &states) {
 void RenderTarget::draw(const VertexBuffer &vertexBuffer, GLenum mode, std::size_t firstVertex, std::size_t vertexCount, const RenderStates &states) {
 	VertexBuffer::bind(&vertexBuffer);
 	beginDrawing(states);
-	glDrawArrays(mode, firstVertex, vertexCount);
+	glCheck(glDrawArrays(mode, firstVertex, vertexCount));
 	endDrawing(states);
 }
 
 void RenderTarget::drawElements(const VertexBuffer &vertexBuffer, GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, const RenderStates &states) {
 	VertexBuffer::bind(&vertexBuffer);
 	beginDrawing(states);
-	glDrawElements(mode, count, type, indices);
+	glCheck(glDrawElements(mode, count, type, indices));
 	endDrawing(states);
 }
 
@@ -56,37 +57,37 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 
 	if (states.vertexAttributes & VertexAttribute::Coord3d) {
 		states.shader->enableVertexAttribArray("coord3d");
-		glVertexAttribPointer(states.shader->attrib("coord3d"), 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, coord3d)));
+		glCheck(glVertexAttribPointer(states.shader->attrib("coord3d"), 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, coord3d))));
 	}
 
 	if (states.vertexAttributes & VertexAttribute::Normal) {
 		states.shader->enableVertexAttribArray("normal");
-		glVertexAttribPointer(states.shader->attrib("normal"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, normal)));
+		glCheck(glVertexAttribPointer(states.shader->attrib("normal"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, normal))));
 	}
 
 	if (states.vertexAttributes & VertexAttribute::TexCoord) {
 		states.shader->enableVertexAttribArray("texCoord");
-		glVertexAttribPointer(states.shader->attrib("texCoord"), 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, texCoord)));
+		glCheck(glVertexAttribPointer(states.shader->attrib("texCoord"), 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, texCoord))));
 	}
 
 	if (states.vertexAttributes & VertexAttribute::Color) {
 		states.shader->enableVertexAttribArray("color");
-		glVertexAttribPointer(states.shader->attrib("color"), 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, color)));
+		glCheck(glVertexAttribPointer(states.shader->attrib("color"), 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, color))));
 	}
 
 	if (states.vertexAttributes & VertexAttribute::LightValue) {
 		states.shader->enableVertexAttribArray("lightValue");
-		glVertexAttribPointer(states.shader->attrib("lightValue"), 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, lightValue)));
+		glCheck(glVertexAttribPointer(states.shader->attrib("lightValue"), 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, lightValue))));
 	}
 
 	if (states.vertexAttributes & VertexAttribute::BlockType) {
 		states.shader->enableVertexAttribArray("blockType");
-		glVertexAttribPointer(states.shader->attrib("blockType"), 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, blockType)));
+		glCheck(glVertexAttribPointer(states.shader->attrib("blockType"), 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, blockType))));
 	}
 
 	if (states.vertexAttributes & VertexAttribute::AmbientOcclusion) {
 		states.shader->enableVertexAttribArray("ambientOcclusion");
-		glVertexAttribPointer(states.shader->attrib("ambientOcclusion"), 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, ambientOcclusion)));
+		glCheck(glVertexAttribPointer(states.shader->attrib("ambientOcclusion"), 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, ambientOcclusion))));
 	}
 
 	if (states.texture)

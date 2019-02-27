@@ -11,12 +11,13 @@
  *
  * =====================================================================================
  */
+#include "gk/gl/GLCheck.hpp"
 #include "gk/gl/VertexBuffer.hpp"
 
 namespace gk {
 
 VertexBuffer::VertexBuffer() {
-	glGenBuffers(1, &m_id);
+	glCheck(glGenBuffers(1, &m_id));
 }
 
 VertexBuffer::VertexBuffer(VertexBuffer &&vertexBuffer) {
@@ -25,26 +26,26 @@ VertexBuffer::VertexBuffer(VertexBuffer &&vertexBuffer) {
 }
 
 VertexBuffer::~VertexBuffer() noexcept {
-	glDeleteBuffers(1, &m_id);
+	glCheck(glDeleteBuffers(1, &m_id));
 }
 
 void VertexBuffer::setData(GLsizeiptr size, const GLvoid *data, GLenum usage) const {
-	glBufferData(GL_ARRAY_BUFFER, size, data, usage);
+	glCheck(glBufferData(GL_ARRAY_BUFFER, size, data, usage));
 }
 
 void VertexBuffer::updateData(GLintptr offset, GLsizeiptr size, const GLvoid *data) const {
-	glBufferSubData(GL_ARRAY_BUFFER, offset, size, data);
+	glCheck(glBufferSubData(GL_ARRAY_BUFFER, offset, size, data));
 }
 
 void VertexBuffer::setAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer) const {
-	glVertexAttribPointer(index, size, type, normalized, stride, pointer);
+	glCheck(glVertexAttribPointer(index, size, type, normalized, stride, pointer));
 }
 
 void VertexBuffer::bind(const VertexBuffer *vertexBuffer) {
 	if(vertexBuffer) {
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->m_id);
+		glCheck(glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->m_id));
 	} else {
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glCheck(glBindBuffer(GL_ARRAY_BUFFER, 0));
 	}
 }
 

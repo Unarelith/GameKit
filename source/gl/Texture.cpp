@@ -11,6 +11,7 @@
  *
  * =====================================================================================
  */
+#include "gk/gl/GLCheck.hpp"
 #include "gk/gl/Texture.hpp"
 #include "gk/core/Exception.hpp"
 
@@ -35,7 +36,7 @@ Texture::Texture(Texture &&texture) {
 }
 
 Texture::~Texture() noexcept {
-	glDeleteTextures(1, &m_texture);
+	glCheck(glDeleteTextures(1, &m_texture));
 }
 
 Texture &Texture::operator=(Texture &&texture) {
@@ -68,7 +69,7 @@ void Texture::loadFromSurface(SDL_Surface *surface) {
 	m_height = surface->h;
 
 	if (m_texture == 0)
-		glGenTextures(1, &m_texture);
+		glCheck(glGenTextures(1, &m_texture));
 
 	bind(this);
 
@@ -82,19 +83,19 @@ void Texture::loadFromSurface(SDL_Surface *surface) {
 		format = (surface->format->Rmask == 0x000000ff) ? GL_RGB : GL_BGR;
 	}
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, surface->pixels);
+	glCheck(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, surface->pixels));
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glCheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+	glCheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
 
 	bind(nullptr);
 }
 
 void Texture::bind(const Texture *texture) {
 	if(texture) {
-		glBindTexture(GL_TEXTURE_2D, texture->m_texture);
+		glCheck(glBindTexture(GL_TEXTURE_2D, texture->m_texture));
 	} else {
-		glBindTexture(GL_TEXTURE_2D, 0);
+		glCheck(glBindTexture(GL_TEXTURE_2D, 0));
 	}
 }
 

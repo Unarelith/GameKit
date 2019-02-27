@@ -14,6 +14,7 @@
 #define GLM_FORCE_RADIANS
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "gk/gl/GLCheck.hpp"
 #include "gk/gl/Texture.hpp"
 #include "gk/gl/Vertex.hpp"
 #include "gk/graphics/Image.hpp"
@@ -126,8 +127,8 @@ void Image::draw(RenderTarget &target, RenderStates states) const {
 	states.texture = m_texture;
 	states.vertexAttributes = VertexAttribute::Only2d;
 
-	glDisable(GL_CULL_FACE);
-	glDisable(GL_DEPTH_TEST);
+	glCheck(glDisable(GL_CULL_FACE));
+	glCheck(glDisable(GL_DEPTH_TEST));
 
 	static const GLubyte indices[] = {
 		0, 1, 3,
