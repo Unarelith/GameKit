@@ -16,21 +16,25 @@
 
 namespace gk {
 
+void Font::loadFont(int ptsize) const {
+	TTF_FontPtr font{TTF_OpenFont(m_filename.c_str(), ptsize), TTF_CloseFont};
+	if (font) {
+		TTF_SetFontKerning(font.get(), m_kerning);
+		TTF_SetFontHinting(font.get(), m_hinting);
+		TTF_SetFontOutline(font.get(), m_outline);
+
+		m_fonts.emplace(ptsize, std::move(font));
+
+		// DEBUG((void*)this, "- Loaded new font:", m_filename, ptsize);
+	}
+	else
+		throw EXCEPTION("Failed to load font '" + m_filename + "':", TTF_GetError());
+}
+
 TTF_Font *Font::getFont(int ptsize) const {
 	auto it = m_fonts.find(ptsize);
-	if (it == m_fonts.end()) {
-		TTF_FontPtr font{TTF_OpenFont(m_filename.c_str(), ptsize), TTF_CloseFont};
-		if (font) {
-			TTF_SetFontKerning(font.get(), m_kerning);
-			TTF_SetFontHinting(font.get(), m_hinting);
-			TTF_SetFontOutline(font.get(), m_outline);
-
-			m_fonts.insert(std::pair<int, TTF_FontPtr>(ptsize, std::move(font)));
-		}
-		else
-			throw EXCEPTION("Failed to load font '" + m_filename + "':", TTF_GetError());
-
-	}
+	if (it == m_fonts.end())
+		loadFont(ptsize);
 
 	return m_fonts.at(ptsize).get();
 }

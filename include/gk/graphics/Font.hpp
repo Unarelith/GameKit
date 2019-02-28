@@ -19,13 +19,14 @@
 #include <unordered_map>
 
 #include "gk/core/SDLHeaders.hpp"
+#include "gk/utils/NonCopyable.hpp"
 
 namespace gk {
 
-class Font {
+class Font : public NonCopyable {
 	public:
 		Font() = default;
-		Font(const std::string &filename) : m_filename(filename) { getFont(defaultSize); }
+		Font(const std::string &filename) : m_filename(filename) {}
 
 		void loadFromFile(const std::string &filename) { m_filename = filename; }
 
@@ -33,9 +34,8 @@ class Font {
 		void setFontHinting(int hinting) { m_hinting = hinting; update(); }
 		void setFontOutline(int outline) { m_outline = outline; update(); }
 
+		void loadFont(int ptsize) const;
 		TTF_Font *getFont(int ptsize) const;
-
-		static const int defaultSize = 14;
 
 	private:
 		void update();

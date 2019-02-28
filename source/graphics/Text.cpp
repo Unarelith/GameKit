@@ -37,10 +37,12 @@ Text::Text(const std::string &text, const Font &font, int ptsize) {
 	m_font = &font;
 	m_characterSize = ptsize;
 
-	update();
+	m_isUpdateNeeded = true;
 }
 
 IntRect Text::getLocalBounds() {
+	if (m_isUpdateNeeded) update();
+
 	return {{(int)getPosition().x, (int)getPosition().y}, {m_image.width(), m_image.height()}};
 }
 
@@ -48,8 +50,10 @@ void Text::setFont(const std::string &resourceName) {
 	setFont(gk::ResourceHandler::getInstance().get<gk::Font>(resourceName));
 }
 
-void Text::update() {
-	if (m_text.empty()) return;
+void Text::update() const {
+	m_isUpdateNeeded = false;
+
+	if (!m_font || m_text.empty() || m_characterSize < 0) return;
 
 	// FIXME: Add a conversion function between gk::Color and SDL_Color
 	SDL_Color color;
@@ -97,6 +101,9 @@ void Text::update() {
 }
 
 void Text::draw(RenderTarget &target, RenderStates states) const {
+	if (m_isUpdateNeeded)
+		update();
+
 	states.transform *= getTransform();
 	states.texture = &m_texture;
 	target.draw(m_image, states);
