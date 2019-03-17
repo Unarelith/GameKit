@@ -41,6 +41,9 @@ class Sprite : public Image {
 		SpriteAnimation &currentAnimation() { return m_animations.at(m_currentAnimation); }
 		const SpriteAnimation &currentAnimation() const { return m_animations.at(m_currentAnimation); }
 
+		SpriteAnimation &getAnimation(std::size_t i) { return m_animations.at(i); }
+		const SpriteAnimation &getAnimation(std::size_t i) const { return m_animations.at(i); }
+
 		void setCurrentFrame(u16 currentFrame);
 		void setCurrentAnimation(u16 currentAnimation);
 

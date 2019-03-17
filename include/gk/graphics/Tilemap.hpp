@@ -42,9 +42,10 @@ class Tilemap : public gk::IDrawable, public gk::Transformable {
 		Tileset &tileset() { return m_tileset; }
 		void setTilesetOffset(u16 tilesetOffset) { m_tilesetOffset = tilesetOffset; }
 
-	private:
+	protected:
 		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
+	private:
 		Tileset &m_tileset;
 		u16 m_tilesetOffset = 0; // FIXME
 
