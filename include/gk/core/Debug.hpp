@@ -26,8 +26,10 @@
 
 #ifdef DEBUG_ENABLED
 	#define DEBUG(args...) { std::cout << gk::Debug::textColor(gk::Debug::TextColor::Red, true) << _FILE << ":" << __LINE__ << ":" << gk::Debug::textColor(); gk::Debug::print(args); }
+	#define TRACE(s) { DEBUG("Function called: " #s); s }
 #else
 	#define DEBUG(args...) {}
+	#define TRACE(s) { s }
 #endif
 
 namespace gk {
