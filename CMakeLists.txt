@@ -9,25 +9,33 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-#------------------------------------------------------------------------------
-# Get source files
-#------------------------------------------------------------------------------
-file(GLOB_RECURSE SOURCE_FILES source/*.cpp external/*.cpp)
-
-include_directories(include/)
+add_subdirectory(source)
 
 #------------------------------------------------------------------------------
 # Add executables
 #------------------------------------------------------------------------------
-add_library(${CMAKE_PROJECT_NAME} STATIC
-            ${SOURCE_FILES})
+add_library(${CMAKE_PROJECT_NAME} STATIC ${SOURCE_FILES})
+
+target_include_directories(${CMAKE_PROJECT_NAME}
+	PUBLIC
+		$<INSTALL_INTERFACE:include>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+	PRIVATE
+		${CMAKE_CURRENT_SOURCE_DIR}/external
+)
 
 #------------------------------------------------------------------------------
 # Setup install rule
 #------------------------------------------------------------------------------
 include(GNUInstallDirs)
 
-install(TARGETS ${CMAKE_PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS ${CMAKE_PROJECT_NAME}
+	EXPORT ${CMAKE_PROJECT_NAME}-export
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	#INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
 install(DIRECTORY include/gk DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 #------------------------------------------------------------------------------
@@ -39,11 +47,6 @@ target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -DDEBUG_ENABLED -DDEBUG_COL
 target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC -Wno-variadic-macros)
 target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC -std=c++14)
 # target_compile_features(${CMAKE_PROJECT_NAME} PUBLIC cxx_std_14)
-
-# if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-# 	target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -static-libstdc++)
-# 	target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -static-libgcc)
-# endif()
 
 #------------------------------------------------------------------------------
 # Packages
