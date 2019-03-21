@@ -130,7 +130,19 @@ class ApplicationStateStack {
 /// \class gk::ApplicationStateStack
 /// \ingroup core
 ///
-/// This class is used to store a stack of gk::ApplicationState.
+/// gk::ApplicationStateStack is a stack container of gk::ApplicationState instances.
+///
+/// Usage example:
+/// \code
+/// // In a gk::CoreApplication subclass
+/// m_stateStack.push<MyApplicationState>(...);
+///
+/// // In a gk::ApplicationState subclass
+/// m_stateStack->push<MyApplicationState>(...);
+///
+/// // Everywhere else
+/// gk::ApplicationStateStack::getInstance().push<MyApplicationState>(...);
+/// \endcode
 ///
 /// \see gk::ApplicationState
 ///

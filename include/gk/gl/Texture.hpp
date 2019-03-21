@@ -143,7 +143,7 @@ class Texture : public NonCopyable {
 /// \class gk::Texture
 /// \ingroup graphics
 ///
-/// This class is an overlay to OpenGL texture system.
+/// gk::Texture is an overlay to OpenGL texture system.
 ///
 /// \see gk::Image, gk::Sprite
 ///
