@@ -23,13 +23,17 @@
 
 namespace gk {
 
+////////////////////////////////////////////////////////////
+/// \brief Base class for your own Application
+///
+////////////////////////////////////////////////////////////
 class CoreApplication {
 	public:
 		////////////////////////////////////////////////////////////
 		/// \brief Constructor
 		///
-		/// \param argc `main()` argument count
-		/// \param argv `main()` argument strings
+		/// \param argc Argument count
+		/// \param argv Argument strings
 		///
 		////////////////////////////////////////////////////////////
 		CoreApplication(int argc, char **argv);
@@ -39,7 +43,7 @@ class CoreApplication {
 		///
 		/// \param isProtected Exceptions are catched if this parameter is set to `true` (default)
 		///
-		/// Loads SDL libraries, run `init()`, then `mainLoop()`
+		/// Loads SDL libraries, run init(), then mainLoop()
 		///
 		////////////////////////////////////////////////////////////
 		int run(bool isProtected = true);
@@ -65,28 +69,52 @@ class CoreApplication {
 		////////////////////////////////////////////////////////////
 		void createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle);
 
+		////////////////////////////////////////////////////////////
+		/// \brief This function is called when a new window event is received
+		///
+		/// \param event Event received from SDL
+		///
+		/// This function is automatically called by handleEvents()
+		///
+		////////////////////////////////////////////////////////////
 		virtual void onEvent(const SDL_Event &event);
 
+		////////////////////////////////////////////////////////////
+		/// \brief Poll window events and send them to onEvent() and ApplicationStateStack
+		///
+		/// This function is automatically called by mainLoop()
+		///
+		////////////////////////////////////////////////////////////
 		virtual void handleEvents();
+
+		////////////////////////////////////////////////////////////
+		/// \brief Game main loop, automatically called by run()
+		///
+		////////////////////////////////////////////////////////////
 		virtual void mainLoop();
 
-		SDLLoader m_sdlLoader;
-		bool m_loadSDL = true;
+		////////////////////////////////////////////////////////////
+		// Member data
+		////////////////////////////////////////////////////////////
+		SDLLoader m_sdlLoader;                                 ///< Init and free SDL
+		bool m_loadSDL = true;                                 ///< If this flag is set to false, SDL won't be loaded
 
-		ApplicationStateStack m_stateStack;
+		ApplicationStateStack m_stateStack;                    ///< Stack containing application states
 
-		GameClock m_clock;
+		GameClock m_clock;                                     ///< Simulated time system
 
-		ResourceHandler m_resourceHandler;
+		ResourceHandler m_resourceHandler;                     ///< Container for all game resources
 
-		Window m_window;
+		Window m_window;                                       ///< The main window
 
-		RenderStates m_renderStates = RenderStates::Default;
+		RenderStates m_renderStates = RenderStates::Default;   ///< The default render states
 
-		ArgumentParser m_argumentParser;
+		ArgumentParser m_argumentParser;                       ///< Helper for argument management
 };
 
 } // namespace gk
+
+#endif // GK_COREAPPLICATION_HPP_
 
 ////////////////////////////////////////////////////////////
 /// \class gk::CoreApplication
@@ -97,5 +125,3 @@ class CoreApplication {
 /// You should add a class named `Application` that inherits from this class.
 ///
 ////////////////////////////////////////////////////////////
-
-#endif // GK_COREAPPLICATION_HPP_
