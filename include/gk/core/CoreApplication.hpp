@@ -93,9 +93,6 @@ class CoreApplication {
 		////////////////////////////////////////////////////////////
 		virtual void mainLoop();
 
-		////////////////////////////////////////////////////////////
-		// Member data
-		////////////////////////////////////////////////////////////
 		SDLLoader m_sdlLoader;                                 ///< Init and free SDL
 		bool m_loadSDL = true;                                 ///< If this flag is set to false, SDL won't be loaded
 
