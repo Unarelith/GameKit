@@ -35,3 +35,80 @@ TODO
 • TODO: Handle OS events
 • TODO: Store related entities in `Controller`s/`View`s and stop checking for their components
 
+## Documentation
+
+• TODO: Audio module
+   ◦ TODO: AudioPlayer
+   ◦ TODO: Music
+   ◦ TODO: Sound
+• TODO: Core module
+   ◦ TODO: ApplicationState
+   ◦ DONE: ApplicationStateStack
+   ◦ TODO: ArgumentParser
+   ◦ TODO: Box
+   ◦ DONE: CoreApplication
+   ◦ TODO: Debug
+   ◦ TODO: Exception
+   ◦ TODO: Filesystem
+   ◦ TODO: GameClock
+   ◦ DONE: GamePad
+   ◦ DONE: InputHandler
+   ◦ TODO: IntTypes
+   ◦ TODO: Mouse
+   ◦ WIP : Rect
+   ◦ TODO: SDLLoader
+   ◦ TODO: Timer
+   ◦ TODO: Vector2
+   ◦ TODO: Vector3
+   ◦ TODO: Window
+   ◦ TODO: XMLFile
+• TODO: Graphics module
+   ◦ TODO: Camera
+   ◦ TODO: Color
+   ◦ TODO: Font
+   ◦ TODO: GLCheck
+   ◦ TODO: IDrawable
+   ◦ TODO: Image
+   ◦ TODO: RectangleShape
+   ◦ TODO: RenderStates
+   ◦ TODO: RenderTarget
+   ◦ TODO: Shader
+   ◦ TODO: Sprite
+   ◦ TODO: SpriteAnimation
+   ◦ TODO: Text
+   ◦ DONE: Texture
+   ◦ TODO: Tilemap
+   ◦ TODO: TilemapAnimator
+   ◦ TODO: TilemapRenderer
+   ◦ TODO: Tileset
+   ◦ TODO: Transformable
+   ◦ TODO: Transform
+   ◦ TODO: VertexBuffer
+   ◦ TODO: Vertex
+   ◦ TODO: View
+• TODO: Resource module
+   ◦ TODO: IResourceLoader
+   ◦ TODO: ResourceHandler
+   ◦ TODO: TextureLoader
+• TODO: Scene module
+   ◦ TODO: AbstractController
+   ◦ TODO: AbstractView
+   ◦ TODO: Behaviour
+   ◦ TODO: BehaviourComponent
+   ◦ TODO: CollisionComponent
+   ◦ TODO: CollisionHelper
+   ◦ TODO: EasyBehaviour
+   ◦ TODO: EasyMovement
+   ◦ TODO: GamePadMovement
+   ◦ TODO: HealthComponent
+   ◦ TODO: HitboxComponent
+   ◦ TODO: HitboxView
+   ◦ TODO: LifetimeComponent
+   ◦ TODO: Movement
+   ◦ TODO: MovementComponent
+   ◦ TODO: PositionComponent
+   ◦ TODO: Scene
+   ◦ TODO: SceneObject
+   ◦ TODO: SceneObjectList
+   ◦ TODO: SpriteView
+
