@@ -138,3 +138,13 @@ class Texture : public NonCopyable {
 } // namespace gk
 
 #endif // GK_TEXTURE_HPP_
+
+////////////////////////////////////////////////////////////
+/// \class gk::Texture
+/// \ingroup graphics
+///
+/// This class is an overlay to OpenGL texture system.
+///
+/// \see gk::Image, gk::Sprite
+///
+////////////////////////////////////////////////////////////

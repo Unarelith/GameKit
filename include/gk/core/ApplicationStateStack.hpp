@@ -21,8 +21,20 @@
 
 namespace gk {
 
+////////////////////////////////////////////////////////////
+/// \brief Stack containing ApplicationState instances
+///
+////////////////////////////////////////////////////////////
 class ApplicationStateStack {
 	public:
+		////////////////////////////////////////////////////////////
+		/// \brief Push a new gk::ApplicationState to the stack
+		///
+		/// \param args Constructor arguments of type T
+		///
+		/// This function will populate ApplicationState::m_stateStack
+		///
+		////////////////////////////////////////////////////////////
 		template<typename T, typename... Args>
 		auto push(Args &&...args) -> typename std::enable_if<std::is_base_of<ApplicationState, T>::value, T&>::type {
 			m_states.emplace(std::make_shared<T>(std::forward<Args>(args)...));
@@ -30,32 +42,96 @@ class ApplicationStateStack {
 			return static_cast<T&>(top());
 		}
 
+		////////////////////////////////////////////////////////////
+		/// \brief Remove the top ApplicationState in the stack
+		///
+		/// The state is moved to another stack while waiting for clearDeleteStates() to remove it.
+		///
+		////////////////////////////////////////////////////////////
 		void pop();
+
+		////////////////////////////////////////////////////////////
+		/// \brief Clear the stack
+		///
+		////////////////////////////////////////////////////////////
 		void clear() { while(!empty()) pop(); }
 
+		////////////////////////////////////////////////////////////
+		/// \brief Clear the removed states of the stack
+		///
+		/// This function is automatically called in CoreApplication::mainLoop()
+		///
+		////////////////////////////////////////////////////////////
 		void clearDeletedStates();
 
+		////////////////////////////////////////////////////////////
+		/// \brief Get the top ApplicationState in the stack
+		///
+		/// \return The currently active ApplicationState
+		///
+		////////////////////////////////////////////////////////////
 		ApplicationState &top() const { return *m_states.top().get(); }
 
+		////////////////////////////////////////////////////////////
+		/// \brief Check if the container is empty
+		///
+		/// \return `true` if the container is empty, otherwise `false`
+		///
+		////////////////////////////////////////////////////////////
 		bool empty() const { return m_states.empty(); }
 
+		////////////////////////////////////////////////////////////
+		/// \brief Get the amount of ApplicationState in the stack
+		///
+		/// \return Size of the stack
+		///
+		////////////////////////////////////////////////////////////
 		std::size_t size() const { return m_states.size(); }
 
+		////////////////////////////////////////////////////////////
+		/// \brief Get the current singleton instance
+		///
+		/// \return Current singleton instance
+		///
+		/// \see setInstance
+		///
+		////////////////////////////////////////////////////////////
 		static ApplicationStateStack &getInstance() {
 			return *s_instance;
 		}
 
+		////////////////////////////////////////////////////////////
+		/// \brief Set the current singleton instance
+		///
+		/// \param instance New singleton instance
+		///
+		/// \see getInstance
+		///
+		////////////////////////////////////////////////////////////
 		static void setInstance(ApplicationStateStack &instance) {
 			s_instance = &instance;
 		}
 
 	private:
-		static ApplicationStateStack *s_instance;
+		////////////////////////////////////////////////////////////
+		// Member data
+		////////////////////////////////////////////////////////////
+		static ApplicationStateStack *s_instance;               ///< Current singleton instance
 
-		std::stack<std::shared_ptr<ApplicationState>> m_states;
-		std::stack<std::shared_ptr<ApplicationState>> m_trash;
+		std::stack<std::shared_ptr<ApplicationState>> m_states; ///< Stack containing the states
+		std::stack<std::shared_ptr<ApplicationState>> m_trash;  ///< Removed states waiting to be deleted
 };
 
 } // namespace gk
 
 #endif // GK_APPLICATIONSTATESTACK_HPP_
+
+////////////////////////////////////////////////////////////
+/// \class gk::ApplicationStateStack
+/// \ingroup core
+///
+/// This class is used to store a stack of gk::ApplicationState.
+///
+/// \see gk::ApplicationState
+///
+////////////////////////////////////////////////////////////
