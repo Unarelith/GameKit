@@ -10,6 +10,11 @@ GameKit is a library I made to avoid duplicating code in my projets.
 
 It's a small game engine built on top of SDL2 and OpenGL.
 
+## Documentation
+
+- [API Documentation](https://codedocs.xyz/Quent42340/GameKit)
+- [Examples](https://github.com/Quent42340/GameKit/tree/master/examples)
+
 ## Linux packages
 
 - **ArchLinux:** `gamekit-git` (AUR)
