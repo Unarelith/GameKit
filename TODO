@@ -55,9 +55,9 @@ TODO
    ◦ DONE: InputHandler
    ◦ TODO: IntTypes
    ◦ TODO: Mouse
-   ◦ WIP : Rect
+   ◦ DONE: Rect
    ◦ TODO: SDLLoader
-   ◦ TODO: Timer
+   ◦ DONE: Timer
    ◦ TODO: Vector2
    ◦ TODO: Vector3
    ◦ TODO: Window
