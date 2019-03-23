@@ -48,9 +48,8 @@ class Rect {
 		/// \param _height Height of the rectangle
 		///
 		////////////////////////////////////////////////////////////
-		Rect(T _x, T _y, T _width, T _height) {
-			reset(_x, _y, _width, _height);
-		}
+		Rect(T _x, T _y, T _width, T _height)
+			: x(_x), y(_y), width(_width), height(_height) {}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Construct the rectangle from position and size
@@ -58,13 +57,12 @@ class Rect {
 		/// Be careful, the last parameter is the size,
 		/// not the bottom-right corner!
 		///
-		/// \param _position Position of the top-left corner of the rectangle
-		/// \param _size     Size of the rectangle
+		/// \param position Position of the top-left corner of the rectangle
+		/// \param size     Size of the rectangle
 		///
 		////////////////////////////////////////////////////////////
-		Rect(const Vector2<T> &_position, const Vector2<T> &_size) {
-			reset(_position.x, _position.y, _size.x, _size.y);
-		}
+		Rect(const Vector2<T> &position, const Vector2<T> &size)
+			: x(position.x), y(position.x), width(size.x), height(size.y) {}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Construct the rectangle from another type of rectangle
@@ -187,41 +185,6 @@ class Rect {
 			}
 		}
 
-		// FIXME: Document this
-		void reset(T _x, T _y, T _width, T _height) {
-			x = _x;
-			y = _y;
-			width = _width;
-			height = _height;
-		}
-
-		// FIXME: Document this
-		void reset(Rect<T> rect) { reset(rect.x, rect.y, rect.width, rect.height); }
-
-		// FIXME: Document this
-		void move(T _x, T _y) { x += _x; y += _y; }
-
-		// FIXME: Document this
-		void move(Vector2<T> d) { move(d.x, d.y); }
-
-		// FIXME: Document this
-		Vector2<T> position() const { return {x, y}; }
-
-		// FIXME: Document this
-		void setPosition(Vector2<T> vector2) { x = vector2.x; y = vector2.y; }
-
-		// FIXME: Document this
-		Rect operator+(const Vector2<T> &vector2) const { return Rect{x + vector2.x, y + vector2.y, width, height}; }
-
-		// FIXME: Document this
-		Rect operator-(const Vector2<T> &vector2) const { return Rect{x - vector2.x, y - vector2.y, width, height}; }
-
-		// FIXME: Document this
-		Rect &operator+=(const Vector2<T> &vector2) { *this = operator+(vector2); return *this; }
-
-		// FIXME: Document this
-		Rect &operator-=(const Vector2<T> &vector2) { *this = operator-(vector2); return *this; }
-
 		////////////////////////////////////////////////////////////
 		/// \brief Overload of binary operator ==
 		///
@@ -266,6 +229,9 @@ using FloatRect = Rect<float>;
 ////////////////////////////////////////////////////////////
 /// \class gk::Rect
 /// \ingroup core
+///
+/// This part of the documentation has been taken from SFML
+/// Once the migration to SFML 2.6 is done, this file will be removed
 ///
 /// A rectangle is defined by its top-left corner and its size.
 /// It is a very simple class defined for convenience, so

@@ -59,7 +59,7 @@ void Image::load(const Texture &texture) {
 }
 
 void Image::setClipRect(float x, float y, u16 width, u16 height) {
-	m_clipRect.reset(x, y, width, height);
+	m_clipRect = gk::FloatRect(x, y, width, height);
 
 	m_posRect.width = width;
 	m_posRect.height = height;
@@ -68,7 +68,7 @@ void Image::setClipRect(float x, float y, u16 width, u16 height) {
 }
 
 void Image::setPosRect(float x, float y, u16 width, u16 height) {
-	m_posRect.reset(x, y, width, height);
+	m_posRect = gk::FloatRect(x, y, width, height);
 
 	updateVertexBuffer();
 }
