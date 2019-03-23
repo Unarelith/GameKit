@@ -264,12 +264,12 @@ using FloatRect = Rect<float>;
 #endif // GK_RECT_HPP_
 
 ////////////////////////////////////////////////////////////
-/// \class sf::Rect
+/// \class gk::Rect
 /// \ingroup core
 ///
 /// A rectangle is defined by its top-left corner and its size.
 /// It is a very simple class defined for convenience, so
-/// its member variables (left, top, width and height) are public
+/// its member variables (x, y, width and height) are public
 /// and can be accessed directly, just like the vector classes
 /// (Vector2 and Vector3).
 ///
