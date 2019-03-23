@@ -53,7 +53,6 @@ TODO
    ◦ TODO: GameClock
    ◦ DONE: GamePad
    ◦ DONE: InputHandler
-   ◦ TODO: IntTypes
    ◦ TODO: Mouse
    ◦ DONE: Rect
    ◦ TODO: SDLLoader
@@ -64,7 +63,7 @@ TODO
    ◦ TODO: XMLFile
 • TODO: Graphics module
    ◦ TODO: Camera
-   ◦ TODO: Color
+   ◦ DONE: Color
    ◦ TODO: Font
    ◦ TODO: GLCheck
    ◦ TODO: IDrawable
