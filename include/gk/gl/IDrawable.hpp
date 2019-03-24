@@ -52,51 +52,42 @@ class IDrawable {
 #endif // GK_IDRAWABLE_HPP_
 
 ////////////////////////////////////////////////////////////
-/// \class gk::Drawable
+/// \class gk::IDrawable
 /// \ingroup graphics
 ///
 /// This part of the documentation has been taken from SFML.
 /// Once the migration to 2.6 is done, this file will be removed.
 ///
-/// gk::Drawable is a very simple base class that allows objects
+/// gk::IDrawable is a very simple base class that allows objects
 /// of derived classes to be drawn to a gk::RenderTarget.
 ///
 /// All you have to do in your derived class is to override the
 /// draw virtual function.
 ///
-/// Note that inheriting from gk::Drawable is not mandatory,
+/// Note that inheriting from gk::IDrawable is not mandatory,
 /// but it allows this nice syntax "window.draw(object)" rather
 /// than "object.draw(window)", which is more consistent with other
 /// GameKit classes.
 ///
 /// Example:
 /// \code
-/// class MyDrawable : public gk::Drawable
-/// {
-/// public:
+/// class MyDrawable : public gk::IDrawable {
+///     public:
+///        ...
 ///
-///    ...
+///     private:
+///         void draw(gk::RenderTarget &target, gk::RenderStates states) const override {
+///             // You can draw other high-level objects
+///             target.draw(m_sprite, states);
 ///
-/// private:
+///             // ... or use the low-level API
+///             states.texture = &m_texture;
+///             target.draw(m_vertices, GL_QUADS, 0, 16, states);
+///         }
 ///
-///     virtual void draw(gk::RenderTarget& target, gk::RenderStates states) const
-///     {
-///         // You can draw other high-level objects
-///         target.draw(m_sprite, states);
-///
-///         // ... or use the low-level API
-///         states.texture = &m_texture;
-///         target.draw(m_vertices, GL_QUADS, 0, 16, states);
-///
-///         // ... or draw with OpenGL directly
-///         glBegin(GL_QUADS);
-///         ...
-///         glEnd();
-///     }
-///
-///     gk::Sprite m_sprite;
-///     gk::Texture m_texture;
-///     gk::VertexBuffer m_vbo;
+///         gk::Sprite m_sprite;
+///         gk::Texture m_texture;
+///         gk::VertexBuffer m_vbo;
 /// };
 /// \endcode
 ///
