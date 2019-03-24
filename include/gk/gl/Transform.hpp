@@ -33,13 +33,13 @@ class Transform {
 		Transform& combine(const Transform& transform);
 
 		Transform& translate(float x, float y, float z = 0);
-		Transform& translate(const Vector3f& offset) { return translate(offset.x, offset.y, offset.z); }
+		Transform& translate(const sf::Vector3f &offset) { return translate(offset.x, offset.y, offset.z); }
 
 		Transform& rotate(float angle) { return rotate(angle, {0, 0, 1}); }
-		Transform& rotate(float angle, const Vector3f& axis);
+		Transform& rotate(float angle, const sf::Vector3f &axis);
 
 		Transform& scale(float scaleX, float scaleY, float scaleZ = 1);
-		Transform& scale(const Vector3f& factors) { return scale(factors.x, factors.y, factors.z); }
+		Transform& scale(const sf::Vector3f &factors) { return scale(factors.x, factors.y, factors.z); }
 
 		const float* getRawMatrix() const { return glm::value_ptr(m_matrix); }
 		const glm::mat4 getMatrix() const { return m_matrix; }
@@ -54,7 +54,7 @@ class Transform {
 };
 
 Transform operator*(const Transform& left, const Transform& right);
-Transform& operator*=(Transform& left, const Transform& right);
+Transform &operator*=(Transform& left, const Transform& right);
 
 } // namespace gk
 

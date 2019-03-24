@@ -17,7 +17,8 @@
 #include <memory>
 #include <stack>
 
-#include "gk/core/Vector2.hpp"
+#include <SFML/System/Vector2.hpp>
+
 #include "gk/scene/movement/Movement.hpp"
 
 namespace gk {
@@ -50,14 +51,14 @@ class MovementComponent {
 			movements.push(_movement);
 		}
 
-		Vector2f v{0, 0};
+		sf::Vector2f v{0, 0};
 
 		float speed = 1.0f;
 
 		bool isMoving = false;
 		bool isDirectionLocked = false;
 
-		Vector2<bool> isBlocked;
+		sf::Vector2<bool> isBlocked;
 
 		MovementStack movements;
 };

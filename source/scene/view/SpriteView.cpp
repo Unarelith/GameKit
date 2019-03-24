@@ -12,7 +12,6 @@
  * =====================================================================================
  */
 #include "gk/graphics/Image.hpp"
-#include "gk/graphics/RectangleShape.hpp"
 #include "gk/graphics/Sprite.hpp"
 #include "gk/scene/component/HitboxComponent.hpp"
 #include "gk/scene/component/LifetimeComponent.hpp"
@@ -25,8 +24,10 @@ void SpriteView::draw(const SceneObject &object, RenderTarget &target, RenderSta
 	if (object.has<LifetimeComponent>() && object.get<LifetimeComponent>().dead(object))
 		return;
 
-	if (object.has<PositionComponent>())
-		states.transform.translate({object.get<PositionComponent>(), 0.f});
+	if (object.has<PositionComponent>()) {
+		auto &pos = object.get<PositionComponent>();
+		states.transform.translate(pos.x, pos.y, 0.f);
+	}
 
 	if(object.has<Image>()) {
 		target.draw(object.get<Image>(), states);

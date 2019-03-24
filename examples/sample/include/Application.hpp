@@ -24,7 +24,7 @@ class Application : public gk::CoreApplication {
 		void init() override;
 
 	private:
-		void onEvent(const SDL_Event &event) override;
+		void onEvent(const sf::Event &event) override;
 
 		gk::Shader m_shader;
 };

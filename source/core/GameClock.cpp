@@ -11,16 +11,18 @@
  *
  * =====================================================================================
  */
-#include "gk/core/SDLHeaders.hpp"
+#include <SFML/System.hpp>
+
 #include "gk/core/GameClock.hpp"
 
 namespace gk {
 
 u32 GameClock::ticks = 0;
+sf::Clock GameClock::clock;
 
 u32 GameClock::getTicks(bool realTime) {
 	if(realTime) {
-		return SDL_GetTicks();
+		return clock.getElapsedTime().asMilliseconds();
 	} else {
 		return ticks;
 	}
@@ -40,7 +42,7 @@ void GameClock::measureLastFrameDuration() {
 	}
 }
 
-void GameClock::updateGame(std::function<void(void)> updateFunc) {
+void GameClock::updateGame(const std::function<void(void)> &updateFunc) {
 	m_numUpdates = 0;
 
 	while(m_lag >= m_timestep && m_numUpdates < 10) {
@@ -53,7 +55,7 @@ void GameClock::updateGame(std::function<void(void)> updateFunc) {
 	}
 }
 
-void GameClock::drawGame(std::function<void(void)> drawFunc) {
+void GameClock::drawGame(const std::function<void(void)> &drawFunc) {
 	if(m_numUpdates > 0) {
 		drawFunc();
 	}
@@ -65,7 +67,7 @@ void GameClock::waitForNextFrame() {
 	u32 lastFrameDuration = getTicks(true) - m_timeDropped - m_lastFrameDate;
 
 	if(lastFrameDuration < m_timestep) {
-		SDL_Delay(m_timestep - lastFrameDuration);
+		sf::sleep(sf::milliseconds(m_timestep - lastFrameDuration));
 	}
 
 	measureLastFrameDuration();

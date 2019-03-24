@@ -15,7 +15,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "gk/gl/GLCheck.hpp"
-#include "gk/gl/Texture.hpp"
 #include "gk/gl/Vertex.hpp"
 #include "gk/graphics/Image.hpp"
 #include "gk/resource/ResourceHandler.hpp"
@@ -23,10 +22,10 @@
 namespace gk {
 
 Image::Image(const std::string &textureName) {
-	load(ResourceHandler::getInstance().get<Texture>(textureName));
+	load(ResourceHandler::getInstance().get<sf::Texture>(textureName));
 }
 
-Image::Image(const Texture &texture) {
+Image::Image(const sf::Texture &texture) {
 	load(texture);
 }
 
@@ -45,21 +44,21 @@ void Image::load(const Image &image) {
 }
 
 void Image::load(const std::string &textureName) {
-	load(ResourceHandler::getInstance().get<Texture>(textureName));
+	load(ResourceHandler::getInstance().get<sf::Texture>(textureName));
 }
 
-void Image::load(const Texture &texture) {
+void Image::load(const sf::Texture &texture) {
 	m_texture = &texture;
 
-	m_width = m_texture->width();
-	m_height = m_texture->height();
+	m_width = m_texture->getSize().x;
+	m_height = m_texture->getSize().y;
 
 	setClipRect(0, 0, m_width, m_height);
 	setPosRect(0, 0, m_width, m_height);
 }
 
 void Image::setClipRect(float x, float y, u16 width, u16 height) {
-	m_clipRect = gk::FloatRect(x, y, width, height);
+	m_clipRect = sf::FloatRect(x, y, width, height);
 
 	m_posRect.width = width;
 	m_posRect.height = height;
@@ -68,45 +67,45 @@ void Image::setClipRect(float x, float y, u16 width, u16 height) {
 }
 
 void Image::setPosRect(float x, float y, u16 width, u16 height) {
-	m_posRect = gk::FloatRect(x, y, width, height);
+	m_posRect = sf::FloatRect(x, y, width, height);
 
 	updateVertexBuffer();
 }
 
 void Image::updateVertexBuffer() const {
 	Vertex vertices[4] = {
-		{{m_posRect.x + m_posRect.width, m_posRect.y,                    0, -1}},
-		{{m_posRect.x,                   m_posRect.y,                    0, -1}},
-		{{m_posRect.x,                   m_posRect.y + m_posRect.height, 0, -1}},
-		{{m_posRect.x + m_posRect.width, m_posRect.y + m_posRect.height, 0, -1}},
+		{{m_posRect.left + m_posRect.width, m_posRect.top,                    0, -1}},
+		{{m_posRect.left,                   m_posRect.top,                    0, -1}},
+		{{m_posRect.left,                   m_posRect.top + m_posRect.height, 0, -1}},
+		{{m_posRect.left + m_posRect.width, m_posRect.top + m_posRect.height, 0, -1}},
 	};
 
-	FloatRect texRect{
-		m_clipRect.x / float(m_width),
-		m_clipRect.y / float(m_height),
-		m_clipRect.width / float(m_width),
+	sf::FloatRect texRect{
+		m_clipRect.left   / float(m_width),
+		m_clipRect.top    / float(m_height),
+		m_clipRect.width  / float(m_width),
 		m_clipRect.height / float(m_height)
 	};
 
 	if (!m_isFlipped) {
-		vertices[0].texCoord[0] = texRect.x + texRect.width;
-		vertices[0].texCoord[1] = texRect.y;
-		vertices[1].texCoord[0] = texRect.x;
-		vertices[1].texCoord[1] = texRect.y;
-		vertices[2].texCoord[0] = texRect.x;
-		vertices[2].texCoord[1] = texRect.y + texRect.height;
-		vertices[3].texCoord[0] = texRect.x + texRect.width;
-		vertices[3].texCoord[1] = texRect.y + texRect.height;
+		vertices[0].texCoord[0] = texRect.left + texRect.width;
+		vertices[0].texCoord[1] = texRect.top;
+		vertices[1].texCoord[0] = texRect.left;
+		vertices[1].texCoord[1] = texRect.top;
+		vertices[2].texCoord[0] = texRect.left;
+		vertices[2].texCoord[1] = texRect.top  + texRect.height;
+		vertices[3].texCoord[0] = texRect.left + texRect.width;
+		vertices[3].texCoord[1] = texRect.top  + texRect.height;
 	}
 	else {
-		vertices[0].texCoord[0] = texRect.x;
-		vertices[0].texCoord[1] = texRect.y;
-		vertices[1].texCoord[0] = texRect.x + texRect.width;
-		vertices[1].texCoord[1] = texRect.y;
-		vertices[2].texCoord[0] = texRect.x + texRect.width;
-		vertices[2].texCoord[1] = texRect.y + texRect.height;
-		vertices[3].texCoord[0] = texRect.x;
-		vertices[3].texCoord[1] = texRect.y + texRect.height;
+		vertices[0].texCoord[0] = texRect.left;
+		vertices[0].texCoord[1] = texRect.top;
+		vertices[1].texCoord[0] = texRect.left + texRect.width;
+		vertices[1].texCoord[1] = texRect.top;
+		vertices[2].texCoord[0] = texRect.left + texRect.width;
+		vertices[2].texCoord[1] = texRect.top  + texRect.height;
+		vertices[3].texCoord[0] = texRect.left;
+		vertices[3].texCoord[1] = texRect.top + texRect.height;
 	}
 
 	for (u8 i = 0 ; i < 4 ; ++i) {

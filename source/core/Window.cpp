@@ -18,27 +18,17 @@
 
 namespace gk {
 
-void Window::open(const std::string &caption, u16 width, u16 height) {
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
+void Window::create(u16 width, u16 height, const std::string &caption) {
+	sf::ContextSettings context;
+	context.depthBits = 24;
+	context.stencilBits = 8;
+	context.antialiasingLevel = 4;
+	context.majorVersion = 2;
+	context.minorVersion = 1;
 
-	m_window.reset(SDL_CreateWindow(caption.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN));
-	if(!m_window) {
-		throw EXCEPTION("Window initialization failed:", SDL_GetError());
-	}
-
-	m_context.reset(SDL_GL_CreateContext(m_window.get()));
-	if(!m_context) {
-		throw EXCEPTION("OpenGL context creation failed:", SDL_GetError());
-	}
-
-	m_size.x = width;
-	m_size.y = height;
-
-	m_defaultView.reset(gk::FloatRect{0, 0, (float)width, (float)height});
-	setView(m_defaultView);
-
-	m_isOpen = true;
+	sf::Window::create(sf::VideoMode(width, height), caption, sf::Style::Close, context);
+	if (!sf::Window::setActive())
+		throw EXCEPTION("Failed to open window");
 
 #ifdef __MINGW32__
 #ifdef USE_GLAD
@@ -60,16 +50,6 @@ void Window::open(const std::string &caption, u16 width, u16 height) {
 
 void Window::clear() {
 	glCheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-}
-
-void Window::display() {
-	SDL_GL_SwapWindow(m_window.get());
-}
-
-void Window::setVerticalSyncEnabled(bool enabled) {
-	if(SDL_GL_SetSwapInterval(enabled) < 0) {
-		DEBUG("Warning: Can't enable VSync");
-	}
 }
 
 } // namespace gk

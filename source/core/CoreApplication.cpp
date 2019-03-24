@@ -13,10 +13,10 @@
  */
 #include <ctime>
 
-#include "gk/audio/AudioPlayer.hpp"
 #include "gk/core/CoreApplication.hpp"
 #include "gk/core/Mouse.hpp"
 #include "gk/core/Exception.hpp"
+#include "gk/resource/AudioPlayer.hpp"
 
 namespace gk {
 
@@ -40,9 +40,6 @@ void CoreApplication::init() {
 
 int CoreApplication::run(bool isProtected) {
 	auto runGame = [&]() {
-		if (m_loadSDL)
-			m_sdlLoader.load();
-
 		init();
 		mainLoop();
 	};
@@ -71,19 +68,15 @@ int CoreApplication::run(bool isProtected) {
 	return 0;
 }
 
-void CoreApplication::createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle) {
-	m_window.open(windowTitle, screenWidth, screenHeight);
-}
-
-void CoreApplication::onEvent(const SDL_Event &event) {
-	if (event.type == SDL_QUIT) {
-		m_window.close();
+void CoreApplication::onEvent(const sf::Event &event) {
+	if (event.type == sf::Event::Closed) {
+		m_isRunning = false;
 	}
 }
 
 void CoreApplication::handleEvents() {
-	SDL_Event event;
-	while (SDL_PollEvent(&event)) {
+	sf::Event event;
+	while (m_window.pollEvent(event)) {
 		onEvent(event);
 
 		if (!m_stateStack.empty())
@@ -92,7 +85,7 @@ void CoreApplication::handleEvents() {
 }
 
 void CoreApplication::mainLoop() {
-	while(m_window.isOpen() && m_stateStack.size()) {
+	while(m_isRunning && m_stateStack.size()) {
 		handleEvents();
 
 		m_clock.updateGame([&] {

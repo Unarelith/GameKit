@@ -16,7 +16,8 @@
 
 #include <vector>
 
-#include "gk/core/Rect.hpp"
+#include <SFML/Graphics/Rect.hpp>
+
 #include "gk/core/Exception.hpp"
 
 namespace gk {
@@ -34,7 +35,7 @@ class HitboxComponent {
 			m_hitboxes.emplace_back(x, y, width, height);
 		}
 
-		const FloatRect *currentHitbox() const {
+		const sf::FloatRect *currentHitbox() const {
 			if(m_currentHitboxID >= 0 && m_currentHitboxID < (s16)m_hitboxes.size()) {
 				return &m_hitboxes[m_currentHitboxID];
 			} else {
@@ -55,7 +56,7 @@ class HitboxComponent {
 	private:
 		s8 m_currentHitboxID = -1;
 
-		std::vector<FloatRect> m_hitboxes;
+		std::vector<sf::FloatRect> m_hitboxes;
 };
 
 } // namespace gk

@@ -11,8 +11,9 @@
  *
  * =====================================================================================
  */
+#include <SFML/Graphics/Texture.hpp>
+
 #include "gk/core/XMLFile.hpp"
-#include "gk/gl/Texture.hpp"
 #include "gk/resource/ResourceHandler.hpp"
 #include "gk/resource/TextureLoader.hpp"
 
@@ -26,7 +27,7 @@ void TextureLoader::load(const char *xmlFilename, ResourceHandler &handler) {
 		std::string name = textureElement->Attribute("name");
 		std::string path = textureElement->Attribute("path");
 
-		auto &texture = handler.add<gk::Texture>("texture-" + name);
+		auto &texture = handler.add<sf::Texture>("texture-" + name);
 		texture.loadFromFile(path);
 
 		textureElement = textureElement->NextSiblingElement("texture");

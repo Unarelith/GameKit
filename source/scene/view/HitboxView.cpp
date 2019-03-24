@@ -11,7 +11,8 @@
  *
  * =====================================================================================
  */
-#include "gk/graphics/RectangleShape.hpp"
+#include <SFML/Graphics/RectangleShape.hpp>
+
 #include "gk/scene/component/HitboxComponent.hpp"
 #include "gk/scene/view/HitboxView.hpp"
 #include "gk/scene/component/LifetimeComponent.hpp"
@@ -28,15 +29,16 @@ void HitboxView::draw(const SceneObject &object, RenderTarget &target, RenderSta
 	}
 
 	if (object.has<HitboxComponent>()) {
-		const FloatRect *hitbox = object.get<HitboxComponent>().currentHitbox();
+		const sf::FloatRect *hitbox = object.get<HitboxComponent>().currentHitbox();
 		if(hitbox) {
-			RectangleShape rect;
-			rect.setPosition(hitbox->x, hitbox->y);
-			rect.setSize(hitbox->width, hitbox->height);
-			rect.setWireframeMode(true); // FIXME
-			rect.setColor(Color::White);
+			sf::RectangleShape rect;
+			rect.setPosition(hitbox->left, hitbox->top);
+			rect.setSize({hitbox->width, hitbox->height});
+			rect.setOutlineThickness(true); // FIXME
+			rect.setFillColor(sf::Color::Transparent);
+			rect.setOutlineColor(sf::Color::White);
 
-			target.draw(rect, states);
+			// target.draw(rect, states); // FIXME
 		}
 	}
 }

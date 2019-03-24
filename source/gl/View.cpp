@@ -21,14 +21,14 @@
 namespace gk {
 
 View::View() {
-	reset(FloatRect(0, 0, 1000, 1000));
+	reset(sf::FloatRect{0, 0, 1000, 1000});
 }
 
-View::View(const Vector3f &center, const Vector2f &size) {
-	reset(FloatRect(center.xy(), size));
+View::View(const sf::Vector3f &center, const sf::Vector2f &size) {
+	reset(sf::FloatRect{{center.x, center.y}, size});
 }
 
-View::View(const FloatRect &rectangle) {
+View::View(const sf::FloatRect &rectangle) {
 	reset(rectangle);
 }
 
@@ -56,9 +56,9 @@ void View::setRotation(float angle) {
 	m_viewTransformUpdated = false;
 }
 
-void View::reset(const FloatRect &rectangle) {
-	m_position.x = rectangle.x + rectangle.width / 2.f;
-	m_position.y = rectangle.y + rectangle.height / 2.f;
+void View::reset(const sf::FloatRect &rectangle) {
+	m_position.x = rectangle.left + rectangle.width / 2.f;
+	m_position.y = rectangle.top  + rectangle.height / 2.f;
 
 	m_size.x = rectangle.width;
 	m_size.y = rectangle.height;

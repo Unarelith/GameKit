@@ -14,14 +14,14 @@
 #ifndef GK_POSITIONCOMPONENT_HPP_
 #define GK_POSITIONCOMPONENT_HPP_
 
-#include "gk/core/Vector2.hpp"
+#include <SFML/System/Vector2.hpp>
 
 namespace gk {
 
-class PositionComponent : public Vector2f {
+class PositionComponent : public sf::Vector2f {
 	public:
-		PositionComponent(float x, float y) : Vector2f(x, y) {}
-		PositionComponent(const Vector2f &pos) : Vector2f(pos) {}
+		PositionComponent(float x, float y) : sf::Vector2f(x, y) {}
+		PositionComponent(const sf::Vector2f &pos) : sf::Vector2f(pos) {}
 };
 
 } // namespace gk

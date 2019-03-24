@@ -14,8 +14,9 @@
 #ifndef GK_IMAGE_HPP_
 #define GK_IMAGE_HPP_
 
+#include <SFML/Graphics/Texture.hpp>
+
 #include "gk/graphics/Color.hpp"
-#include "gk/core/Rect.hpp"
 #include "gk/gl/IDrawable.hpp"
 #include "gk/gl/Transformable.hpp"
 #include "gk/gl/VertexBuffer.hpp"
@@ -26,16 +27,16 @@ class Image : public IDrawable, public Transformable {
 	public:
 		Image() = default;
 		Image(const std::string &textureName);
-		Image(const Texture &texture);
+		Image(const sf::Texture &texture);
 
 		void load(const Image &image);
 		void load(const std::string &textureName);
-		void load(const Texture &texture);
+		void load(const sf::Texture &texture);
 
-		const FloatRect &clipRect() const { return m_clipRect; }
+		const sf::FloatRect &clipRect() const { return m_clipRect; }
 		void setClipRect(float x, float y, u16 width, u16 height);
 
-		const FloatRect &posRect() const { return m_posRect; }
+		const sf::FloatRect &posRect() const { return m_posRect; }
 		void setPosRect(float x, float y, u16 width, u16 height);
 
 		u16 width() const { return m_width * getScale().x; }
@@ -50,7 +51,7 @@ class Image : public IDrawable, public Transformable {
 
 		void draw(RenderTarget &target, RenderStates states) const override;
 
-		const Texture *m_texture = nullptr;
+		const sf::Texture *m_texture = nullptr;
 
 		VertexBuffer m_vbo;
 
@@ -58,8 +59,8 @@ class Image : public IDrawable, public Transformable {
 		u16 m_width = 0;
 		u16 m_height = 0;
 
-		FloatRect m_clipRect;
-		FloatRect m_posRect;
+		sf::FloatRect m_clipRect;
+		sf::FloatRect m_posRect;
 
 		Color m_color;
 

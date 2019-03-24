@@ -41,7 +41,7 @@ void Transformable::setScale(float factorX, float factorY, float factorZ) {
 	// m_inverseTransformNeedUpdate = true;
 }
 
-void Transformable::setRotation(float angle, const Vector3f &axis) {
+void Transformable::setRotation(float angle, const sf::Vector3f &axis) {
 	m_rotation = std::fmod(angle, 360);
 	if (m_rotation < 0)
 		m_rotation += 360.f;
@@ -57,7 +57,7 @@ void Transformable::move(float offsetX, float offsetY, float offsetZ) {
 	setPosition(m_position.x + offsetX, m_position.y + offsetY, m_position.z + offsetZ);
 }
 
-void Transformable::move(const Vector3f &offset) {
+void Transformable::move(const sf::Vector3f &offset) {
 	setPosition(m_position.x + offset.x, m_position.y + offset.y, m_position.z + offset.z);
 }
 
@@ -65,7 +65,7 @@ void Transformable::scale(float factorX, float factorY, float factorZ) {
 	setScale(m_scale.x * factorX, m_scale.y * factorY, m_scale.z * factorZ);
 }
 
-void Transformable::scale(const Vector3f &factor) {
+void Transformable::scale(const sf::Vector3f &factor) {
 	setScale(m_scale.x * factor.x, m_scale.y * factor.y, m_scale.z * factor.z);
 }
 
@@ -73,7 +73,7 @@ void Transformable::rotate(float angle) {
 	setRotation(m_rotation + angle);
 }
 
-void Transformable::rotate(float angle, const Vector3f &axis) {
+void Transformable::rotate(float angle, const sf::Vector3f &axis) {
 	Transform newRotation;
 	newRotation.rotate(angle, axis);
 

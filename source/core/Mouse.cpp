@@ -11,32 +11,34 @@
  *
  * =====================================================================================
  */
+#include <SFML/Window/Mouse.hpp>
+
 #include "gk/core/Mouse.hpp"
-#include "gk/core/SDLHeaders.hpp"
 
 namespace gk {
 
 Window *Mouse::s_window = nullptr;
 
 void Mouse::resetToWindowCenter() {
-	SDL_WarpMouseInWindow(s_window->window(), s_window->getSize().x / 2, s_window->getSize().y / 2);
+	// FIXME
+	// SDL_WarpMouseInWindow(s_window->window(), s_window->getSize().x / 2, s_window->getSize().y / 2);
 }
 
 void Mouse::setCursorGrabbed(bool grabbed) {
-	SDL_SetRelativeMouseMode((SDL_bool)grabbed);
+	if (s_window)
+		s_window->setMouseCursorGrabbed(grabbed);
 }
 
 void Mouse::setCursorVisible(bool visible) {
-	SDL_ShowCursor(visible);
+	if (s_window)
+		s_window->setMouseCursorVisible(visible);
 }
 
-Vector2i Mouse::getPosition() {
-	Vector2i pos;
-	SDL_GetMouseState(&pos.x, &pos.y);
-	return pos;
+sf::Vector2i Mouse::getPosition() {
+	return sf::Mouse::getPosition();
 }
 
-bool Mouse::isInRect(const IntRect &rect) {
+bool Mouse::isInRect(const sf::IntRect &rect) {
 	return rect.contains(getPosition());
 }
 

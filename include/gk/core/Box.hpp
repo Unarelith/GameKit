@@ -16,7 +16,7 @@
 
 #include <algorithm>
 
-#include "Vector3.hpp"
+#include <SFML/System/Vector3.hpp>
 
 namespace gk {
 
@@ -29,7 +29,7 @@ class Box {
 			reset(_x, _y, _z, _width, _height, _depth);
 		}
 
-		Box(const Vector3<T> &_position, const Vector3<T> &_size) {
+		Box(const sf::Vector3<T> &_position, const sf::Vector3<T> &_size) {
 			reset(_position.x, _position.y, _position.z, _size.x, _size.y, _size.z);
 		}
 
@@ -49,7 +49,7 @@ class Box {
 		void reset(Box<T> box) { reset(box.x, box.y, box.z, box.width, box.height, box.depth); }
 
 		void move(T _x, T _y, T _z) { x += _x; y += _y; z += _z; }
-		void move(Vector3<T> d) { move(d.x, d.y, d.z); }
+		void move(sf::Vector3<T> d) { move(d.x, d.y, d.z); }
 
 		bool intersects(const Box<T> &box) const {
 			T r1MinX = std::min(x, static_cast<T>(x + width));
@@ -76,15 +76,15 @@ class Box {
 			return interLeft < interRight && interBottom < interTop && interFront < interBack;
 		}
 
-		Vector3<T> position() const { return {x, y, z}; }
+		sf::Vector3<T> position() const { return {x, y, z}; }
 
-		void setPosition(Vector3<T> vector3) { x = vector3.x; y = vector3.y; z = vector3.z; }
+		void setPosition(sf::Vector3<T> vector3) { x = vector3.x; y = vector3.y; z = vector3.z; }
 
-		Box operator+(const Vector3<T> &vector3) const { return Box{x + vector3.x, y + vector3.y, z + vector3.z, width, height, depth}; }
-		Box operator-(const Vector3<T> &vector3) const { return Box{x - vector3.x, y - vector3.y, z - vector3.z, width, height, depth}; }
+		Box operator+(const sf::Vector3<T> &vector3) const { return Box{x + vector3.x, y + vector3.y, z + vector3.z, width, height, depth}; }
+		Box operator-(const sf::Vector3<T> &vector3) const { return Box{x - vector3.x, y - vector3.y, z - vector3.z, width, height, depth}; }
 
-		Box &operator+=(const Vector3<T> &vector3) { *this = operator+(vector3); return *this; }
-		Box &operator-=(const Vector3<T> &vector3) { *this = operator-(vector3); return *this; }
+		Box &operator+=(const sf::Vector3<T> &vector3) { *this = operator+(vector3); return *this; }
+		Box &operator-=(const sf::Vector3<T> &vector3) { *this = operator-(vector3); return *this; }
 
 		T x = 0;
 		T y = 0;

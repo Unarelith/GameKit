@@ -11,17 +11,25 @@
  *
  * =====================================================================================
  */
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Texture.hpp>
+
 #include "gk/gl/GLCheck.hpp"
 #include "gk/gl/IDrawable.hpp"
 #include "gk/gl/RenderTarget.hpp"
 #include "gk/gl/Shader.hpp"
-#include "gk/gl/Texture.hpp"
 #include "gk/gl/Vertex.hpp"
 #include "gk/gl/VertexBuffer.hpp"
 
 namespace gk {
 
 const RenderStates RenderStates::Default{};
+
+void RenderTarget::draw(const sf::Drawable &drawable, const RenderStates &states) {
+	sf::RenderStates sfmlStates = sf::RenderStates::Default;
+	sfmlStates.texture = states.texture;
+	sf::RenderTarget::draw(drawable, sfmlStates);
+}
 
 void RenderTarget::draw(const IDrawable &drawable, const RenderStates &states) {
 	drawable.draw(*this, states);
@@ -91,13 +99,13 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 	}
 
 	if (states.texture)
-		Texture::bind(states.texture);
+		sf::Texture::bind(states.texture);
 }
 
 void RenderTarget::endDrawing(const RenderStates &states) {
 	if (!states.shader) return;
 
-	Texture::bind(nullptr);
+	sf::Texture::bind(nullptr);
 
 	if (states.vertexAttributes & VertexAttribute::AmbientOcclusion)
 		states.shader->disableVertexAttribArray("ambientOcclusion");
@@ -119,22 +127,22 @@ void RenderTarget::endDrawing(const RenderStates &states) {
 	Shader::bind(nullptr);
 }
 
-IntRect RenderTarget::getViewport(const View& view) const {
+sf::IntRect RenderTarget::getViewport(const View &view) const {
 	float width  = static_cast<float>(getSize().x);
 	float height = static_cast<float>(getSize().y);
-	const FloatRect& viewport = view.getViewport();
+	const sf::FloatRect &viewport = view.getViewport();
 
-	return IntRect(static_cast<int>(0.5f + width  * viewport.x),
-	               static_cast<int>(0.5f + height * viewport.y),
-	               static_cast<int>(width  * viewport.width),
-	               static_cast<int>(height * viewport.height));
+	return sf::IntRect(static_cast<int>(0.5f + width  * viewport.left),
+	                   static_cast<int>(0.5f + height * viewport.top),
+	                   static_cast<int>(width  * viewport.width),
+	                   static_cast<int>(height * viewport.height));
 }
 
 void RenderTarget::applyCurrentView(const RenderStates &states) {
-	IntRect viewport = getViewport(*m_view);
+	sf::IntRect viewport = getViewport(*m_view);
 	if (viewport != m_previousViewport) {
-		int top = getSize().y - (viewport.y + viewport.height);
-		glViewport(viewport.x, top, viewport.width, viewport.height);
+		int top = getSize().y - (viewport.left + viewport.height);
+		glViewport(viewport.left, top, viewport.width, viewport.height);
 		m_previousViewport = viewport;
 	}
 

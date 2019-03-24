@@ -30,7 +30,7 @@ Transform& Transform::translate(float x, float y, float z) {
 	return *this;
 }
 
-Transform& Transform::rotate(float angle, const Vector3f& axis) {
+Transform& Transform::rotate(float angle, const sf::Vector3f &axis) {
 	float rotationAngle = angle * RADIANS_PER_DEGREES;
 	m_matrix = glm::rotate(m_matrix, rotationAngle, {axis.x, axis.y, axis.z});
 	return *this;

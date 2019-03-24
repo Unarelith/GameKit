@@ -14,7 +14,8 @@
 #ifndef GK_APPLICATIONSTATE_HPP_
 #define GK_APPLICATIONSTATE_HPP_
 
-#include "gk/core/SDLHeaders.hpp"
+#include <SFML/Window/Event.hpp>
+
 #include "gk/gl/IDrawable.hpp"
 #include "gk/gl/Transformable.hpp"
 #include "gk/utils/NonCopyable.hpp"
@@ -58,10 +59,10 @@ class ApplicationState : public IDrawable, public Transformable, public NonCopya
 		////////////////////////////////////////////////////////////
 		/// \brief Do an action in response to an SDL event
 		///
-		/// \param event The event sent from SDL
+		/// \param event The event sent from SFML
 		///
 		////////////////////////////////////////////////////////////
-		virtual void onEvent(const SDL_Event &) {}
+		virtual void onEvent(const sf::Event &) {}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Execute actions every game tick

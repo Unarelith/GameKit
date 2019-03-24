@@ -16,6 +16,8 @@
 
 #include <string>
 
+#include <SFML/Audio/Music.hpp>
+
 #include "gk/core/IntTypes.hpp"
 
 namespace gk {
@@ -25,7 +27,7 @@ class AudioPlayer {
 		static void playMusic(const std::string &resourceName);
 
 		static void playSound(const std::string &resourceName);
-		static void repeatSound(const std::string &resourceName, u8 delay = 0);
+		[[deprecated]] static void repeatSound(const std::string &resourceName, u8 delay = 0);
 
 		static void pauseMusic();
 		static void resumeMusic();
@@ -37,6 +39,7 @@ class AudioPlayer {
 
 	private:
 		static bool s_muteState;
+		static sf::Music *s_currentMusic;
 };
 
 } // namespace gk

@@ -16,13 +16,14 @@
 
 #include <glm/matrix.hpp>
 
+#include <SFML/Graphics/RenderStates.hpp>
+
 #include "gk/core/IntTypes.hpp"
 #include "gk/gl/Transform.hpp"
 
 namespace gk {
 
 class Shader;
-class Texture;
 
 namespace VertexAttribute {
 	enum {
@@ -39,17 +40,17 @@ namespace VertexAttribute {
 	};
 }
 
-struct RenderStates {
-	Transform projectionMatrix;
-	Transform viewMatrix;
-	Transform transform;
+class RenderStates : public sf::RenderStates {
+	public:
+		Transform projectionMatrix;
+		Transform viewMatrix;
+		Transform transform;
 
-	const Texture *texture = nullptr;
-	const Shader *shader = nullptr;
+		Shader *shader = nullptr;
 
-	u8 vertexAttributes = VertexAttribute::All;
+		u8 vertexAttributes = VertexAttribute::All;
 
-	static const RenderStates Default; // Defined in RenderTarget.cpp
+		static const RenderStates Default; // Defined in RenderTarget.cpp
 };
 
 } // namespace gk

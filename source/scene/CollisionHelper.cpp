@@ -39,28 +39,28 @@ bool CollisionHelper::inCollision(SceneObject &object1, SceneObject &object2) {
 		auto &hitbox2 = object2.get<HitboxComponent>();
 
 		if(hitbox1.currentHitbox() && hitbox2.currentHitbox()) {
-			FloatRect rect1 = *hitbox1.currentHitbox();
-			FloatRect rect2 = *hitbox2.currentHitbox();
+			sf::FloatRect rect1 = *hitbox1.currentHitbox();
+			sf::FloatRect rect2 = *hitbox2.currentHitbox();
 
 			auto &pos1 = object1.get<PositionComponent>();
 			auto &pos2 = object2.get<PositionComponent>();
 
-			rect1.x += pos1.x;
-			rect1.y += pos1.y;
+			rect1.left += pos1.x;
+			rect1.top  += pos1.y;
 
-			rect2.x += pos2.x;
-			rect2.y += pos2.y;
+			rect2.left += pos2.x;
+			rect2.top  += pos2.y;
 
 			if(object1.has<MovementComponent>()) {
 				auto &movement = object1.get<MovementComponent>();
-				rect1.x += movement.v.x;
-				rect1.y += movement.v.y;
+				rect1.left += movement.v.x;
+				rect1.top  += movement.v.y;
 			}
 
 			if(object2.has<MovementComponent>()) {
 				auto &movement = object2.get<MovementComponent>();
-				rect2.x += movement.v.x;
-				rect2.x += movement.v.y;
+				rect2.left += movement.v.x;
+				rect2.top  += movement.v.y;
 			}
 
 			if(rect1.intersects(rect2)) {

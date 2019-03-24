@@ -16,6 +16,8 @@
 
 #include <functional>
 
+#include <SFML/System/Clock.hpp>
+
 #include "gk/core/IntTypes.hpp"
 
 namespace gk {
@@ -26,9 +28,9 @@ class GameClock {
 
 		void measureLastFrameDuration();
 
-		void updateGame(std::function<void(void)> updateFunc);
+		void updateGame(const std::function<void(void)> &updateFunc);
 
-		void drawGame(std::function<void(void)> drawFunc);
+		void drawGame(const std::function<void(void)> &drawFunc);
 
 		void waitForNextFrame();
 
@@ -36,6 +38,7 @@ class GameClock {
 
 	private:
 		static u32 ticks;
+		static sf::Clock clock;
 
 		u32 m_lastFrameDate = 0;
 		u32 m_lag = 0;

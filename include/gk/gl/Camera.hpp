@@ -14,6 +14,8 @@
 #ifndef GK_CAMERA_HPP_
 #define GK_CAMERA_HPP_
 
+#include <SFML/System/Vector3.hpp>
+
 #include "gk/gl/View.hpp"
 
 namespace gk {
@@ -29,26 +31,26 @@ class Camera : public View {
 		Camera(float fov, float near, float far);
 		virtual ~Camera() = default;
 
-		const Vector3f &getPosition() const override { return m_position; }
-		const Vector3f &getDirection() const { return m_direction; }
-		const Vector3f &getUpVector() const { return m_upVector; }
+		const sf::Vector3f &getPosition() const override { return m_position; }
+		const sf::Vector3f &getDirection() const { return m_direction; }
+		const sf::Vector3f &getUpVector() const { return m_upVector; }
 
 		float getFieldOfView() const { return m_fieldOfView; }
 		float getAspectRatio() const { return m_aspect; }
 		float getNearClippingPlane() const { return m_nearPlane; }
 		float getFarClippingPlane() const { return m_farPlane; }
 
-		void setPosition(float x, float y, float z) { setPosition(Vector3f(x, y, z)); }
-		void setPosition(const Vector3f &position);
+		void setPosition(float x, float y, float z) { setPosition(sf::Vector3f{x, y, z}); }
+		void setPosition(const sf::Vector3f &position);
 
-		void setDirection(float x, float y, float z) { setDirection(Vector3f(x, y, z)); }
-		void setDirection(const Vector3f &direction);
+		void setDirection(float x, float y, float z) { setDirection(sf::Vector3f{x, y, z}); }
+		void setDirection(const sf::Vector3f &direction);
 
-		void setTargetPosition(float x, float y, float z) { setTargetPosition(Vector3f(x, y, z)); }
-		void setTargetPosition(const Vector3f &target);
+		void setTargetPosition(float x, float y, float z) { setTargetPosition(sf::Vector3f{x, y, z}); }
+		void setTargetPosition(const sf::Vector3f &target);
 
-		void setUpVector(float x, float y, float z) { setUpVector(Vector3f(x, y, z)); }
-		void setUpVector(const Vector3f &upVector);
+		void setUpVector(float x, float y, float z) { setUpVector(sf::Vector3f{x, y, z}); }
+		void setUpVector(const sf::Vector3f &upVector);
 
 		void setFieldOfView(float fov);
 		void setAspectRatio(float aspect);
@@ -59,9 +61,9 @@ class Camera : public View {
 		const Transform &getViewTransform() const override;
 
 	private:
-		Vector3f m_position{0, 0, 0};
-		Vector3f m_direction{0, 0, -1};
-		Vector3f m_upVector{0, 1, 0};
+		sf::Vector3f m_position{0, 0, 0};
+		sf::Vector3f m_direction{0, 0, -1};
+		sf::Vector3f m_upVector{0, 1, 0};
 
 		float m_fieldOfView = 90.0f;
 		float m_aspect = 1.0f;

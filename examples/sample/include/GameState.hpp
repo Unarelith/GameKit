@@ -14,8 +14,9 @@
 #ifndef GAMESTATE_HPP_
 #define GAMESTATE_HPP_
 
+#include <SFML/Graphics/RectangleShape.hpp>
+
 #include <gk/core/ApplicationState.hpp>
-#include <gk/graphics/RectangleShape.hpp>
 
 class GameState : public gk::ApplicationState {
 	public:
@@ -26,7 +27,7 @@ class GameState : public gk::ApplicationState {
 	private:
 		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
 
-		gk::RectangleShape m_rect{50, 50, gk::Color::Red};
+		sf::RectangleShape m_rect;
 };
 
 #endif // GAMESTATE_HPP_

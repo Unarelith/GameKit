@@ -17,7 +17,7 @@
 void Application::init() {
 	gk::CoreApplication::init();
 
-	createWindow(640, 480, "sample");
+	m_window.create(640, 480, "sample");
 
 	m_shader.loadFromFile("shaders/game.v.glsl", "shaders/game.f.glsl");
 	m_renderStates.shader = &m_shader;
@@ -25,11 +25,11 @@ void Application::init() {
 	m_stateStack.push<GameState>();
 }
 
-void Application::onEvent(const SDL_Event &event) {
+void Application::onEvent(const sf::Event &event) {
 	gk::CoreApplication::onEvent(event);
 
-	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE) {
-		m_window.close();
+	if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+		m_isRunning = false;
 	}
 }
 

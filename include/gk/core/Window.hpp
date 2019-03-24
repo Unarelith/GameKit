@@ -14,45 +14,30 @@
 #ifndef GK_WINDOW_HPP_
 #define GK_WINDOW_HPP_
 
-#include <memory>
 #include <string>
 
+#include <SFML/Window/Window.hpp>
+
 #include "gk/core/IntTypes.hpp"
-#include "gk/core/SDLHeaders.hpp"
 #include "gk/gl/RenderTarget.hpp"
 
 namespace gk {
 
-class Window : public RenderTarget {
+class Window : public RenderTarget, public sf::Window {
 	public:
-		void open(const std::string &caption, u16 width, u16 height);
+		////////////////////////////////////////////////////////////
+		/// \brief Create window
+		///
+		/// \param width Window width
+		/// \param height Window height
+		/// \param caption Window caption
+		///
+		/// Opens a new window with defined size and title.
+		///
+		////////////////////////////////////////////////////////////
+		void create(u16 width, u16 height, const std::string &caption);
 
 		void clear();
-		void display();
-
-		void setVerticalSyncEnabled(bool enabled);
-
-		Vector2u getSize() const override { return m_size; }
-
-		void close() { m_isOpen = false; }
-		bool isOpen() const { return m_isOpen; }
-
-		SDL_Window *window() const { return m_window.get(); }
-
-		const View &getDefaultView() const override { return m_defaultView; }
-
-	private:
-		using SDL_WindowPtr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;
-		using SDL_GLContextPtr = std::unique_ptr<void, decltype(&SDL_GL_DeleteContext)>;
-
-		SDL_WindowPtr m_window{nullptr, SDL_DestroyWindow};
-		SDL_GLContextPtr m_context{nullptr, SDL_GL_DeleteContext};
-
-		Vector2u m_size;
-
-		bool m_isOpen;
-
-		View m_defaultView;
 };
 
 } // namespace gk

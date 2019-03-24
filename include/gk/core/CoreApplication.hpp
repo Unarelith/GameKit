@@ -14,10 +14,11 @@
 #ifndef GK_COREAPPLICATION_HPP_
 #define GK_COREAPPLICATION_HPP_
 
+#include <SFML/Window/Event.hpp>
+
 #include "gk/core/ApplicationStateStack.hpp"
 #include "gk/core/ArgumentParser.hpp"
 #include "gk/core/GameClock.hpp"
-#include "gk/core/SDLLoader.hpp"
 #include "gk/core/Window.hpp"
 #include "gk/resource/ResourceHandler.hpp"
 
@@ -43,7 +44,7 @@ class CoreApplication {
 		///
 		/// \param isProtected Exceptions are catched if this parameter is set to `true` (default)
 		///
-		/// Loads SDL libraries, run init(), then mainLoop()
+		/// Run init(), then mainLoop()
 		///
 		////////////////////////////////////////////////////////////
 		int run(bool isProtected = true);
@@ -58,18 +59,6 @@ class CoreApplication {
 		virtual void init();
 
 		////////////////////////////////////////////////////////////
-		/// \brief Open window
-		///
-		/// \param screenWidth Window width
-		/// \param screenHeight Window height
-		/// \param windowTitle Window caption
-		///
-		/// Opens a new window with defined size and title.
-		///
-		////////////////////////////////////////////////////////////
-		void createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle);
-
-		////////////////////////////////////////////////////////////
 		/// \brief This function is called when a new window event is received
 		///
 		/// \param event Event received from SDL
@@ -77,7 +66,7 @@ class CoreApplication {
 		/// This function is automatically called by handleEvents()
 		///
 		////////////////////////////////////////////////////////////
-		virtual void onEvent(const SDL_Event &event);
+		virtual void onEvent(const sf::Event &event);
 
 		////////////////////////////////////////////////////////////
 		/// \brief Poll window events and send them to onEvent() and ApplicationStateStack
@@ -96,9 +85,6 @@ class CoreApplication {
 		////////////////////////////////////////////////////////////
 		// Member data
 		////////////////////////////////////////////////////////////
-		SDLLoader m_sdlLoader;                                 ///< Init and free SDL
-		bool m_loadSDL = true;                                 ///< If this flag is set to false, SDL won't be loaded
-
 		ApplicationStateStack m_stateStack;                    ///< Stack containing application states
 
 		GameClock m_clock;                                     ///< Simulated time system
@@ -110,6 +96,8 @@ class CoreApplication {
 		RenderStates m_renderStates = RenderStates::Default;   ///< The default render states
 
 		ArgumentParser m_argumentParser;                       ///< Helper for argument management
+
+		bool m_isRunning = true;                               ///< The application will stop if this flag is set to false
 };
 
 } // namespace gk
