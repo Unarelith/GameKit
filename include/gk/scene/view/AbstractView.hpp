@@ -14,7 +14,9 @@
 #ifndef GK_ABSTRACTVIEW_HPP_
 #define GK_ABSTRACTVIEW_HPP_
 
-#include "gk/gl/RenderTarget.hpp"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RenderStates.hpp>
+
 #include "gk/scene/SceneObjectList.hpp"
 
 namespace gk {
@@ -23,9 +25,9 @@ class AbstractView {
 	public:
 		virtual ~AbstractView() = default;
 
-		virtual void draw(const SceneObject &object, RenderTarget &target, RenderStates states) = 0;
+		virtual void draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) = 0;
 
-		virtual void draw(const SceneObjectList &objectList, RenderTarget &target, RenderStates states) {
+		virtual void draw(const SceneObjectList &objectList, sf::RenderTarget &target, sf::RenderStates states) {
 			for(auto &object : objectList) {
 				draw(object, target, states);
 

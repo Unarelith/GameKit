@@ -15,7 +15,6 @@
 #define APPLICATION_HPP_
 
 #include <gk/core/CoreApplication.hpp>
-#include <gk/gl/Shader.hpp>
 
 class Application : public gk::CoreApplication {
 	public:
@@ -25,8 +24,6 @@ class Application : public gk::CoreApplication {
 
 	private:
 		void onEvent(const sf::Event &event) override;
-
-		gk::Shader m_shader;
 };
 
 #endif // APPLICATION_HPP_

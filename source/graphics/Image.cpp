@@ -11,21 +11,25 @@
  *
  * =====================================================================================
  */
-#define GLM_FORCE_RADIANS
-#include <glm/gtc/matrix_transform.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Vertex.hpp>
 
-#include "gk/gl/GLCheck.hpp"
-#include "gk/gl/Vertex.hpp"
 #include "gk/graphics/Image.hpp"
 #include "gk/resource/ResourceHandler.hpp"
 
 namespace gk {
 
-Image::Image(const std::string &textureName) {
+Image::Image() {
+	m_vbo.create(4);
+	m_vbo.setPrimitiveType(sf::PrimitiveType::Quads);
+	m_vbo.setUsage(sf::VertexBuffer::Dynamic);
+}
+
+Image::Image(const std::string &textureName) : Image() {
 	load(ResourceHandler::getInstance().get<sf::Texture>(textureName));
 }
 
-Image::Image(const sf::Texture &texture) {
+Image::Image(const sf::Texture &texture) : Image() {
 	load(texture);
 }
 
@@ -72,12 +76,12 @@ void Image::setPosRect(float x, float y, u16 width, u16 height) {
 	updateVertexBuffer();
 }
 
-void Image::updateVertexBuffer() const {
-	Vertex vertices[4] = {
-		{{m_posRect.left + m_posRect.width, m_posRect.top,                    0, -1}},
-		{{m_posRect.left,                   m_posRect.top,                    0, -1}},
-		{{m_posRect.left,                   m_posRect.top + m_posRect.height, 0, -1}},
-		{{m_posRect.left + m_posRect.width, m_posRect.top + m_posRect.height, 0, -1}},
+void Image::updateVertexBuffer() {
+	sf::Vertex vertices[4] = {
+		{{m_posRect.left + m_posRect.width, m_posRect.top,                  }},
+		{{m_posRect.left,                   m_posRect.top,                  }},
+		{{m_posRect.left,                   m_posRect.top + m_posRect.height}},
+		{{m_posRect.left + m_posRect.width, m_posRect.top + m_posRect.height}},
 	};
 
 	sf::FloatRect texRect{
@@ -88,53 +92,42 @@ void Image::updateVertexBuffer() const {
 	};
 
 	if (!m_isFlipped) {
-		vertices[0].texCoord[0] = texRect.left + texRect.width;
-		vertices[0].texCoord[1] = texRect.top;
-		vertices[1].texCoord[0] = texRect.left;
-		vertices[1].texCoord[1] = texRect.top;
-		vertices[2].texCoord[0] = texRect.left;
-		vertices[2].texCoord[1] = texRect.top  + texRect.height;
-		vertices[3].texCoord[0] = texRect.left + texRect.width;
-		vertices[3].texCoord[1] = texRect.top  + texRect.height;
+		vertices[0].texCoords.x = texRect.left + texRect.width;
+		vertices[0].texCoords.y = texRect.top;
+		vertices[1].texCoords.x = texRect.left;
+		vertices[1].texCoords.y = texRect.top;
+		vertices[2].texCoords.x = texRect.left;
+		vertices[2].texCoords.y = texRect.top  + texRect.height;
+		vertices[3].texCoords.x = texRect.left + texRect.width;
+		vertices[3].texCoords.y = texRect.top  + texRect.height;
 	}
 	else {
-		vertices[0].texCoord[0] = texRect.left;
-		vertices[0].texCoord[1] = texRect.top;
-		vertices[1].texCoord[0] = texRect.left + texRect.width;
-		vertices[1].texCoord[1] = texRect.top;
-		vertices[2].texCoord[0] = texRect.left + texRect.width;
-		vertices[2].texCoord[1] = texRect.top  + texRect.height;
-		vertices[3].texCoord[0] = texRect.left;
-		vertices[3].texCoord[1] = texRect.top + texRect.height;
+		vertices[0].texCoords.x = texRect.left;
+		vertices[0].texCoords.y = texRect.top;
+		vertices[1].texCoords.x = texRect.left + texRect.width;
+		vertices[1].texCoords.y = texRect.top;
+		vertices[2].texCoords.x = texRect.left + texRect.width;
+		vertices[2].texCoords.y = texRect.top  + texRect.height;
+		vertices[3].texCoords.x = texRect.left;
+		vertices[3].texCoords.y = texRect.top + texRect.height;
 	}
 
 	for (u8 i = 0 ; i < 4 ; ++i) {
-		vertices[i].color[0] = m_color.r;
-		vertices[i].color[1] = m_color.g;
-		vertices[i].color[2] = m_color.b;
-		vertices[i].color[3] = m_color.a;
+		vertices[i].color.r = m_color.r;
+		vertices[i].color.g = m_color.g;
+		vertices[i].color.b = m_color.b;
+		vertices[i].color.a = m_color.a;
 	}
 
-	VertexBuffer::bind(&m_vbo);
-	m_vbo.setData(sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-	VertexBuffer::bind(nullptr);
+	m_vbo.update(vertices, 4, 0);
 }
 
-void Image::draw(RenderTarget &target, RenderStates states) const {
+void Image::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	states.transform *= getTransform();
 
 	states.texture = m_texture;
-	states.vertexAttributes = VertexAttribute::Only2d;
 
-	glCheck(glDisable(GL_CULL_FACE));
-	glCheck(glDisable(GL_DEPTH_TEST));
-
-	static const GLubyte indices[] = {
-		0, 1, 3,
-		3, 1, 2
-	};
-
-	target.drawElements(m_vbo, GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, indices, states);
+	target.draw(m_vbo, 0, 4, states);
 }
 
 }

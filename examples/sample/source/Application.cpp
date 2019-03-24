@@ -17,10 +17,7 @@
 void Application::init() {
 	gk::CoreApplication::init();
 
-	m_window.create(640, 480, "sample");
-
-	m_shader.loadFromFile("shaders/game.v.glsl", "shaders/game.f.glsl");
-	m_renderStates.shader = &m_shader;
+	m_window.create(sf::VideoMode(640, 480), "sample", sf::Style::Close);
 
 	m_stateStack.push<GameState>();
 }

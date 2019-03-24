@@ -17,7 +17,8 @@
 #include <functional>
 #include <list>
 
-#include "gk/gl/IDrawable.hpp"
+#include <SFML/Graphics/Drawable.hpp>
+
 #include "gk/scene/controller/AbstractController.hpp"
 #include "gk/scene/view/AbstractView.hpp"
 #include "gk/scene/CollisionHelper.hpp"
@@ -26,7 +27,7 @@
 
 namespace gk {
 
-class Scene : public IDrawable {
+class Scene : public sf::Drawable {
 	public:
 		Scene();
 
@@ -64,10 +65,10 @@ class Scene : public IDrawable {
 
 		bool isActive() { return !m_controllerList.empty() || !m_viewList.empty(); }
 
-		void draw(const SceneObject &object, RenderTarget &target, RenderStates states) const;
+		void draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) const;
 
 	private:
-		void draw(RenderTarget &target, RenderStates states) const override;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		SceneObjectList m_objects;
 

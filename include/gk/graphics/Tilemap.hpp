@@ -14,14 +14,16 @@
 #ifndef GK_TILEMAP_HPP_
 #define GK_TILEMAP_HPP_
 
-#include "gk/gl/Transformable.hpp"
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/Transformable.hpp>
+
 #include "gk/graphics/tilemap/TilemapAnimator.hpp"
 #include "gk/graphics/tilemap/TilemapRenderer.hpp"
 #include "gk/graphics/Tileset.hpp"
 
 namespace gk {
 
-class Tilemap : public gk::IDrawable, public gk::Transformable {
+class Tilemap : public sf::Drawable, public sf::Transformable {
 	public:
 		Tilemap(u16 width, u16 height, Tileset &tileset, const std::vector<std::vector<u16>> &data);
 
@@ -43,10 +45,11 @@ class Tilemap : public gk::IDrawable, public gk::Transformable {
 		void setTilesetOffset(u16 tilesetOffset) { m_tilesetOffset = tilesetOffset; }
 
 	protected:
-		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
+
+		Tileset &m_tileset;
 
 	private:
-		Tileset &m_tileset;
 		u16 m_tilesetOffset = 0; // FIXME
 
 		u16 m_width = 0;

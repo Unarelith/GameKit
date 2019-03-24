@@ -14,6 +14,7 @@
 #ifndef GK_RESOURCE_HPP_
 #define GK_RESOURCE_HPP_
 
+#include "gk/resource/AudioPlayer.hpp"
 #include "gk/resource/IResourceLoader.hpp"
 #include "gk/resource/ResourceHandler.hpp"
 #include "gk/resource/TextureLoader.hpp"

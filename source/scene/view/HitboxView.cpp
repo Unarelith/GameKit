@@ -12,6 +12,7 @@
  * =====================================================================================
  */
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
 
 #include "gk/scene/component/HitboxComponent.hpp"
 #include "gk/scene/view/HitboxView.hpp"
@@ -20,7 +21,7 @@
 
 namespace gk {
 
-void HitboxView::draw(const SceneObject &object, RenderTarget &target, RenderStates states) {
+void HitboxView::draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) {
 	if (object.has<LifetimeComponent>() && object.get<LifetimeComponent>().dead(object))
 		return;
 
@@ -34,11 +35,11 @@ void HitboxView::draw(const SceneObject &object, RenderTarget &target, RenderSta
 			sf::RectangleShape rect;
 			rect.setPosition(hitbox->left, hitbox->top);
 			rect.setSize({hitbox->width, hitbox->height});
-			rect.setOutlineThickness(true); // FIXME
+			rect.setOutlineThickness(1);
 			rect.setFillColor(sf::Color::Transparent);
 			rect.setOutlineColor(sf::Color::White);
 
-			// target.draw(rect, states); // FIXME
+			target.draw(rect, states);
 		}
 	}
 }

@@ -22,10 +22,7 @@
 #include "gk/core/GameClock.hpp"
 #include "gk/core/input/GamePad.hpp"
 #include "gk/core/Mouse.hpp"
-#include "gk/core/Rect.hpp"
 #include "gk/core/Timer.hpp"
-#include "gk/core/Vector2.hpp"
-#include "gk/core/Vector3.hpp"
 #include "gk/core/XMLFile.hpp"
 
 #endif // GK_CORE_HPP_

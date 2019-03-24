@@ -22,7 +22,7 @@ GameState::GameState() {
 void GameState::update() {
 }
 
-void GameState::draw(gk::RenderTarget &target, gk::RenderStates states) const {
+void GameState::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	target.draw(m_rect, states);
 }
 

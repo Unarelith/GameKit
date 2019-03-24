@@ -14,10 +14,11 @@
 #ifndef GK_APPLICATIONSTATE_HPP_
 #define GK_APPLICATIONSTATE_HPP_
 
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Transformable.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "gk/gl/IDrawable.hpp"
-#include "gk/gl/Transformable.hpp"
 #include "gk/utils/NonCopyable.hpp"
 
 namespace gk {
@@ -28,7 +29,7 @@ class ApplicationStateStack;
 /// \brief Abstract base class for game states
 ///
 ////////////////////////////////////////////////////////////
-class ApplicationState : public IDrawable, public Transformable, public NonCopyable {
+class ApplicationState : public sf::Drawable, public sf::Transformable, public NonCopyable {
 	public:
 		////////////////////////////////////////////////////////////
 		/// \brief Default constructor
@@ -97,7 +98,7 @@ class ApplicationState : public IDrawable, public Transformable, public NonCopya
 		/// \param states Current render states
 		///
 		////////////////////////////////////////////////////////////
-		void draw(gk::RenderTarget &, gk::RenderStates) const override {}
+		void draw(sf::RenderTarget &, sf::RenderStates) const override {}
 
 		////////////////////////////////////////////////////////////
 		// Member data
@@ -130,7 +131,7 @@ class ApplicationState : public IDrawable, public Transformable, public NonCopya
 ///         }
 ///
 ///     private:
-///         void draw(gk::RenderTarget &target, gk::RenderStates states) const override {
+///         void draw(sf::RenderTarget &target, sf::RenderStates states) const override {
 ///             ...
 ///         }
 ///

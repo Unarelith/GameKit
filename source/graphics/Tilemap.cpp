@@ -13,6 +13,8 @@
  */
 #include <algorithm>
 
+#include <SFML/Graphics/RenderTarget.hpp>
+
 #include "gk/graphics/Tilemap.hpp"
 #include "gk/resource/ResourceHandler.hpp"
 
@@ -39,7 +41,7 @@ void Tilemap::update() {
 	m_animator.animateTiles(*this);
 }
 
-void Tilemap::draw(gk::RenderTarget &target, gk::RenderStates states) const {
+void Tilemap::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	states.transform *= getTransform();
 
 	target.draw(m_renderer, states);

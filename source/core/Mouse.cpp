@@ -17,7 +17,7 @@
 
 namespace gk {
 
-Window *Mouse::s_window = nullptr;
+sf::RenderWindow *Mouse::s_window = nullptr;
 
 void Mouse::resetToWindowCenter() {
 	// FIXME

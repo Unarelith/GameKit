@@ -7,21 +7,10 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/core/KeyboardUtils.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Mouse.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Timer.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/core/Window.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/XMLFile.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/input/GamePad.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/input/InputHandler.cpp
 
-	${CMAKE_CURRENT_SOURCE_DIR}/gl/Camera.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/gl/GLCheck.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/gl/RenderTarget.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/gl/Shader.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/gl/Transform.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/gl/Transformable.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/gl/VertexBuffer.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/gl/View.cpp
-
-	${CMAKE_CURRENT_SOURCE_DIR}/graphics/Color.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/Image.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/Sprite.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/SpriteAnimation.cpp

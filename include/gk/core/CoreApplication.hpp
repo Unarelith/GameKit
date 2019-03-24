@@ -14,12 +14,12 @@
 #ifndef GK_COREAPPLICATION_HPP_
 #define GK_COREAPPLICATION_HPP_
 
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 
 #include "gk/core/ApplicationStateStack.hpp"
 #include "gk/core/ArgumentParser.hpp"
 #include "gk/core/GameClock.hpp"
-#include "gk/core/Window.hpp"
 #include "gk/resource/ResourceHandler.hpp"
 
 namespace gk {
@@ -91,9 +91,7 @@ class CoreApplication {
 
 		ResourceHandler m_resourceHandler;                     ///< Container for all game resources
 
-		Window m_window;                                       ///< The main window
-
-		RenderStates m_renderStates = RenderStates::Default;   ///< The default render states
+		sf::RenderWindow m_window;                             ///< The main window
 
 		ArgumentParser m_argumentParser;                       ///< Helper for argument management
 

@@ -14,24 +14,25 @@
 #ifndef GK_TILEMAPRENDERER_HPP_
 #define GK_TILEMAPRENDERER_HPP_
 
-#include "gk/gl/IDrawable.hpp"
-#include "gk/gl/VertexBuffer.hpp"
+#include <SFML/Graphics/Drawable.hpp>
+#include <SFML/Graphics/VertexBuffer.hpp>
+
 #include "gk/graphics/Tileset.hpp"
 
 namespace gk {
 
 class Tilemap;
 
-class TilemapRenderer : public gk::IDrawable {
+class TilemapRenderer : public sf::Drawable {
 	public:
 		void init(Tilemap *map, u16 mapWidth, u16 mapHeight, u8 mapLayers);
 
 		void updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap &map);
 
 	private:
-		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
-		gk::VertexBuffer m_vbo;
+		sf::VertexBuffer m_vbo;
 
 		Tilemap *m_map = nullptr;
 };

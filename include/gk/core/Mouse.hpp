@@ -15,8 +15,7 @@
 #define GK_MOUSE_HPP_
 
 #include <SFML/Graphics/Rect.hpp>
-
-#include "gk/core/Window.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace gk {
 
@@ -24,7 +23,7 @@ class Mouse {
 	public:
 		static void resetToWindowCenter();
 
-		static void setWindow(Window *window) { s_window = window; }
+		static void setWindow(sf::RenderWindow *window) { s_window = window; }
 
 		static void setCursorVisible(bool isVisible);
 		static void setCursorGrabbed(bool isGrabbed);
@@ -34,7 +33,7 @@ class Mouse {
 		static bool isInRect(const sf::IntRect &rect);
 
 	private:
-		static Window *s_window;
+		static sf::RenderWindow *s_window;
 };
 
 } // namespace gk

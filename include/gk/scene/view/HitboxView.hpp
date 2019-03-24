@@ -20,7 +20,7 @@ namespace gk {
 
 class HitboxView : public AbstractView {
 	public:
-		void draw(const SceneObject &object, RenderTarget &target, RenderStates states);
+		void draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states);
 };
 
 } // namespace gk

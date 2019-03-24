@@ -11,6 +11,8 @@
  *
  * =====================================================================================
  */
+#include <SFML/Graphics/RenderTarget.hpp>
+
 #include "gk/graphics/Image.hpp"
 #include "gk/graphics/Sprite.hpp"
 #include "gk/scene/component/HitboxComponent.hpp"
@@ -20,13 +22,13 @@
 
 namespace gk {
 
-void SpriteView::draw(const SceneObject &object, RenderTarget &target, RenderStates states) {
+void SpriteView::draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) {
 	if (object.has<LifetimeComponent>() && object.get<LifetimeComponent>().dead(object))
 		return;
 
 	if (object.has<PositionComponent>()) {
 		auto &pos = object.get<PositionComponent>();
-		states.transform.translate(pos.x, pos.y, 0.f);
+		states.transform.translate(pos.x, pos.y);
 	}
 
 	if(object.has<Image>()) {

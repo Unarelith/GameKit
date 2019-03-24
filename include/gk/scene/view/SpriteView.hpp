@@ -20,7 +20,7 @@ namespace gk {
 
 class SpriteView : public AbstractView {
 	public:
-		void draw(const SceneObject &object, RenderTarget &target, RenderStates states) override;
+		void draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) override;
 };
 
 } // namespace gk

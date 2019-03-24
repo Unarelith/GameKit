@@ -11,9 +11,10 @@
  *
  * =====================================================================================
  */
-#include "gk/gl/GLCheck.hpp"
-#include "gk/gl/Shader.hpp"
-#include "gk/gl/Vertex.hpp"
+#include <SFML/OpenGL.hpp>
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Vertex.hpp>
+
 #include "gk/graphics/tilemap/TilemapRenderer.hpp"
 #include "gk/graphics/Tilemap.hpp"
 
@@ -22,15 +23,13 @@ namespace gk {
 void TilemapRenderer::init(Tilemap *map, u16 mapWidth, u16 mapHeight, u8 mapLayers) {
 	m_map = map;
 
-	gk::VertexBuffer::bind(&m_vbo);
-	m_vbo.setData(sizeof(gk::Vertex) * mapWidth * mapHeight * mapLayers * 6, nullptr, GL_DYNAMIC_DRAW);
-	gk::VertexBuffer::bind(nullptr);
+	m_vbo.setPrimitiveType(sf::PrimitiveType::Triangles);
+	m_vbo.create(mapWidth * mapHeight * mapLayers * 6);
+	m_vbo.setUsage(sf::VertexBuffer::Dynamic);
 }
 
 void TilemapRenderer::updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap &map) {
 	if (id == 0) return;
-
-	gk::VertexBuffer::bind(&m_vbo);
 
 	float tileWidth  = map.tileset().tileWidth();
 	float tileHeight = map.tileset().tileHeight();
@@ -44,32 +43,26 @@ void TilemapRenderer::updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap
 	float texTileWidth  = tileWidth  / map.tileset().getSize().x;
 	float texTileHeight = tileHeight / map.tileset().getSize().y;
 
-	gk::Vertex vertices[] = {
-		{{x            , y             , 0, 1}, {texTileX               , texTileY                }, {1.0f, 1.0f, 1.0f, 1.0f}},
-		{{x + tileWidth, y             , 0, 1}, {texTileX + texTileWidth, texTileY                }, {1.0f, 1.0f, 1.0f, 1.0f}},
-		{{x + tileWidth, y + tileHeight, 0, 1}, {texTileX + texTileWidth, texTileY + texTileHeight}, {1.0f, 1.0f, 1.0f, 1.0f}},
-		{{x            , y             , 0, 1}, {texTileX               , texTileY                }, {1.0f, 1.0f, 1.0f, 1.0f}},
-		{{x + tileWidth, y + tileHeight, 0, 1}, {texTileX + texTileWidth, texTileY + texTileHeight}, {1.0f, 1.0f, 1.0f, 1.0f}},
-		{{x            , y + tileHeight, 0, 1}, {texTileX               , texTileY + texTileHeight}, {1.0f, 1.0f, 1.0f, 1.0f}}
+	sf::Vertex vertices[] = {
+		{{x            , y             }, {255, 255, 255, 255}, {texTileX               , texTileY                }},
+		{{x + tileWidth, y             }, {255, 255, 255, 255}, {texTileX + texTileWidth, texTileY                }},
+		{{x + tileWidth, y + tileHeight}, {255, 255, 255, 255}, {texTileX + texTileWidth, texTileY + texTileHeight}},
+		{{x            , y             }, {255, 255, 255, 255}, {texTileX               , texTileY                }},
+		{{x + tileWidth, y + tileHeight}, {255, 255, 255, 255}, {texTileX + texTileWidth, texTileY + texTileHeight}},
+		{{x            , y + tileHeight}, {255, 255, 255, 255}, {texTileX               , texTileY + texTileHeight}}
 	};
 
-	m_vbo.updateData(sizeof(vertices) * (tileX + tileY * map.width() + layer * map.width() * map.height()), sizeof(vertices), vertices);
-
-	gk::VertexBuffer::bind(nullptr);
+	m_vbo.update(vertices, 6, tileX + tileY * map.width() + layer * map.width() * map.height());
 }
 
-void TilemapRenderer::draw(gk::RenderTarget &target, gk::RenderStates states) const {
+void TilemapRenderer::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	if (!m_map) return;
 
 	states.texture = &m_map->tileset();
-	states.vertexAttributes = VertexAttribute::Only2d;
-
-	glCheck(glDisable(GL_CULL_FACE));
-	glCheck(glDisable(GL_DEPTH_TEST));
 
 	for (u8 i = 0 ; i < m_map->layerCount() ; ++i) {
-		target.draw(m_vbo, GL_TRIANGLES,
-			(6 * m_map->width() * m_map->height()) * (m_map->layerCount() - 1 - i),
+		target.draw(m_vbo,
+			6 * m_map->width() * m_map->height() * (m_map->layerCount() - 1 - i),
 			6 * m_map->width() * m_map->height(), states);
 	}
 }

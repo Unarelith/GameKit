@@ -62,7 +62,7 @@ void Scene::update(SceneObject &object) {
 	}
 }
 
-void Scene::draw(const SceneObject &object, RenderTarget &target, RenderStates states) const {
+void Scene::draw(const SceneObject &object, sf::RenderTarget &target, sf::RenderStates states) const {
 	for (auto &view : m_viewList) {
 		view->draw(object, target, states);
 
@@ -71,7 +71,7 @@ void Scene::draw(const SceneObject &object, RenderTarget &target, RenderStates s
 	}
 }
 
-void Scene::draw(gk::RenderTarget &target, gk::RenderStates states) const {
+void Scene::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 	for (auto &view : m_viewList)
 		view->draw(m_objects, target, states);
 }

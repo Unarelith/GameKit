@@ -14,18 +14,18 @@
 #ifndef GK_IMAGE_HPP_
 #define GK_IMAGE_HPP_
 
+#include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Transformable.hpp>
+#include <SFML/Graphics/VertexBuffer.hpp>
 
-#include "gk/graphics/Color.hpp"
-#include "gk/gl/IDrawable.hpp"
-#include "gk/gl/Transformable.hpp"
-#include "gk/gl/VertexBuffer.hpp"
+#include "gk/core/IntTypes.hpp"
 
 namespace gk {
 
-class Image : public IDrawable, public Transformable {
+class Image : public sf::Drawable, public sf::Transformable {
 	public:
-		Image() = default;
+		Image();
 		Image(const std::string &textureName);
 		Image(const sf::Texture &texture);
 
@@ -42,18 +42,18 @@ class Image : public IDrawable, public Transformable {
 		u16 width() const { return m_width * getScale().x; }
 		u16 height() const { return m_height * getScale().y; }
 
-		void setColor(const Color &color) { m_color = color; updateVertexBuffer(); }
+		void setColor(const sf::Color &color) { m_color = color; updateVertexBuffer(); }
 		void setAlphaMod(u8 alpha) { m_color.a = alpha / 255.0f; updateVertexBuffer(); }
 		void setFlip(bool isFlipped) { m_isFlipped = isFlipped; }
 
 	protected:
-		void updateVertexBuffer() const;
+		void updateVertexBuffer();
 
-		void draw(RenderTarget &target, RenderStates states) const override;
+		void draw(sf::RenderTarget &target, sf::RenderStates states) const override;
 
 		const sf::Texture *m_texture = nullptr;
 
-		VertexBuffer m_vbo;
+		sf::VertexBuffer m_vbo;
 
 	private:
 		u16 m_width = 0;
@@ -62,7 +62,7 @@ class Image : public IDrawable, public Transformable {
 		sf::FloatRect m_clipRect;
 		sf::FloatRect m_posRect;
 
-		Color m_color;
+		sf::Color m_color;
 
 		bool m_isFlipped = false;
 };
