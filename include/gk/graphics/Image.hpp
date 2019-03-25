@@ -53,7 +53,7 @@ class Image : public sf::Drawable, public sf::Transformable {
 
 		const sf::Texture *m_texture = nullptr;
 
-		sf::VertexBuffer m_vbo;
+		sf::VertexBuffer m_vertices;
 
 	private:
 		u16 m_width = 0;
@@ -62,7 +62,7 @@ class Image : public sf::Drawable, public sf::Transformable {
 		sf::FloatRect m_clipRect;
 		sf::FloatRect m_posRect;
 
-		sf::Color m_color;
+		sf::Color m_color = sf::Color::White;
 
 		bool m_isFlipped = false;
 };

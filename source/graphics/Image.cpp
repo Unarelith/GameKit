@@ -20,9 +20,8 @@
 namespace gk {
 
 Image::Image() {
-	m_vbo.create(4);
-	m_vbo.setPrimitiveType(sf::PrimitiveType::Quads);
-	m_vbo.setUsage(sf::VertexBuffer::Dynamic);
+	m_vertices.setPrimitiveType(sf::PrimitiveType::Quads);
+	m_vertices.create(4);
 }
 
 Image::Image(const std::string &textureName) : Image() {
@@ -84,42 +83,32 @@ void Image::updateVertexBuffer() {
 		{{m_posRect.left + m_posRect.width, m_posRect.top + m_posRect.height}},
 	};
 
-	sf::FloatRect texRect{
-		m_clipRect.left   / float(m_width),
-		m_clipRect.top    / float(m_height),
-		m_clipRect.width  / float(m_width),
-		m_clipRect.height / float(m_height)
-	};
-
 	if (!m_isFlipped) {
-		vertices[0].texCoords.x = texRect.left + texRect.width;
-		vertices[0].texCoords.y = texRect.top;
-		vertices[1].texCoords.x = texRect.left;
-		vertices[1].texCoords.y = texRect.top;
-		vertices[2].texCoords.x = texRect.left;
-		vertices[2].texCoords.y = texRect.top  + texRect.height;
-		vertices[3].texCoords.x = texRect.left + texRect.width;
-		vertices[3].texCoords.y = texRect.top  + texRect.height;
+		vertices[0].texCoords.x = m_clipRect.left + m_clipRect.width;
+		vertices[0].texCoords.y = m_clipRect.top;
+		vertices[1].texCoords.x = m_clipRect.left;
+		vertices[1].texCoords.y = m_clipRect.top;
+		vertices[2].texCoords.x = m_clipRect.left;
+		vertices[2].texCoords.y = m_clipRect.top  + m_clipRect.height;
+		vertices[3].texCoords.x = m_clipRect.left + m_clipRect.width;
+		vertices[3].texCoords.y = m_clipRect.top  + m_clipRect.height;
 	}
 	else {
-		vertices[0].texCoords.x = texRect.left;
-		vertices[0].texCoords.y = texRect.top;
-		vertices[1].texCoords.x = texRect.left + texRect.width;
-		vertices[1].texCoords.y = texRect.top;
-		vertices[2].texCoords.x = texRect.left + texRect.width;
-		vertices[2].texCoords.y = texRect.top  + texRect.height;
-		vertices[3].texCoords.x = texRect.left;
-		vertices[3].texCoords.y = texRect.top + texRect.height;
+		vertices[0].texCoords.x = m_clipRect.left;
+		vertices[0].texCoords.y = m_clipRect.top;
+		vertices[1].texCoords.x = m_clipRect.left + m_clipRect.width;
+		vertices[1].texCoords.y = m_clipRect.top;
+		vertices[2].texCoords.x = m_clipRect.left + m_clipRect.width;
+		vertices[2].texCoords.y = m_clipRect.top  + m_clipRect.height;
+		vertices[3].texCoords.x = m_clipRect.left;
+		vertices[3].texCoords.y = m_clipRect.top + m_clipRect.height;
 	}
 
 	for (u8 i = 0 ; i < 4 ; ++i) {
-		vertices[i].color.r = m_color.r;
-		vertices[i].color.g = m_color.g;
-		vertices[i].color.b = m_color.b;
-		vertices[i].color.a = m_color.a;
+		vertices[i].color = m_color;
 	}
 
-	m_vbo.update(vertices, 4, 0);
+	m_vertices.update(vertices);
 }
 
 void Image::draw(sf::RenderTarget &target, sf::RenderStates states) const {
@@ -127,7 +116,7 @@ void Image::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 
 	states.texture = m_texture;
 
-	target.draw(m_vbo, 0, 4, states);
+	target.draw(m_vertices, states);
 }
 
 }
