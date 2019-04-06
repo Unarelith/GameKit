@@ -1,10 +1,22 @@
 TODO
 
+# SFML migration
+
+• DONE:  CubeLand
+• DONE:  cpp_rtype
+• DONE:  ScarletSlanderTales-DarkTower
+• DONE:  Lexa
+• WIP:   ZeldaOOL
+• TODO:  Asylia
+• TODO:  OpenMiner
+• FIXME: CloneBand
+
 # General
 
 • DONE: Try to use this in `Asylia`
 • DONE: Add `examples` folder
 •  WIP: Add documentation in all the classes
+• TODO: Use `GameKit` in `TestProj`
 • TODO: Merge `gl` and `graphics`
 • TODO: Add unit tests
 
