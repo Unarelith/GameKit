@@ -16,6 +16,8 @@
 
 #include <map>
 
+#include <SFML/Window/Event.hpp>
+
 #include "gk/core/IntTypes.hpp"
 
 namespace gk {
@@ -60,6 +62,16 @@ class InputHandler {
 		///
 		////////////////////////////////////////////////////////////
 		virtual bool isKeyPressedWithDelay(GameKey key, u16 delay);
+
+		////////////////////////////////////////////////////////////
+		/// \brief Update state from SFML event
+		///
+		/// \param event SFML event
+		///
+		/// This function is called on every SFML events received by the window
+		///
+		////////////////////////////////////////////////////////////
+		virtual void updateState(const sf::Event &) {}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Get current keys state

@@ -13,6 +13,7 @@
  */
 #include <ctime>
 
+#include "gk/core/input/GamePad.hpp"
 #include "gk/core/CoreApplication.hpp"
 #include "gk/core/Mouse.hpp"
 #include "gk/core/Exception.hpp"
@@ -78,6 +79,9 @@ void CoreApplication::handleEvents() {
 	sf::Event event;
 	while (m_window.pollEvent(event)) {
 		onEvent(event);
+
+		if (GamePad::getInputHandler())
+			GamePad::getInputHandler()->updateState(event);
 
 		if (!m_stateStack.empty())
 			m_stateStack.top().onEvent(event);

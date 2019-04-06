@@ -26,7 +26,9 @@ class KeyboardHandler : public InputHandler {
 	public:
 		void loadKeysFromFile(const std::string &filename);
 
-		bool isKeyPressed(GameKey key);
+		void updateState(const sf::Event &event) override;
+
+		bool isKeyPressed(GameKey key) override;
 
 	private:
 		std::map<GameKey, sf::Keyboard::Key> m_keys;

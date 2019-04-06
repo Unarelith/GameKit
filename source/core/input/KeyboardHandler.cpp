@@ -45,6 +45,18 @@ void KeyboardHandler::loadKeysFromFile(const std::string &filename) {
 	addKey(7, "Select");
 }
 
+void KeyboardHandler::updateState(const sf::Event &event) {
+	for(auto &it : m_keys) {
+		if(event.type == sf::Event::KeyPressed && event.key.code == it.second) {
+			m_keysPressed[it.first] = true;
+		}
+
+		if (event.type == sf::Event::KeyReleased && event.key.code == it.second) {
+			m_keysPressed[it.first] = false;
+		}
+	}
+}
+
 bool KeyboardHandler::isKeyPressed(GameKey key) {
 	m_keysPressed[key] = sf::Keyboard::isKeyPressed(m_keys[key]);
 

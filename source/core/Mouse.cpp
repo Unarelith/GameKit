@@ -35,11 +35,15 @@ void Mouse::setCursorVisible(bool visible) {
 }
 
 sf::Vector2i Mouse::getPosition() {
+	if (s_window)
+		return sf::Mouse::getPosition(*s_window);
 	return sf::Mouse::getPosition();
 }
 
 bool Mouse::isInRect(const sf::IntRect &rect) {
-	return rect.contains(getPosition());
+	if (s_window)
+		return rect.contains(sf::Mouse::getPosition(*s_window));
+	return rect.contains(sf::Mouse::getPosition());
 }
 
 } // namespace gk
