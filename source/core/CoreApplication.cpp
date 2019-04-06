@@ -69,6 +69,16 @@ int CoreApplication::run(bool isProtected) {
 	return 0;
 }
 
+void CoreApplication::createWindow(sf::VideoMode mode, const sf::String &title, sf::Uint32 style, const sf::ContextSettings &settings) {
+	m_window.create(mode, title, style, settings);
+
+	auto desktop = sf::VideoMode::getDesktopMode();
+	m_window.setPosition(sf::Vector2i(
+		desktop.width / 2 - m_window.getSize().x / 2,
+		desktop.height / 2 - m_window.getSize().y / 2
+	));
+}
+
 void CoreApplication::onEvent(const sf::Event &event) {
 	if (event.type == sf::Event::Closed) {
 		m_isRunning = false;

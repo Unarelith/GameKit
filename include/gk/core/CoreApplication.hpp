@@ -51,6 +51,25 @@ class CoreApplication {
 
 	protected:
 		////////////////////////////////////////////////////////////
+		/// \brief Create (or recreate) the window
+		///
+		/// If the window was already created, it closes it first.
+		/// If \a style contains sf::Style::Fullscreen, then \a mode
+		/// must be a valid video mode.
+		///
+		/// The fourth parameter is an optional structure specifying
+		/// advanced OpenGL context settings such as antialiasing,
+		/// depth-buffer bits, etc.
+		///
+		/// \param mode     Video mode to use (defines the width, height and depth of the rendering area of the window)
+		/// \param title    Title of the window
+		/// \param style    %Window style, a bitwise OR combination of sf::Style enumerators
+		/// \param settings Additional settings for the underlying OpenGL context
+		///
+		////////////////////////////////////////////////////////////
+		void createWindow(sf::VideoMode mode, const sf::String &title, sf::Uint32 style = sf::Style::Default, const sf::ContextSettings &settings = sf::ContextSettings());
+
+		////////////////////////////////////////////////////////////
 		/// \brief Initialization function
 		///
 		/// This function is used to init engine and singletons.
