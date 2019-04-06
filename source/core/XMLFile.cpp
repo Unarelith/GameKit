@@ -67,7 +67,7 @@ void XMLFile::load(const std::string &filename) {
 				errorString = "Parsing error.";
 				break;
 			default:
-				errorString = "Unknown error.";
+				errorString = "Unknown error. Code: " + std::to_string(code);
 				break;
 		}
 

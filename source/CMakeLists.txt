@@ -10,6 +10,7 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/core/XMLFile.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/input/GamePad.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/input/InputHandler.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/core/input/KeyboardHandler.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/Image.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/Sprite.cpp

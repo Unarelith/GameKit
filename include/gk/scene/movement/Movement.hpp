@@ -22,9 +22,9 @@ class Movement {
 	public:
 		virtual ~Movement() = default;
 
-		bool isFinished() const { return m_isFinished; }
-
 		virtual void process(SceneObject &object) = 0;
+
+		bool isFinished() const { return m_isFinished; }
 
 	protected:
 		bool m_isFinished = false;
