@@ -34,6 +34,8 @@ class Tilemap : public gk::IDrawable, public gk::Transformable {
 		u16 getTile(u16 tileX, u16 tileY, u8 layer = 0);
 		void setTile(u16 tileX, u16 tileY, u16 id, bool write = true, bool persistent = false);
 
+		bool inTile(float x, float y, u16 tileID);
+
 		u16 width() const { return m_width; }
 		u16 height() const { return m_height; }
 

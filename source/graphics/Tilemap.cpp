@@ -75,5 +75,10 @@ void Tilemap::setTile(u16 tileX, u16 tileY, u16 id, bool write, bool persistent)
 	m_renderer.updateTile(layerCount() - 1, tileX, tileY, std::max(0, id - m_tilesetOffset), *this);
 }
 
+bool Tilemap::inTile(float x, float y, u16 tileID) {
+	return getTile(x / m_tileset.tileWidth(),
+	               y / m_tileset.tileHeight()) == tileID;
+}
+
 } // namespace gk
 
