@@ -24,7 +24,7 @@ TextInput::TextInput() {
 
 	m_text.setFont(ResourceHandler::getInstance().get<Font>("font-default"));
 	m_text.setCharacterSize(25);
-	m_text.setText("|");
+	m_text.setText(m_cursor);
 }
 
 void TextInput::setPosition(float x, float y) {
@@ -39,9 +39,11 @@ void TextInput::setSize(u16 width, u16 height) {
 void TextInput::onEvent(const SDL_Event &event) {
 	if (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_BACKSPACE && !m_content.empty()) {
 		m_content.erase(m_content.begin() + m_content.length() - 1);
-		AudioPlayer::playSound("sound-keyboard");
 
-		m_text.setText(m_content + "|");
+		if (!m_keyboardSound.empty())
+			AudioPlayer::playSound(m_keyboardSound);
+
+		m_text.setText(m_content + m_cursor);
 	}
 
   	if (event.type == SDL_TEXTINPUT) {
@@ -49,10 +51,12 @@ void TextInput::onEvent(const SDL_Event &event) {
 		for (char c : text) {
 			if (isprint(c) && (!m_characterLimit || m_content.size() < m_characterLimit)) {
 				m_content += c;
-				AudioPlayer::playSound("sound-keyboard");
+
+				if (!m_keyboardSound.empty())
+					AudioPlayer::playSound(m_keyboardSound);
 			}
 
-			m_text.setText(m_content + "|");
+			m_text.setText(m_content + m_cursor);
 		}
 	}
 }
