@@ -27,8 +27,12 @@ class KeyboardHandler : public InputHandler {
 
 		bool isKeyPressed(GameKey key);
 
+		SDL_Keycode getKeyCode(gk::GameKey key) { return SDL_GetKeyFromScancode(m_keys[key]); }
+		std::string getKeyName(gk::GameKey key) { return SDL_GetKeyName(getKeyCode(key)); }
+		void setKeycode(gk::GameKey key, SDL_Keycode keycode) { m_keys[key] = SDL_GetScancodeFromKey(keycode); }
+
 	protected:
-		std::map<GameKey, SDL_Keycode> m_keys;
+		std::map<GameKey, SDL_Scancode> m_keys;
 };
 
 } // namespace gk
