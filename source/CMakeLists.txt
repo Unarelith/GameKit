@@ -42,6 +42,8 @@ set(SOURCE_FILES
 
 	${CMAKE_CURRENT_SOURCE_DIR}/resource/ResourceHandler.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/resource/TextureLoader.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/resource/TilemapLoader.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/resource/TilesetLoader.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/scene/CollisionHelper.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/scene/Scene.cpp
