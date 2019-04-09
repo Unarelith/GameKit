@@ -5,6 +5,8 @@ TODO
 • DONE: Try to use this in `Asylia`
 • DONE: Add `examples` folder
 •  WIP: Add documentation in all the classes
+• TODO: Add `SpriteLoader` and `SpriteComponent` from Lexa
+   ◦ TODO: Replace relevant classes in Lexa, darktower and others
 • TODO: Merge `gl` and `graphics`
 • TODO: Add unit tests
 
