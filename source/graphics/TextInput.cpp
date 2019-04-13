@@ -18,7 +18,7 @@
 namespace gk {
 
 TextInput::TextInput() {
-	m_rectText.setColor(Color::Black);
+	m_rectText.setFillColor(Color::Black);
 	m_rectText.setOutlineThickness(2);
 	m_rectText.setOutlineColor(Color::White);
 

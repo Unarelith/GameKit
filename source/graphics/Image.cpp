@@ -11,9 +11,6 @@
  *
  * =====================================================================================
  */
-#define GLM_FORCE_RADIANS
-#include <glm/gtc/matrix_transform.hpp>
-
 #include "gk/gl/GLCheck.hpp"
 #include "gk/gl/Texture.hpp"
 #include "gk/gl/Vertex.hpp"

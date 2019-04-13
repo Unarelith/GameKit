@@ -34,7 +34,7 @@ void HitboxView::draw(const SceneObject &object, RenderTarget &target, RenderSta
 			rect.setPosition(hitbox->x, hitbox->y);
 			rect.setSize(hitbox->width, hitbox->height);
 			rect.setWireframeMode(true); // FIXME
-			rect.setColor(Color::White);
+			rect.setFillColor(Color::White);
 
 			target.draw(rect, states);
 		}
