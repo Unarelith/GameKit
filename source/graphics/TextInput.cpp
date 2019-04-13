@@ -24,7 +24,7 @@ TextInput::TextInput() {
 
 	m_text.setFont(ResourceHandler::getInstance().get<Font>("font-default"));
 	m_text.setCharacterSize(25);
-	m_text.setText(m_cursor);
+	m_text.setString(m_cursor);
 }
 
 void TextInput::setPosition(float x, float y) {
@@ -43,7 +43,7 @@ void TextInput::onEvent(const SDL_Event &event) {
 		if (!m_keyboardSound.empty())
 			AudioPlayer::playSound(m_keyboardSound);
 
-		m_text.setText(m_content + m_cursor);
+		m_text.setString(m_content + m_cursor);
 	}
 
   	if (event.type == SDL_TEXTINPUT) {
@@ -56,7 +56,7 @@ void TextInput::onEvent(const SDL_Event &event) {
 					AudioPlayer::playSound(m_keyboardSound);
 			}
 
-			m_text.setText(m_content + m_cursor);
+			m_text.setString(m_content + m_cursor);
 		}
 	}
 }

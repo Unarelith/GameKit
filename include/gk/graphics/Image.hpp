@@ -16,13 +16,13 @@
 
 #include "gk/graphics/Color.hpp"
 #include "gk/core/Rect.hpp"
-#include "gk/gl/IDrawable.hpp"
+#include "gk/gl/Drawable.hpp"
 #include "gk/gl/Transformable.hpp"
 #include "gk/gl/VertexBuffer.hpp"
 
 namespace gk {
 
-class Image : public IDrawable, public Transformable {
+class Image : public Drawable, public Transformable {
 	public:
 		Image() = default;
 		Image(const std::string &textureName);

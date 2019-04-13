@@ -14,7 +14,7 @@
 #ifndef GK_TILEMAPRENDERER_HPP_
 #define GK_TILEMAPRENDERER_HPP_
 
-#include "gk/gl/IDrawable.hpp"
+#include "gk/gl/Drawable.hpp"
 #include "gk/gl/VertexBuffer.hpp"
 #include "gk/graphics/Tileset.hpp"
 
@@ -22,7 +22,7 @@ namespace gk {
 
 class Tilemap;
 
-class TilemapRenderer : public gk::IDrawable {
+class TilemapRenderer : public gk::Drawable {
 	public:
 		void init(Tilemap *map, u16 mapWidth, u16 mapHeight, u8 mapLayers);
 

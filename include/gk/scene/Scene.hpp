@@ -17,7 +17,7 @@
 #include <functional>
 #include <list>
 
-#include "gk/gl/IDrawable.hpp"
+#include "gk/gl/Drawable.hpp"
 #include "gk/scene/controller/AbstractController.hpp"
 #include "gk/scene/view/AbstractView.hpp"
 #include "gk/scene/CollisionHelper.hpp"
@@ -26,7 +26,7 @@
 
 namespace gk {
 
-class Scene : public IDrawable {
+class Scene : public Drawable {
 	public:
 		Scene();
 

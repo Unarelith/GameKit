@@ -21,7 +21,7 @@
 
 namespace gk {
 
-class Tilemap : public gk::IDrawable, public gk::Transformable {
+class Tilemap : public Drawable, public Transformable {
 	public:
 		Tilemap(u16 width, u16 height, Tileset &tileset, const std::vector<std::vector<u16>> &data);
 
@@ -45,7 +45,7 @@ class Tilemap : public gk::IDrawable, public gk::Transformable {
 		void setTilesetOffset(u16 tilesetOffset) { m_tilesetOffset = tilesetOffset; }
 
 	protected:
-		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
+		void draw(RenderTarget &target, RenderStates states) const override;
 
 	private:
 		Tileset &m_tileset;

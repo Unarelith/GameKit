@@ -25,15 +25,15 @@ Text::Text(const std::string &fontResourceName, int ptsize) {
 	setFont(fontResourceName);
 }
 
-Text::Text(const std::string &text, const std::string &fontResourceName, int ptsize) {
-	m_text = text;
+Text::Text(const std::string &str, const std::string &fontResourceName, int ptsize) {
+	m_string = str;
 	m_characterSize = ptsize;
 
 	setFont(fontResourceName);
 }
 
-Text::Text(const std::string &text, const Font &font, int ptsize) {
-	m_text = text;
+Text::Text(const std::string &str, const Font &font, int ptsize) {
+	m_string = str;
 	m_font = &font;
 	m_characterSize = ptsize;
 
@@ -53,7 +53,7 @@ void Text::setFont(const std::string &resourceName) {
 void Text::update() const {
 	m_isUpdateNeeded = false;
 
-	if (!m_font || m_text.empty() || m_characterSize < 0) return;
+	if (!m_font || m_string.empty() || m_characterSize < 0) return;
 
 	// FIXME: Add a conversion function between gk::Color and SDL_Color
 	SDL_Color color;
@@ -67,9 +67,9 @@ void Text::update() const {
 
 	SDL_Surface* surface = nullptr;
 	if (m_isWrapped)
-		surface = TTF_RenderUTF8_Blended_Wrapped(font, m_text.c_str(), color, m_size.x);
+		surface = TTF_RenderUTF8_Blended_Wrapped(font, m_string.c_str(), color, m_size.x);
 	else
-		surface = TTF_RenderUTF8_Blended(font, m_text.c_str(), color);
+		surface = TTF_RenderUTF8_Blended(font, m_string.c_str(), color);
 
 	if (surface) {
 		m_texture.loadFromSurface(surface);
@@ -94,7 +94,7 @@ void Text::update() const {
 			m_image.setPosRect(0, 0, m_texture.width(), m_texture.height());
 	}
 	else
-		DEBUG("Unable to create text image for '" + m_text + "':", TTF_GetError());
+		DEBUG("Unable to create text image for '" + m_string + "':", TTF_GetError());
 
 	// FIXME: Save old style instead of restoring Normal
 	TTF_SetFontStyle(font, Style::Normal);

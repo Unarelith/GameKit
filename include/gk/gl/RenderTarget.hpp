@@ -21,12 +21,12 @@
 
 namespace gk {
 
-class IDrawable;
+class Drawable;
 class VertexBuffer;
 
 class RenderTarget {
 	public:
-		void draw(const IDrawable &drawable, const RenderStates &states = RenderStates::Default);
+		void draw(const Drawable &drawable, const RenderStates &states = RenderStates::Default);
 		void draw(const VertexBuffer &vertexBuffer, GLenum mode, std::size_t firstVertex, std::size_t vertexCount, const RenderStates &states = RenderStates::Default);
 		void drawElements(const VertexBuffer &vertexBuffer, GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, const RenderStates &states = RenderStates::Default);
 

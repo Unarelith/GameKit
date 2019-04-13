@@ -12,7 +12,7 @@
  * =====================================================================================
  */
 #include "gk/gl/GLCheck.hpp"
-#include "gk/gl/IDrawable.hpp"
+#include "gk/gl/Drawable.hpp"
 #include "gk/gl/RenderTarget.hpp"
 #include "gk/gl/Shader.hpp"
 #include "gk/gl/Texture.hpp"
@@ -23,7 +23,7 @@ namespace gk {
 
 const RenderStates RenderStates::Default{};
 
-void RenderTarget::draw(const IDrawable &drawable, const RenderStates &states) {
+void RenderTarget::draw(const Drawable &drawable, const RenderStates &states) {
 	drawable.draw(*this, states);
 }
 

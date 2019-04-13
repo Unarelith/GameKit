@@ -15,7 +15,7 @@
 #define GK_APPLICATIONSTATE_HPP_
 
 #include "gk/core/SDLHeaders.hpp"
-#include "gk/gl/IDrawable.hpp"
+#include "gk/gl/Drawable.hpp"
 #include "gk/gl/Transformable.hpp"
 #include "gk/utils/NonCopyable.hpp"
 
@@ -27,7 +27,7 @@ class ApplicationStateStack;
 /// \brief Abstract base class for game states
 ///
 ////////////////////////////////////////////////////////////
-class ApplicationState : public IDrawable, public Transformable, public NonCopyable {
+class ApplicationState : public Drawable, public Transformable, public NonCopyable {
 	public:
 		////////////////////////////////////////////////////////////
 		/// \brief Default constructor

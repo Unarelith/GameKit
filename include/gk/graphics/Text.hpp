@@ -16,7 +16,7 @@
 
 #include "gk/graphics/Color.hpp"
 #include "gk/core/Rect.hpp"
-#include "gk/gl/IDrawable.hpp"
+#include "gk/gl/Drawable.hpp"
 #include "gk/gl/Texture.hpp"
 #include "gk/gl/Transformable.hpp"
 #include "gk/graphics/Font.hpp"
@@ -24,20 +24,20 @@
 
 namespace gk {
 
-class Text : public IDrawable, public Transformable {
+class Text : public Drawable, public Transformable {
 	public:
 		Text() = default;
 		Text(const std::string &fontResourceName, int ptsize);
-		Text(const std::string &text, const std::string &fontResourceName, int ptsize);
-		Text(const std::string &text, const Font &font, int ptsize);
+		Text(const std::string &str, const std::string &fontResourceName, int ptsize);
+		Text(const std::string &str, const Font &font, int ptsize);
 
 		IntRect getLocalBounds();
 
 		void setFont(const Font &font) { m_font = &font; m_isUpdateNeeded = true; }
 		void setFont(const std::string &resourceName);
 
-		const std::string &text() const { return m_text; }
-		void setText(const std::string &text) { m_text = text; m_isUpdateNeeded = true; }
+		const std::string &string() const { return m_string; }
+		void setString(const std::string &str) { m_string = str; m_isUpdateNeeded = true; }
 
 		enum Style {
 			Normal        = TTF_STYLE_NORMAL,
@@ -70,7 +70,7 @@ class Text : public IDrawable, public Transformable {
 		mutable Image m_image;
 		mutable Texture m_texture;
 
-		std::string m_text;
+		std::string m_string;
 		int m_characterSize = -1;
 
 		gk::Vector2i m_size{0, 0};

@@ -17,13 +17,13 @@
 #include <array>
 
 #include "gk/graphics/Color.hpp"
-#include "gk/gl/IDrawable.hpp"
+#include "gk/gl/Drawable.hpp"
 #include "gk/gl/Transformable.hpp"
 #include "gk/gl/VertexBuffer.hpp"
 
 namespace gk {
 
-class RectangleShape : public IDrawable, public Transformable {
+class RectangleShape : public Drawable, public Transformable {
 	public:
 		RectangleShape();
 		RectangleShape(float width, float height, const Color &color = Color::White);

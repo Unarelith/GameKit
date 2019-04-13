@@ -20,7 +20,7 @@
 
 namespace gk {
 
-class TextInput : public IDrawable, public Transformable {
+class TextInput : public Drawable, public Transformable {
 	public:
 		TextInput();
 
@@ -33,9 +33,9 @@ class TextInput : public IDrawable, public Transformable {
 		void setPosition(float x, float y);
 		void setSize(u16 width, u16 height);
 		void setCharacterLimit(u16 characterLimit) { m_characterLimit = characterLimit; }
-		void setContent(const std::string &content) { m_content = content; m_text.setText(m_content + m_cursor); }
+		void setContent(const std::string &content) { m_content = content; m_text.setString(m_content + m_cursor); }
 		void setKeyboardSound(const std::string &keyboardSound) { m_keyboardSound = keyboardSound; }
-		void setCursor(const std::string &cursor) { m_cursor = cursor; m_text.setText(m_content + m_cursor); }
+		void setCursor(const std::string &cursor) { m_cursor = cursor; m_text.setString(m_content + m_cursor); }
 
 	private:
 		void draw(RenderTarget &target, RenderStates states) const override;
