@@ -47,7 +47,7 @@ IntRect Text::getLocalBounds() {
 }
 
 void Text::setFont(const std::string &resourceName) {
-	setFont(gk::ResourceHandler::getInstance().get<gk::Font>(resourceName));
+	setFont(ResourceHandler::getInstance().get<Font>(resourceName));
 }
 
 void Text::update() const {
@@ -55,7 +55,7 @@ void Text::update() const {
 
 	if (!m_font || m_string.empty() || m_characterSize < 0) return;
 
-	// FIXME: Add a conversion function between gk::Color and SDL_Color
+	// FIXME: Add a conversion function between Color and SDL_Color
 	SDL_Color color;
 	color.r = m_color.r * 255.0f;
 	color.g = m_color.g * 255.0f;
@@ -72,6 +72,7 @@ void Text::update() const {
 		surface = TTF_RenderUTF8_Blended(font, m_string.c_str(), color);
 
 	if (surface) {
+		m_texture = std::make_shared<Texture>();
 		m_texture->loadFromSurface(surface);
 		SDL_FreeSurface(surface);
 

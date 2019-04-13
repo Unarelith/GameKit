@@ -96,7 +96,7 @@ class ApplicationState : public Drawable, public Transformable, public NonCopyab
 		/// \param states Current render states
 		///
 		////////////////////////////////////////////////////////////
-		void draw(gk::RenderTarget &, gk::RenderStates) const override {}
+		void draw(RenderTarget &, RenderStates) const override {}
 
 		////////////////////////////////////////////////////////////
 		// Member data

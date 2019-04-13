@@ -22,15 +22,15 @@ namespace gk {
 void TilemapRenderer::init(Tilemap *map, u16 mapWidth, u16 mapHeight, u8 mapLayers) {
 	m_map = map;
 
-	gk::VertexBuffer::bind(&m_vbo);
-	m_vbo.setData(sizeof(gk::Vertex) * mapWidth * mapHeight * mapLayers * 6, nullptr, GL_DYNAMIC_DRAW);
-	gk::VertexBuffer::bind(nullptr);
+	VertexBuffer::bind(&m_vbo);
+	m_vbo.setData(sizeof(Vertex) * mapWidth * mapHeight * mapLayers * 6, nullptr, GL_DYNAMIC_DRAW);
+	VertexBuffer::bind(nullptr);
 }
 
 void TilemapRenderer::updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap &map) {
 	if (id == 0) return;
 
-	gk::VertexBuffer::bind(&m_vbo);
+	VertexBuffer::bind(&m_vbo);
 
 	float tileWidth  = map.tileset().tileWidth();
 	float tileHeight = map.tileset().tileHeight();
@@ -44,7 +44,7 @@ void TilemapRenderer::updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap
 	float texTileWidth  = tileWidth  / map.tileset().getSize().x;
 	float texTileHeight = tileHeight / map.tileset().getSize().y;
 
-	gk::Vertex vertices[] = {
+	Vertex vertices[] = {
 		{{x            , y             , 0, 1}, {texTileX               , texTileY                }, {1.0f, 1.0f, 1.0f, 1.0f}},
 		{{x + tileWidth, y             , 0, 1}, {texTileX + texTileWidth, texTileY                }, {1.0f, 1.0f, 1.0f, 1.0f}},
 		{{x + tileWidth, y + tileHeight, 0, 1}, {texTileX + texTileWidth, texTileY + texTileHeight}, {1.0f, 1.0f, 1.0f, 1.0f}},
@@ -55,10 +55,10 @@ void TilemapRenderer::updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap
 
 	m_vbo.updateData(sizeof(vertices) * (tileX + tileY * map.width() + layer * map.width() * map.height()), sizeof(vertices), vertices);
 
-	gk::VertexBuffer::bind(nullptr);
+	VertexBuffer::bind(nullptr);
 }
 
-void TilemapRenderer::draw(gk::RenderTarget &target, gk::RenderStates states) const {
+void TilemapRenderer::draw(RenderTarget &target, RenderStates states) const {
 	if (!m_map) return;
 
 	states.texture = &m_map->tileset();

@@ -24,9 +24,9 @@ Tileset::Tileset(const std::string &filename, const std::string &configFile) {
 }
 
 void Tileset::load(const std::string &filename, const std::string &configFile) {
-	gk::Texture::loadFromFile(filename);
+	Texture::loadFromFile(filename);
 
-	gk::XMLFile doc(configFile);
+	XMLFile doc(configFile);
 
 	tinyxml2::XMLElement *tilesetElement = doc.FirstChildElement("tileset").ToElement();
 	if (!tilesetElement)

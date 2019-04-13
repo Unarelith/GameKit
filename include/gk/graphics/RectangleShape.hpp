@@ -39,7 +39,7 @@ class RectangleShape : public Drawable, public Transformable {
 		Vector2f getSize() const { return Vector2f{m_width, m_height}; }
 
 		void setSize(float width, float height) { m_width = width; m_height = height; updateVertexBuffer(); }
-		void setSize(const gk::Vector2f &size) { m_width = size.x; m_height = size.y; updateVertexBuffer(); }
+		void setSize(const Vector2f &size) { m_width = size.x; m_height = size.y; updateVertexBuffer(); }
 
 		void setOutlineColor(const Color &color) { m_outlineColor = color; updateVertexBuffer(); }
 		void setOutlineThickness(int outlineThickness) { m_outlineThickness = outlineThickness; updateVertexBuffer(); }

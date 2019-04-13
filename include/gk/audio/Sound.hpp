@@ -43,7 +43,7 @@ class Sound {
 
 		Mix_ChunkPtr m_sfx{nullptr, Mix_FreeChunk};
 
-		gk::Timer m_timer;
+		Timer m_timer;
 
 		int m_channel = -1;
 		int m_volume = MIX_MAX_VOLUME;

@@ -41,7 +41,7 @@ class Tile {
 		u16 m_type = 0;
 };
 
-class Tileset : public gk::Texture {
+class Tileset : public Texture {
 	public:
 		Tileset() = default;
 		Tileset(const Tileset &) = delete;

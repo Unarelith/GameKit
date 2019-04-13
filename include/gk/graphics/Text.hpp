@@ -27,7 +27,6 @@ namespace gk {
 class Text : public Drawable, public Transformable {
 	public:
 		Text() = default;
-		Text(const Text &text);
 		Text(const std::string &fontResourceName, int ptsize);
 		Text(const std::string &str, const std::string &fontResourceName, int ptsize);
 		Text(const std::string &str, const Font &font, int ptsize);
@@ -52,7 +51,7 @@ class Text : public Drawable, public Transformable {
 		void setColor(const Color &color) { m_color = color; m_isUpdateNeeded = true; }
 		void setCharacterSize(int size) { m_characterSize = size; m_isUpdateNeeded = true; }
 
-		void setSize(const gk::Vector2i &size) { m_size = size; m_isUpdateNeeded = true; }
+		void setSize(const Vector2i &size) { m_size = size; m_isUpdateNeeded = true; }
 		void setCentered(bool isCentered) { m_isCentered = isCentered; m_isUpdateNeeded = true; }
 		void setScaled(bool isScaled) { m_isScaled = isScaled; m_isUpdateNeeded = true; }
 		void setWrapped(bool isWrapped) { m_isWrapped = isWrapped; m_isUpdateNeeded = true; }
@@ -74,7 +73,7 @@ class Text : public Drawable, public Transformable {
 		std::string m_string;
 		int m_characterSize = -1;
 
-		gk::Vector2i m_size{0, 0};
+		Vector2i m_size{0, 0};
 		bool m_isCentered = false;
 		bool m_isScaled = false;
 		bool m_isWrapped = false;

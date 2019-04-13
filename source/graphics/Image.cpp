@@ -56,7 +56,7 @@ void Image::load(const Texture &texture) {
 }
 
 void Image::setClipRect(float x, float y, u16 width, u16 height) {
-	m_clipRect = gk::FloatRect(x, y, width, height);
+	m_clipRect = FloatRect(x, y, width, height);
 
 	m_posRect.width = width;
 	m_posRect.height = height;

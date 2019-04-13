@@ -39,7 +39,7 @@ void Tilemap::update() {
 	m_animator.animateTiles(*this);
 }
 
-void Tilemap::draw(gk::RenderTarget &target, gk::RenderStates states) const {
+void Tilemap::draw(RenderTarget &target, RenderStates states) const {
 	states.transform *= getTransform();
 
 	target.draw(m_renderer, states);

@@ -22,16 +22,16 @@ namespace gk {
 
 class Tilemap;
 
-class TilemapRenderer : public gk::Drawable {
+class TilemapRenderer : public Drawable {
 	public:
 		void init(Tilemap *map, u16 mapWidth, u16 mapHeight, u8 mapLayers);
 
 		void updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap &map);
 
 	private:
-		void draw(gk::RenderTarget &target, gk::RenderStates states) const override;
+		void draw(RenderTarget &target, RenderStates states) const override;
 
-		gk::VertexBuffer m_vbo;
+		VertexBuffer m_vbo;
 
 		Tilemap *m_map = nullptr;
 };
