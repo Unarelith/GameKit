@@ -27,6 +27,7 @@ namespace gk {
 class Text : public Drawable, public Transformable {
 	public:
 		Text() = default;
+		Text(const Text &text);
 		Text(const std::string &fontResourceName, int ptsize);
 		Text(const std::string &str, const std::string &fontResourceName, int ptsize);
 		Text(const std::string &str, const Font &font, int ptsize);
@@ -68,7 +69,7 @@ class Text : public Drawable, public Transformable {
 
 		mutable bool m_isUpdateNeeded = false;
 		mutable Image m_image;
-		mutable Texture m_texture;
+		mutable std::shared_ptr<Texture> m_texture;
 
 		std::string m_string;
 		int m_characterSize = -1;

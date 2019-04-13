@@ -18,6 +18,7 @@
 
 #include "gk/core/IntTypes.hpp"
 #include "gk/core/SDLHeaders.hpp"
+#include "gk/core/Vector2.hpp"
 #include "gk/gl/OpenGL.hpp"
 #include "gk/utils/NonCopyable.hpp"
 
@@ -108,20 +109,12 @@ class Texture : public NonCopyable {
 		const std::string &filename() const { return m_filename; }
 
 		////////////////////////////////////////////////////////////
-		/// \brief Return the width of the texture
+		/// \brief Return the size of the texture
 		///
-		/// \return Width in pixels
-		///
-		////////////////////////////////////////////////////////////
-		u16 width() const { return m_width; }
-
-		////////////////////////////////////////////////////////////
-		/// \brief Return the height of the texture
-		///
-		/// \return Height in pixels
+		/// \return Size in pixels
 		///
 		////////////////////////////////////////////////////////////
-		u16 height() const { return m_height; }
+		const gk::Vector2u &getSize() const { return m_size; }
 
 	private:
 		////////////////////////////////////////////////////////////
@@ -129,8 +122,7 @@ class Texture : public NonCopyable {
 		////////////////////////////////////////////////////////////
 		std::string m_filename; ///< Texture filename
 
-		u16 m_width;            ///< Width of the texture
-		u16 m_height;           ///< Height of the texture
+		gk::Vector2u m_size;    ///< Size of the texture
 
 		GLuint m_texture = 0;   ///< Internal OpenGL texture ID
 };

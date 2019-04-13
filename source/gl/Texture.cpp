@@ -28,8 +28,7 @@ Texture::Texture(SDL_Surface *surface) {
 Texture::Texture(Texture &&texture) {
 	m_filename = texture.m_filename;
 
-	m_width = texture.m_width;
-	m_height = texture.m_height;
+	m_size = texture.m_size;
 
 	m_texture = texture.m_texture;
 	texture.m_texture = 0;
@@ -42,8 +41,7 @@ Texture::~Texture() noexcept {
 Texture &Texture::operator=(Texture &&texture) {
 	m_filename = texture.m_filename;
 
-	m_width = texture.m_width;
-	m_height = texture.m_height;
+	m_size = texture.m_size;
 
 	m_texture = texture.m_texture;
 	texture.m_texture = 0;
@@ -65,8 +63,8 @@ void Texture::loadFromFile(const std::string &filename) {
 }
 
 void Texture::loadFromSurface(SDL_Surface *surface) {
-	m_width = surface->w;
-	m_height = surface->h;
+	m_size.x = surface->w;
+	m_size.y = surface->h;
 
 	if (m_texture == 0)
 		glCheck(glGenTextures(1, &m_texture));
@@ -83,7 +81,7 @@ void Texture::loadFromSurface(SDL_Surface *surface) {
 		format = (surface->format->Rmask == 0x000000ff) ? GL_RGB : GL_BGR;
 	}
 
-	glCheck(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, format, GL_UNSIGNED_BYTE, surface->pixels));
+	glCheck(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_size.x, m_size.y, 0, format, GL_UNSIGNED_BYTE, surface->pixels));
 
 	glCheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
 	glCheck(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));

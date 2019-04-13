@@ -38,11 +38,11 @@ void TilemapRenderer::updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap
 	float x = tileX * tileWidth;
 	float y = tileY * tileHeight;
 
-	float texTileX = id % u16(map.tileset().width() / tileWidth) * tileWidth  / map.tileset().width();
-	float texTileY = id / u16(map.tileset().width() / tileWidth) * tileHeight / map.tileset().height();
+	float texTileX = id % u16(map.tileset().getSize().x / tileWidth) * tileWidth  / map.tileset().getSize().x;
+	float texTileY = id / u16(map.tileset().getSize().x / tileWidth) * tileHeight / map.tileset().getSize().y;
 
-	float texTileWidth  = tileWidth  / map.tileset().width();
-	float texTileHeight = tileHeight / map.tileset().height();
+	float texTileWidth  = tileWidth  / map.tileset().getSize().x;
+	float texTileHeight = tileHeight / map.tileset().getSize().y;
 
 	gk::Vertex vertices[] = {
 		{{x            , y             , 0, 1}, {texTileX               , texTileY                }, {1.0f, 1.0f, 1.0f, 1.0f}},

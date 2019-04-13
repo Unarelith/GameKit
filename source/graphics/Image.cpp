@@ -48,8 +48,8 @@ void Image::load(const std::string &textureName) {
 void Image::load(const Texture &texture) {
 	m_texture = &texture;
 
-	m_width = m_texture->width();
-	m_height = m_texture->height();
+	m_width = m_texture->getSize().x;
+	m_height = m_texture->getSize().y;
 
 	setClipRect(0, 0, m_width, m_height);
 	setPosRect(0, 0, m_width, m_height);
@@ -65,7 +65,7 @@ void Image::setClipRect(float x, float y, u16 width, u16 height) {
 }
 
 void Image::setPosRect(float x, float y, u16 width, u16 height) {
-	m_posRect = gk::FloatRect(x, y, width, height);
+	m_posRect = FloatRect(x, y, width, height);
 
 	updateVertexBuffer();
 }

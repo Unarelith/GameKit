@@ -72,26 +72,26 @@ void Text::update() const {
 		surface = TTF_RenderUTF8_Blended(font, m_string.c_str(), color);
 
 	if (surface) {
-		m_texture.loadFromSurface(surface);
+		m_texture->loadFromSurface(surface);
 		SDL_FreeSurface(surface);
 
-		m_image.load(m_texture);
+		m_image.load(*m_texture);
 
 		if (m_isCentered)
 			m_image.setPosition(
-				m_size.x / 2 - m_texture.width() / 2,
-				m_size.y / 2 - m_texture.height() / 2
+				m_size.x / 2 - m_texture->getSize().x / 2,
+				m_size.y / 2 - m_texture->getSize().y / 2
 			);
 		else
 			m_image.setPosition(0, 0);
 
 		if (m_isScaled) {
-			int width = std::min((int)m_texture.width(), m_size.x);
-			int height = std::min((int)m_texture.height(), m_size.y);
+			int width = std::min((int)m_texture->getSize().x, m_size.x);
+			int height = std::min((int)m_texture->getSize().y, m_size.y);
 			m_image.setPosRect(0, 0, width, height);
 		}
 		else
-			m_image.setPosRect(0, 0, m_texture.width(), m_texture.height());
+			m_image.setPosRect(0, 0, m_texture->getSize().x, m_texture->getSize().y);
 	}
 	else
 		DEBUG("Unable to create text image for '" + m_string + "':", TTF_GetError());
@@ -105,7 +105,7 @@ void Text::draw(RenderTarget &target, RenderStates states) const {
 		update();
 
 	states.transform *= getTransform();
-	states.texture = &m_texture;
+	states.texture = m_texture.get();
 	target.draw(m_image, states);
 }
 
