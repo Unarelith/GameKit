@@ -35,6 +35,7 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/SpriteAnimation.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/Text.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/TextInput.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/graphics/TiledImage.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/Tilemap.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/Tileset.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/tilemap/TilemapAnimator.cpp

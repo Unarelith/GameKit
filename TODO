@@ -5,6 +5,7 @@ TODO
 • DONE: Try to use this in `Asylia`
 • DONE: Add `examples` folder
 •  WIP: Add documentation in all the classes
+• TODO: Rename `GamePadMovement` to `TopDownMovement` and add `PlatformerMovement`
 • TODO: Add `SpriteLoader` and `SpriteComponent` from Lexa
    ◦ TODO: Replace relevant classes in Lexa, darktower and others
 • TODO: Merge `gl` and `graphics`
@@ -55,6 +56,7 @@ TODO
    ◦ TODO: GameClock
    ◦ DONE: GamePad
    ◦ DONE: InputHandler
+   ◦ TODO: KeyboardHandler
    ◦ TODO: Mouse
    ◦ DONE: Rect
    ◦ TODO: SDLLoader
@@ -78,6 +80,7 @@ TODO
    ◦ TODO: SpriteAnimation
    ◦ TODO: Text
    ◦ DONE: Texture
+   ◦ TODO: TiledImage
    ◦ TODO: Tilemap
    ◦ TODO: TilemapAnimator
    ◦ TODO: TilemapRenderer
@@ -90,6 +93,8 @@ TODO
 • TODO: Resource module
    ◦ TODO: IResourceLoader
    ◦ TODO: ResourceHandler
+   ◦ TODO: TilemapLoader
+   ◦ TODO: TilesetLoader
    ◦ TODO: TextureLoader
 • TODO: Scene module
    ◦ TODO: AbstractController
@@ -99,7 +104,9 @@ TODO
    ◦ TODO: CollisionComponent
    ◦ TODO: CollisionHelper
    ◦ TODO: EasyBehaviour
+   ◦ TODO: EasyController
    ◦ TODO: EasyMovement
+   ◦ TODO: EasyView
    ◦ TODO: GamePadMovement
    ◦ TODO: HealthComponent
    ◦ TODO: HitboxComponent

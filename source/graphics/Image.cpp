@@ -55,6 +55,10 @@ void Image::load(const Texture &texture) {
 	setPosRect(0, 0, m_width, m_height);
 }
 
+void Image::setTexture(const std::string &textureName) {
+	m_texture = &ResourceHandler::getInstance().get<Texture>(textureName);
+}
+
 void Image::setClipRect(float x, float y, u16 width, u16 height) {
 	m_clipRect = FloatRect(x, y, width, height);
 

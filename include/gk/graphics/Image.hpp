@@ -32,6 +32,8 @@ class Image : public Drawable, public Transformable {
 		void load(const std::string &textureName);
 		void load(const Texture &texture);
 
+		void setTexture(const std::string &textureName);
+
 		const FloatRect &clipRect() const { return m_clipRect; }
 		void setClipRect(float x, float y, u16 width, u16 height);
 
