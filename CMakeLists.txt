@@ -11,8 +11,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" "${CMAKE_CURRE
 
 add_subdirectory(source)
 
-if (MSVC)
-	set(MSVC_LIBRARIES_PATH "C:/Libraries")
+if (WIN32)
+	set(WIN_LIBRARIES_PATH "C:/Libraries")
 endif ()
 
 #------------------------------------------------------------------------------
@@ -63,8 +63,8 @@ set(CMAKE_CXX_STANDARD 14)
 #------------------------------------------------------------------------------
 # - tinyxml2
 #------------------------------------------------------------------------------
-if (MSVC)
-	set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${MSVC_LIBRARIES_PATH}/tinyxml2)
+if (WIN32)
+	set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${WIN_LIBRARIES_PATH}/tinyxml2)
 endif ()
 
 find_package(TinyXml2 REQUIRED)
@@ -80,8 +80,8 @@ link_directories(${TINYXML2_LIBRARY_DIRS})
 #------------------------------------------------------------------------------
 set(OpenGL_GL_PREFERENCE "LEGACY")
 
-if (MSVC)
-	set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${MSVC_LIBRARIES_PATH}/glm)
+if (WIN32)
+	set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${WIN_LIBRARIES_PATH}/glm)
 endif ()
 
 find_package(OpenGL REQUIRED)
@@ -100,11 +100,11 @@ include_directories(${GLM_INCLUDE_DIRS})
 #------------------------------------------------------------------------------
 # - SDL2, SDL2_image, SDL2_mixer, SDL2_ttf
 #------------------------------------------------------------------------------
-if (MSVC)
-	set(SDL2_PATH       ${MSVC_LIBRARIES_PATH}/SDL2       CACHE BOOL "" FORCE)
-	set(SDL2_IMAGE_PATH ${MSVC_LIBRARIES_PATH}/SDL2_image CACHE BOOL "" FORCE)
-	set(SDL2_MIXER_PATH ${MSVC_LIBRARIES_PATH}/SDL2_mixer CACHE BOOL "" FORCE)
-	set(SDL2_TTF_PATH   ${MSVC_LIBRARIES_PATH}/SDL2_ttf   CACHE BOOL "" FORCE)
+if (WIN32)
+	set(SDL2_PATH       ${WIN_LIBRARIES_PATH}/SDL2       CACHE BOOL "" FORCE)
+	set(SDL2_IMAGE_PATH ${WIN_LIBRARIES_PATH}/SDL2_image CACHE BOOL "" FORCE)
+	set(SDL2_MIXER_PATH ${WIN_LIBRARIES_PATH}/SDL2_mixer CACHE BOOL "" FORCE)
+	set(SDL2_TTF_PATH   ${WIN_LIBRARIES_PATH}/SDL2_ttf   CACHE BOOL "" FORCE)
 endif ()
 
 find_package(SDL2 REQUIRED)
@@ -136,8 +136,8 @@ include_directories(${SDL2_INCLUDE_DIRS}
 #------------------------------------------------------------------------------
 # - GLEW
 #------------------------------------------------------------------------------
-if (MSVC)
-	set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${MSVC_LIBRARIES_PATH}/glew)
+if (WIN32)
+	set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${WIN_LIBRARIES_PATH}/glew)
 
 	find_package(GLEW REQUIRED)
 
