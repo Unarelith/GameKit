@@ -15,6 +15,7 @@
 #define GK_SHADER_HPP_
 
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include <glm/glm.hpp>
@@ -36,6 +37,9 @@ class Shader {
 		void createProgram();
 		void linkProgram();
 
+		void bindAttributeLocation(GLuint index, const std::string &name);
+		void defaultAttributeLocationBinding();
+
 		void addShader(GLenum type, const std::string &filename);
 
 		GLint attrib(const std::string &name) const;
@@ -56,6 +60,8 @@ class Shader {
 	private:
 		std::vector<GLuint> m_vertexShaders;
 		std::vector<GLuint> m_fragmentShaders;
+
+		std::unordered_map<std::string, GLuint> m_attributes;
 
 		GLuint m_program;
 };

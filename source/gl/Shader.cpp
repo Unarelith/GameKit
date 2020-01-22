@@ -53,6 +53,8 @@ void Shader::loadFromFile(const std::string &vertexFilename, const std::string &
 
 void Shader::createProgram() {
 	glCheck(m_program = glCreateProgram());
+
+	defaultAttributeLocationBinding();
 }
 
 void Shader::linkProgram() {
@@ -76,6 +78,24 @@ void Shader::linkProgram() {
 
 		throw EXCEPTION("Program", m_program, "link failed:", error);
 	}
+}
+
+void Shader::bindAttributeLocation(GLuint index, const std::string &name) {
+	if (attrib(name) == -1) {
+		glCheck(glBindAttribLocation(m_program, index, name.c_str()));
+
+		m_attributes.emplace(name, index);
+	}
+}
+
+void Shader::defaultAttributeLocationBinding() {
+	bindAttributeLocation(0, "coord3d");
+	bindAttributeLocation(1, "texCoord");
+	bindAttributeLocation(2, "color");
+	bindAttributeLocation(3, "normal");
+	bindAttributeLocation(4, "lightValue");
+	bindAttributeLocation(5, "blockType");
+	bindAttributeLocation(6, "ambientOcclusion");
 }
 
 void Shader::addShader(GLenum type, const std::string &filename) {
@@ -130,14 +150,11 @@ void Shader::addShader(GLenum type, const std::string &filename) {
 }
 
 GLint Shader::attrib(const std::string &name) const {
-	GLint attrib;
-	glCheck(attrib = glGetAttribLocation(m_program, name.c_str()));
+	auto it = m_attributes.find(name);
+	if (it == m_attributes.end())
+		return -1;
 
-	if(attrib == -1) {
-		DEBUG("Could not bind attribute:", name);
-	}
-
-	return attrib;
+	return it->second;
 }
 
 GLint Shader::uniform(const std::string &name) const {

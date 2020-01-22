@@ -19,6 +19,7 @@
 #include "gk/core/GameClock.hpp"
 #include "gk/core/SDLLoader.hpp"
 #include "gk/core/Window.hpp"
+#include "gk/gl/VertexArray.hpp"
 #include "gk/resource/ResourceHandler.hpp"
 
 namespace gk {
@@ -110,6 +111,8 @@ class CoreApplication {
 		RenderStates m_renderStates = RenderStates::Default;   ///< The default render states
 
 		ArgumentParser m_argumentParser;                       ///< Helper for argument management
+
+		VertexArray m_vao;                                     ///< The VAO used for rendering
 };
 
 } // namespace gk
