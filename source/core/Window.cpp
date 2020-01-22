@@ -40,7 +40,7 @@ void Window::open(const std::string &caption, u16 width, u16 height) {
 
 	m_isOpen = true;
 
-#ifdef __MINGW32__
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__MINGW32__)
 #ifdef USE_GLAD
 	if(!gladLoadGL()) {
 		throw EXCEPTION("glad init failed");

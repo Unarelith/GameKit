@@ -29,9 +29,15 @@ Makefile
 *.sln
 *.vcxproj
 *.vcxproj.filters
+*.vcxproj.user
 gamekit.dir
 Win32
+Debug
 Release
+RelWithDebInfo
+
+# Visual Studio
+.vs
 
 # Doxygen generated files
 doc/html
