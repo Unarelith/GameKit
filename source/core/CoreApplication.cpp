@@ -73,8 +73,6 @@ int CoreApplication::run(bool isProtected) {
 
 void CoreApplication::createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle) {
 	m_window.open(windowTitle, screenWidth, screenHeight);
-
-	m_vao.init();
 }
 
 void CoreApplication::onEvent(const SDL_Event &event) {
@@ -107,12 +105,8 @@ void CoreApplication::mainLoop() {
 		m_clock.drawGame([&] {
 			m_window.clear();
 
-			VertexArray::bind(&m_vao);
-
 			if(!m_stateStack.empty())
 				m_window.draw(m_stateStack.top(), m_renderStates);
-
-			VertexArray::bind(nullptr);
 
 			m_window.display();
 		});
