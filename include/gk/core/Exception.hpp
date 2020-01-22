@@ -19,7 +19,7 @@
 
 #include "gk/core/Debug.hpp"
 
-#define EXCEPTION(args...) (gk::Exception(__LINE__, _FILE, args))
+#define EXCEPTION(...) (gk::Exception(__LINE__, _FILE, __VA_ARGS__))
 
 namespace gk {
 

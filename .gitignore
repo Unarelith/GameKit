@@ -25,6 +25,14 @@ compile_commands.json
 install_manifest.txt
 Makefile
 
+# CMake temporary files on Windows
+*.sln
+*.vcxproj
+*.vcxproj.filters
+gamekit.dir
+Win32
+Release
+
 # Doxygen generated files
 doc/html
 doc/latex

@@ -14,7 +14,7 @@
 #ifndef GK_SDLHEADERS_HPP_
 #define GK_SDLHEADERS_HPP_
 
-#ifdef __ANDROID__
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__ANDROID__)
 	#include "SDL.h"
 	#include "SDL_image.h"
 	#include "SDL_mixer.h"

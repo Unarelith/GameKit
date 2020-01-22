@@ -25,10 +25,10 @@
 #define _FILE (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
 
 #ifdef DEBUG_ENABLED
-	#define DEBUG(args...) { std::cout << gk::Debug::textColor(gk::Debug::TextColor::Red, true) << _FILE << ":" << __LINE__ << ":" << gk::Debug::textColor(); gk::Debug::print(args); }
+	#define DEBUG(...) { std::cout << gk::Debug::textColor(gk::Debug::TextColor::Red, true) << _FILE << ":" << __LINE__ << ":" << gk::Debug::textColor(); gk::Debug::print(__VA_ARGS__); }
 	#define TRACE(s) { DEBUG("Function called: " #s); s }
 #else
-	#define DEBUG(args...) {}
+	#define DEBUG(...) {}
 	#define TRACE(s) { s }
 #endif
 

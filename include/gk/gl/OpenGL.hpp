@@ -20,7 +20,7 @@
 #ifdef __APPLE__
 	#include <OpenGL/gl.h>
 #else
-	#ifdef __MINGW32__
+	#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__MINGW32__)
 		#ifdef USE_GLAD
 			#include <GLAD/glad.h>
 		#else
