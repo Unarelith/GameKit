@@ -45,6 +45,8 @@ namespace Debug {
 #ifdef DEBUG_COLOR
 		return std::string("\33[0;") + ((color < 10) ? "0" : "") + std::to_string(color) + ";0" + ((bold) ? "1" : "0") + "m";
 #else
+		(void)color;
+		(void)bold;
 		return std::string("");
 #endif
 	}

@@ -14,7 +14,6 @@
 #ifndef GK_TRANSFORM_HPP_
 #define GK_TRANSFORM_HPP_
 
-#define GLM_FORCE_RADIANS
 #include <glm/gtc/type_ptr.hpp>
 
 #include "gk/core/Box.hpp"
