@@ -53,9 +53,12 @@ if(NOT MSVC)
 	target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC -Wno-variadic-macros)
 endif()
 
-set(CMAKE_CXX_STANDARD 14)
+if(MSVC)
+	set(CMAKE_CXX_STANDARD 14)
+else()
+	target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC -std=c++14)
+endif()
 
-# target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC -std=c++14)
 # target_compile_features(${CMAKE_PROJECT_NAME} PUBLIC cxx_std_14)
 
 #------------------------------------------------------------------------------
