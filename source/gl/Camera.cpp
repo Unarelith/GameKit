@@ -68,7 +68,7 @@ void Camera::setFarClippingPlane(float distance) {
 
 const Transform& Camera::getTransform() const {
 	if (!m_transformUpdated) {
-		m_transform = glm::perspective(m_fieldOfView, m_aspect, m_nearPlane, m_farPlane);
+		m_transform = glm::perspective(glm::radians(m_fieldOfView), m_aspect, m_nearPlane, m_farPlane);
 
 		m_transformUpdated = true;
 	}
