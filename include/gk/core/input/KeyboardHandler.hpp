@@ -15,6 +15,7 @@
 #define GK_KEYBOARDHANDLER_HPP_
 
 #include <map>
+#include <string>
 
 #include "gk/core/input/InputHandler.hpp"
 #include "gk/core/SDLHeaders.hpp"
