@@ -86,6 +86,8 @@ void CoreApplication::handleEvents() {
 	while (SDL_PollEvent(&event)) {
 		onEvent(event);
 
+		m_window.onEvent(event);
+
 		if (!m_stateStack.empty())
 			m_stateStack.top().onEvent(event);
 	}

@@ -66,9 +66,54 @@ void Window::display() {
 	SDL_GL_SwapWindow(m_window.get());
 }
 
+void Window::onEvent(const SDL_Event &event) {
+	if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
+		glViewport(0, 0, event.window.data1, event.window.data2);
+
+		m_size.x = event.window.data1;
+		m_size.y = event.window.data2;
+	}
+}
+
 void Window::setVerticalSyncEnabled(bool enabled) {
 	if(SDL_GL_SetSwapInterval(enabled) < 0) {
 		DEBUG("Warning: Can't enable VSync");
+	}
+}
+
+void Window::setWindowMode(Mode mode) {
+	if (m_windowMode != mode) {
+		if (mode == Mode::Windowed) {
+			SDL_SetWindowFullscreen(m_window.get(), 0);
+			SDL_SetWindowSize(m_window.get(), m_baseSize.x, m_baseSize.y);
+			SDL_SetWindowPosition(m_window.get(), m_basePosition.x, m_basePosition.y);
+		}
+		else {
+			m_baseSize = m_size;
+
+			SDL_GetWindowPosition(m_window.get(), &m_basePosition.x, &m_basePosition.y);
+			SDL_SetWindowFullscreen(m_window.get(), (mode == Mode::Fullscreen) ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP);
+
+			SDL_DisplayMode desktopMode;
+			if (SDL_GetDesktopDisplayMode(0, &desktopMode) == 0)
+				SDL_SetWindowDisplayMode(m_window.get(), &desktopMode);
+		}
+
+		m_windowMode = mode;
+	}
+}
+
+Vector2u Window::getSize() const {
+	if (m_windowMode == Mode::Windowed)
+		return m_size;
+	else {
+		int w, h;
+		SDL_GetWindowSize(m_window.get(), &w, &h);
+
+		return Vector2u{
+			static_cast<unsigned int>(w),
+			static_cast<unsigned int>(h)
+		};
 	}
 }
 
