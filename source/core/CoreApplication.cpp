@@ -94,6 +94,8 @@ void CoreApplication::handleEvents() {
 }
 
 void CoreApplication::mainLoop() {
+	m_clock.startFpsTimer();
+
 	while(m_window.isOpen() && m_stateStack.size()) {
 		handleEvents();
 
