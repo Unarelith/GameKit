@@ -14,6 +14,7 @@
 #ifndef GK_TILEDIMAGE_HPP_
 #define GK_TILEDIMAGE_HPP_
 
+#include <string>
 #include <vector>
 
 #include "gk/graphics/Image.hpp"
