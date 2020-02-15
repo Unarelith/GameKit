@@ -53,6 +53,7 @@ class Window : public RenderTarget {
 		void setWindowMode(Mode mode);
 
 		Vector2u getSize() const override;
+		void resize(unsigned int width, unsigned int height);
 
 		void close() { m_isOpen = false; }
 		bool isOpen() const { return m_isOpen; }

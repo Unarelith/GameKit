@@ -126,5 +126,9 @@ Vector2u Window::getSize() const {
 	}
 }
 
+void Window::resize(unsigned int width, unsigned int height) {
+	SDL_SetWindowSize(m_window.get(), width, height);
+}
+
 } // namespace gk
 
