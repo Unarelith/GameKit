@@ -43,7 +43,11 @@ class Vector3 {
 		template<typename U>
 		Vector3(const Vector3<U> &vector3) : x(vector3.x), y(vector3.y), z(vector3.z) {}
 
+		float cross(const Vector3<T> &vector3) const { return x * vector3.x + y * vector3.y + z * vector3.z; }
+
 		Vector3 operator+(const Vector3<T> &vector3) const { return Vector3{x + vector3.x, y + vector3.y, z + vector3.z}; }
+		Vector3 operator+(T n) const { return Vector3{x + n, y + n, z + n}; }
+
 		Vector3 operator-(const Vector3<T> &vector3) const { return Vector3{x - vector3.x, y - vector3.y, z - vector3.z}; }
 		Vector3 operator-()                          const { return Vector3{-x, -y, -z}; }
 		Vector3 operator*(T n)                       const { return Vector3{x * n, y * n, z * n}; }

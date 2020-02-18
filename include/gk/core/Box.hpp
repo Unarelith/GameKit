@@ -106,6 +106,7 @@ class Box {
 
 using IntBox = Box<int>;
 using FloatBox = Box<float>;
+using DoubleBox = Box<double>;
 
 }
 
