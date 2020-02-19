@@ -126,17 +126,17 @@ IntRect RenderTarget::getViewport(const View& view) const {
 	float height = static_cast<float>(getSize().y);
 	const FloatRect& viewport = view.getViewport();
 
-	return IntRect(static_cast<int>(0.5f + width  * viewport.x),
-	               static_cast<int>(0.5f + height * viewport.y),
-	               static_cast<int>(width  * viewport.width),
-	               static_cast<int>(height * viewport.height));
+	return IntRect(static_cast<int>(0.5f + width  * viewport.position.x),
+	               static_cast<int>(0.5f + height * viewport.position.y),
+	               static_cast<int>(width  * viewport.size.x),
+	               static_cast<int>(height * viewport.size.y));
 }
 
 void RenderTarget::applyCurrentView(const RenderStates &states) {
 	IntRect viewport = getViewport(*m_view);
 	if (viewport != m_previousViewport) {
-		int top = getSize().y - (viewport.y + viewport.height);
-		glViewport(viewport.x, top, viewport.width, viewport.height);
+		int top = getSize().y - (viewport.position.y + viewport.size.y);
+		glViewport(viewport.position.x, top, viewport.size.x, viewport.size.y);
 		m_previousViewport = viewport;
 	}
 

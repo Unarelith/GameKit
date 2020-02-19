@@ -46,6 +46,19 @@ class Rect {
 		Rect() = default;
 
 		////////////////////////////////////////////////////////////
+		/// \brief Construct the rectangle from position and size
+		///
+		/// Be careful, the last parameter is the size,
+		/// not the bottom-right corner!
+		///
+		/// \param position Position of the top-left corner of the rectangle
+		/// \param size     Size of the rectangle
+		///
+		////////////////////////////////////////////////////////////
+		Rect(const Vector2<T> &_position, const Vector2<T> &_size)
+			: position(_position), size(_size) {}
+
+		////////////////////////////////////////////////////////////
 		/// \brief Construct the rectangle from its coordinates
 		///
 		/// Be careful, the last two parameters are the width
@@ -58,20 +71,7 @@ class Rect {
 		///
 		////////////////////////////////////////////////////////////
 		Rect(T _x, T _y, T _width, T _height)
-			: x(_x), y(_y), width(_width), height(_height) {}
-
-		////////////////////////////////////////////////////////////
-		/// \brief Construct the rectangle from position and size
-		///
-		/// Be careful, the last parameter is the size,
-		/// not the bottom-right corner!
-		///
-		/// \param position Position of the top-left corner of the rectangle
-		/// \param size     Size of the rectangle
-		///
-		////////////////////////////////////////////////////////////
-		Rect(const Vector2<T> &position, const Vector2<T> &size)
-			: x(position.x), y(position.x), width(size.x), height(size.y) {}
+			: position(Vector2<T>{_x, _y}), size(Vector2<T>{_width, _height}) {}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Construct the rectangle from another type of rectangle
@@ -86,7 +86,7 @@ class Rect {
 		////////////////////////////////////////////////////////////
 		template<typename U>
 		explicit Rect(const Rect<U> &rect)
-			: Rect(rect.x, rect.y, rect.width, rect.height) {}
+			: Rect(rect.position, rect.size) {}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Check if a point is inside the rectangle's area
@@ -103,10 +103,10 @@ class Rect {
 		///
 		////////////////////////////////////////////////////////////
 		bool contains(T _x, T _y) const {
-			T minX = std::min(x, static_cast<T>(x + width));
-			T maxX = std::max(x, static_cast<T>(x + width));
-			T minY = std::min(y, static_cast<T>(y + height));
-			T maxY = std::max(y, static_cast<T>(y + height));
+			T minX = std::min(position.x, static_cast<T>(position.x + size.x));
+			T maxX = std::max(position.x, static_cast<T>(position.x + size.x));
+			T minY = std::min(position.y, static_cast<T>(position.y + size.y));
+			T maxY = std::max(position.y, static_cast<T>(position.y + size.y));
 
 			return (_x >= minX) && (_x < maxX) && (_y >= minY) && (_y < maxY);
 		}
@@ -139,15 +139,15 @@ class Rect {
 		///
 		////////////////////////////////////////////////////////////
 		bool intersects(const Rect<T> &rect) const {
-			T r1MinX = std::min(x, static_cast<T>(x + width));
-			T r1MaxX = std::max(x, static_cast<T>(x + width));
-			T r1MinY = std::min(y, static_cast<T>(y + height));
-			T r1MaxY = std::max(y, static_cast<T>(y + height));
+			T r1MinX = std::min(position.x, static_cast<T>(position.x + size.x));
+			T r1MaxX = std::max(position.x, static_cast<T>(position.x + size.x));
+			T r1MinY = std::min(position.y, static_cast<T>(position.y + size.y));
+			T r1MaxY = std::max(position.y, static_cast<T>(position.y + size.y));
 
-			T r2MinX = std::min(rect.x, static_cast<T>(rect.x + rect.width));
-			T r2MaxX = std::max(rect.x, static_cast<T>(rect.x + rect.width));
-			T r2MinY = std::min(rect.y, static_cast<T>(rect.y + rect.height));
-			T r2MaxY = std::max(rect.y, static_cast<T>(rect.y + rect.height));
+			T r2MinX = std::min(rect.position.x, static_cast<T>(rect.position.x + rect.size.x));
+			T r2MaxX = std::max(rect.position.x, static_cast<T>(rect.position.x + rect.size.x));
+			T r2MinY = std::min(rect.position.y, static_cast<T>(rect.position.y + rect.size.y));
+			T r2MaxY = std::max(rect.position.y, static_cast<T>(rect.position.y + rect.size.y));
 
 			T interLeft   = std::max(r1MinX, r2MinX);
 			T interTop    = std::max(r1MinY, r2MinY);
@@ -168,15 +168,15 @@ class Rect {
 		///
 		////////////////////////////////////////////////////////////
 		T intersectionDirection(const Rect<T> &rect) const {
-			T r1MinX = std::min(x, static_cast<T>(x + width));
-			T r1MaxX = std::max(x, static_cast<T>(x + width));
-			T r1MinY = std::min(y, static_cast<T>(y + height));
-			T r1MaxY = std::max(y, static_cast<T>(y + height));
+			T r1MinX = std::min(position.x, static_cast<T>(position.x + size.x));
+			T r1MaxX = std::max(position.x, static_cast<T>(position.x + size.x));
+			T r1MinY = std::min(position.y, static_cast<T>(position.y + size.y));
+			T r1MaxY = std::max(position.y, static_cast<T>(position.y + size.y));
 
-			T r2MinX = std::min(rect.x, static_cast<T>(rect.x + rect.width));
-			T r2MaxX = std::max(rect.x, static_cast<T>(rect.x + rect.width));
-			T r2MinY = std::min(rect.y, static_cast<T>(rect.y + rect.height));
-			T r2MaxY = std::max(rect.y, static_cast<T>(rect.y + rect.height));
+			T r2MinX = std::min(rect.position.x, static_cast<T>(rect.position.x + rect.size.x));
+			T r2MaxX = std::max(rect.position.x, static_cast<T>(rect.position.x + rect.size.x));
+			T r2MinY = std::min(rect.position.y, static_cast<T>(rect.position.y + rect.size.y));
+			T r2MaxY = std::max(rect.position.y, static_cast<T>(rect.position.y + rect.size.y));
 
 			T interLeft   = std::max(r1MinX, r2MinX);
 			T interTop    = std::max(r1MinY, r2MinY);
@@ -204,7 +204,7 @@ class Rect {
 		/// \return True if this rectangle is equal to \a rect
 		///
 		////////////////////////////////////////////////////////////
-		bool operator==(const Rect<T> &rect) const { return x == rect.x && y == rect.y && width == rect.width && height == rect.height; }
+		bool operator==(const Rect<T> &rect) const { return position == rect.position && size == rect.size; }
 
 		////////////////////////////////////////////////////////////
 		/// \brief Overload of binary operator !=
@@ -221,10 +221,8 @@ class Rect {
 		////////////////////////////////////////////////////////////
 		// Member data
 		////////////////////////////////////////////////////////////
-		T x = 0;      ///< Left coordinate of the rectangle
-		T y = 0;      ///< Top coordinate of the rectangle
-		T width = 0;  ///< Width of the rectangle
-		T height = 0; ///< Height of the rectangle
+		Vector2<T> position = Vector2<T>{0, 0};      ///< Coordinates of the rectangle
+		Vector2<T> size = Vector2<T>{0, 0};          ///< Size of the rectangle
 };
 
 // Create typedefs for the most common types

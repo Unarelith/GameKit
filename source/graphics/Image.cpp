@@ -71,8 +71,8 @@ void Image::setTexture(const std::string &textureName) {
 void Image::setClipRect(float x, float y, u16 width, u16 height) {
 	m_clipRect = FloatRect(x, y, width, height);
 
-	m_posRect.width = width;
-	m_posRect.height = height;
+	m_posRect.size.x = width;
+	m_posRect.size.y = height;
 
 	updateVertexBuffer();
 }
@@ -85,38 +85,38 @@ void Image::setPosRect(float x, float y, u16 width, u16 height) {
 
 void Image::updateVertexBuffer() const {
 	Vertex vertices[4] = {
-		{{m_posRect.x + m_posRect.width, m_posRect.y,                    0, -1}},
-		{{m_posRect.x,                   m_posRect.y,                    0, -1}},
-		{{m_posRect.x,                   m_posRect.y + m_posRect.height, 0, -1}},
-		{{m_posRect.x + m_posRect.width, m_posRect.y + m_posRect.height, 0, -1}},
+		{{m_posRect.position.x + m_posRect.size.x, m_posRect.position.y,                    0, -1}},
+		{{m_posRect.position.x,                    m_posRect.position.y,                    0, -1}},
+		{{m_posRect.position.x,                    m_posRect.position.y + m_posRect.size.y, 0, -1}},
+		{{m_posRect.position.x + m_posRect.size.x, m_posRect.position.y + m_posRect.size.y, 0, -1}},
 	};
 
 	FloatRect texRect{
-		m_clipRect.x / float(m_width),
-		m_clipRect.y / float(m_height),
-		m_clipRect.width / float(m_width),
-		m_clipRect.height / float(m_height)
+		m_clipRect.position.x / float(m_width),
+		m_clipRect.position.y / float(m_height),
+		m_clipRect.size.x / float(m_width),
+		m_clipRect.size.y / float(m_height)
 	};
 
 	if (!m_isFlipped) {
-		vertices[0].texCoord[0] = texRect.x + texRect.width;
-		vertices[0].texCoord[1] = texRect.y;
-		vertices[1].texCoord[0] = texRect.x;
-		vertices[1].texCoord[1] = texRect.y;
-		vertices[2].texCoord[0] = texRect.x;
-		vertices[2].texCoord[1] = texRect.y + texRect.height;
-		vertices[3].texCoord[0] = texRect.x + texRect.width;
-		vertices[3].texCoord[1] = texRect.y + texRect.height;
+		vertices[0].texCoord[0] = texRect.position.x + texRect.size.x;
+		vertices[0].texCoord[1] = texRect.position.y;
+		vertices[1].texCoord[0] = texRect.position.x;
+		vertices[1].texCoord[1] = texRect.position.y;
+		vertices[2].texCoord[0] = texRect.position.x;
+		vertices[2].texCoord[1] = texRect.position.y + texRect.size.y;
+		vertices[3].texCoord[0] = texRect.position.x + texRect.size.x;
+		vertices[3].texCoord[1] = texRect.position.y + texRect.size.y;
 	}
 	else {
-		vertices[0].texCoord[0] = texRect.x;
-		vertices[0].texCoord[1] = texRect.y;
-		vertices[1].texCoord[0] = texRect.x + texRect.width;
-		vertices[1].texCoord[1] = texRect.y;
-		vertices[2].texCoord[0] = texRect.x + texRect.width;
-		vertices[2].texCoord[1] = texRect.y + texRect.height;
-		vertices[3].texCoord[0] = texRect.x;
-		vertices[3].texCoord[1] = texRect.y + texRect.height;
+		vertices[0].texCoord[0] = texRect.position.x;
+		vertices[0].texCoord[1] = texRect.position.y;
+		vertices[1].texCoord[0] = texRect.position.x + texRect.size.x;
+		vertices[1].texCoord[1] = texRect.position.y;
+		vertices[2].texCoord[0] = texRect.position.x + texRect.size.x;
+		vertices[2].texCoord[1] = texRect.position.y + texRect.size.y;
+		vertices[3].texCoord[0] = texRect.position.x;
+		vertices[3].texCoord[1] = texRect.position.y + texRect.size.y;
 	}
 
 	for (u8 i = 0 ; i < 4 ; ++i) {

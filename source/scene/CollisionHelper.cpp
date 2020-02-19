@@ -54,22 +54,17 @@ bool CollisionHelper::inCollision(SceneObject &object1, SceneObject &object2) {
 			auto &pos1 = object1.get<PositionComponent>();
 			auto &pos2 = object2.get<PositionComponent>();
 
-			rect1.x += pos1.x;
-			rect1.y += pos1.y;
-
-			rect2.x += pos2.x;
-			rect2.y += pos2.y;
+			rect1.position += pos1;
+			rect2.position += pos2;
 
 			if(object1.has<MovementComponent>()) {
 				auto &movement = object1.get<MovementComponent>();
-				rect1.x += movement.v.x;
-				rect1.y += movement.v.y;
+				rect1.position += movement.v;
 			}
 
 			if(object2.has<MovementComponent>()) {
 				auto &movement = object2.get<MovementComponent>();
-				rect2.x += movement.v.x;
-				rect2.x += movement.v.y;
+				rect2.position += movement.v;
 			}
 
 			if(rect1.intersects(rect2)) {
