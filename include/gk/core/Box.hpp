@@ -34,46 +34,53 @@ class Box {
 	public:
 		Box() = default;
 
-		Box(T _x, T _y, T _z, T _width, T _height, T _depth) {
-			reset(_x, _y, _z, _width, _height, _depth);
+		Box(T _x, T _y, T _z, T _xsize, T _ysize, T _zsize) {
+			reset(_x, _y, _z, _xsize, _ysize, _zsize);
 		}
 
 		Box(const Vector3<T> &_position, const Vector3<T> &_size) {
-			reset(_position.x, _position.y, _position.z, _size.x, _size.y, _size.z);
+			reset(_position, _size);
 		}
 
 		template<typename U>
 		Box(const Box<U> &box)
-			: Box(box.x, box.y, box.width, box.height) {}
+			: Box(box.position, box.size) {}
 
-		void reset(T _x, T _y, T _z, T _width, T _height, T _depth) {
-			x = _x;
-			y = _y;
-			z = _z;
-			width = _width;
-			height = _height;
-			depth = _depth;
+		void reset(T _x, T _y, T _z, T _xsize, T _ysize, T _zsize) {
+			position.x = _x;
+			position.y = _y;
+			position.z = _z;
+			size.x = _xsize;
+			size.y = _ysize;
+			size.z = _zsize;
 		}
 
-		void reset(Box<T> box) { reset(box.x, box.y, box.z, box.width, box.height, box.depth); }
+		void reset(Vector3<T> _position, Vector3<T> _size) {
+			position = _position;
+			size = _size;
+		}
 
-		void move(T _x, T _y, T _z) { x += _x; y += _y; z += _z; }
-		void move(Vector3<T> d) { move(d.x, d.y, d.z); }
+		void reset(Box<T> box) {
+			reset(box.position, box.size);
+		}
+
+		void move(Vector3<T> d) { position += d; }
+		void move(T _x, T _y, T _z) { move(Vector3<T>{_x, _y, _z}); }
 
 		bool intersects(const Box<T> &box) const {
-			T r1MinX = std::min(x, static_cast<T>(x + width));
-			T r1MaxX = std::max(x, static_cast<T>(x + width));
-			T r1MinY = std::min(y, static_cast<T>(y + height));
-			T r1MaxY = std::max(y, static_cast<T>(y + height));
-			T r1MinZ = std::min(z, static_cast<T>(z + depth));
-			T r1MaxZ = std::max(z, static_cast<T>(z + depth));
+			T r1MinX = std::min(position.x, static_cast<T>(position.x + size.x));
+			T r1MaxX = std::max(position.x, static_cast<T>(position.x + size.x));
+			T r1MinY = std::min(position.y, static_cast<T>(position.y + size.y));
+			T r1MaxY = std::max(position.y, static_cast<T>(position.y + size.y));
+			T r1MinZ = std::min(position.z, static_cast<T>(position.z + size.z));
+			T r1MaxZ = std::max(position.z, static_cast<T>(position.z + size.z));
 
-			T r2MinX = std::min(box.x, static_cast<T>(box.x + box.width));
-			T r2MaxX = std::max(box.x, static_cast<T>(box.x + box.width));
-			T r2MinY = std::min(box.y, static_cast<T>(box.y + box.height));
-			T r2MaxY = std::max(box.y, static_cast<T>(box.y + box.height));
-			T r2MinZ = std::min(box.z, static_cast<T>(box.z + box.depth));
-			T r2MaxZ = std::max(box.z, static_cast<T>(box.z + box.depth));
+			T r2MinX = std::min(box.position.x, static_cast<T>(box.position.x + box.size.x));
+			T r2MaxX = std::max(box.position.x, static_cast<T>(box.position.x + box.size.x));
+			T r2MinY = std::min(box.position.y, static_cast<T>(box.position.y + box.size.y));
+			T r2MaxY = std::max(box.position.y, static_cast<T>(box.position.y + box.size.y));
+			T r2MinZ = std::min(box.position.z, static_cast<T>(box.position.z + box.size.z));
+			T r2MaxZ = std::max(box.position.z, static_cast<T>(box.position.z + box.size.z));
 
 			T interLeft   = std::max(r1MinX, r2MinX);
 			T interRight  = std::min(r1MaxX, r2MaxX);
@@ -85,23 +92,15 @@ class Box {
 			return interLeft < interRight && interBottom < interTop && interFront < interBack;
 		}
 
-		Vector3<T> position() const { return {x, y, z}; }
-
-		void setPosition(Vector3<T> vector3) { x = vector3.x; y = vector3.y; z = vector3.z; }
-
-		Box operator+(const Vector3<T> &vector3) const { return Box{x + vector3.x, y + vector3.y, z + vector3.z, width, height, depth}; }
-		Box operator-(const Vector3<T> &vector3) const { return Box{x - vector3.x, y - vector3.y, z - vector3.z, width, height, depth}; }
+		Box operator+(const Vector3<T> &vector3) const { return Box{position + vector3, size}; }
+		Box operator-(const Vector3<T> &vector3) const { return Box{position - vector3, size}; }
 
 		Box &operator+=(const Vector3<T> &vector3) { *this = operator+(vector3); return *this; }
 		Box &operator-=(const Vector3<T> &vector3) { *this = operator-(vector3); return *this; }
 
-		T x = 0;
-		T y = 0;
-		T z = 0;
+		Vector3<T> position = {0, 0, 0};
 
-		T width = 0;
-		T height = 0;
-		T depth = 0;
+		Vector3<T> size = {0, 0, 0};
 };
 
 using IntBox = Box<int>;
