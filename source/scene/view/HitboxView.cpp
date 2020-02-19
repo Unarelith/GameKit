@@ -40,8 +40,8 @@ void HitboxView::draw(const SceneObject &object, RenderTarget &target, RenderSta
 		const FloatRect *hitbox = object.get<HitboxComponent>().currentHitbox();
 		if(hitbox) {
 			RectangleShape rect;
-			rect.setPosition(hitbox->position.x, hitbox->position.y);
-			rect.setSize(hitbox->size);
+			rect.setPosition(hitbox->x, hitbox->y);
+			rect.setSize(hitbox->sizeX, hitbox->sizeY);
 			rect.setWireframeMode(true); // FIXME
 			rect.setFillColor(Color::White);
 

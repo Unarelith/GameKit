@@ -66,10 +66,11 @@ void View::setRotation(float angle) {
 }
 
 void View::reset(const FloatRect &rectangle) {
-	m_position.x = rectangle.position.x + rectangle.size.x / 2.f;
-	m_position.y = rectangle.position.y + rectangle.size.y / 2.f;
+	m_position.x = rectangle.x + rectangle.sizeX / 2.f;
+	m_position.y = rectangle.y + rectangle.sizeY / 2.f;
 
-	m_size = rectangle.size;
+	m_size.x = rectangle.sizeX;
+	m_size.y = rectangle.sizeY;
 
 	m_rotation = 0;
 
