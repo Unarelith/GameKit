@@ -89,11 +89,6 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 		glCheck(glVertexAttribPointer(states.shader->attrib("lightValue"), 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, lightValue))));
 	}
 
-	if (states.vertexAttributes & VertexAttribute::BlockType) {
-		states.shader->enableVertexAttribArray("blockType");
-		glCheck(glVertexAttribPointer(states.shader->attrib("blockType"), 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, blockType))));
-	}
-
 	if (states.vertexAttributes & VertexAttribute::AmbientOcclusion) {
 		states.shader->enableVertexAttribArray("ambientOcclusion");
 		glCheck(glVertexAttribPointer(states.shader->attrib("ambientOcclusion"), 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, ambientOcclusion))));
@@ -110,8 +105,6 @@ void RenderTarget::endDrawing(const RenderStates &states) {
 
 	if (states.vertexAttributes & VertexAttribute::AmbientOcclusion)
 		states.shader->disableVertexAttribArray("ambientOcclusion");
-	if (states.vertexAttributes & VertexAttribute::BlockType)
-		states.shader->disableVertexAttribArray("blockType");
 	if (states.vertexAttributes & VertexAttribute::LightValue)
 		states.shader->disableVertexAttribArray("lightValue");
 	if (states.vertexAttributes & VertexAttribute::Color)

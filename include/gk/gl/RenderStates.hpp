@@ -40,8 +40,7 @@ namespace VertexAttribute {
 		TexCoord         = 4,
 		Color            = 8,
 		LightValue       = 16,
-		BlockType        = 32,
-		AmbientOcclusion = 64,
+		AmbientOcclusion = 32,
 
 		Only2d      = Coord3d | TexCoord | Color,
 		All         = 0xff,

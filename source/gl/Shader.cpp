@@ -103,8 +103,7 @@ void Shader::defaultAttributeLocationBinding() {
 	bindAttributeLocation(2, "color");
 	bindAttributeLocation(3, "normal");
 	bindAttributeLocation(4, "lightValue");
-	bindAttributeLocation(5, "blockType");
-	bindAttributeLocation(6, "ambientOcclusion");
+	bindAttributeLocation(5, "ambientOcclusion");
 }
 
 void Shader::addShader(GLenum type, const std::string &filename) {

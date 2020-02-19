@@ -33,7 +33,6 @@ struct Vertex {
 	GLfloat color[4]        = {0, 0, 0, 1};
 	GLfloat normal[3]       = {0, 0, 0};
 	GLfloat lightValue[2]   = {-1, -1}; // FIXME
-	GLfloat blockType       = -1; // FIXME
 	GLfloat ambientOcclusion = 5; // FIXME
 };
 
