@@ -91,14 +91,18 @@ void CoreApplication::onEvent(const SDL_Event &event) {
 }
 
 void CoreApplication::handleEvents() {
+	gk::ApplicationState *currentState = nullptr;
+	if (!m_stateStack.empty())
+		currentState = &m_stateStack.top();
+
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		onEvent(event);
 
 		m_window.onEvent(event);
 
-		if (!m_stateStack.empty())
-			m_stateStack.top().onEvent(event);
+		if (currentState)
+			currentState->onEvent(event);
 	}
 }
 
