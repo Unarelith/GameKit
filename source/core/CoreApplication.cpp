@@ -101,7 +101,7 @@ void CoreApplication::handleEvents() {
 
 		m_window.onEvent(event);
 
-		if (currentState)
+		if (currentState && !m_stateStack.empty())
 			currentState->onEvent(event);
 	}
 }
