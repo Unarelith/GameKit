@@ -35,10 +35,16 @@ void KeyboardHandler::loadKeysFromFile(const std::string &filename) {
 		GameKey key = 0;
 		tinyxml2::XMLElement *keyElement = keys->FirstChildElement("key");
 		while (keyElement) {
-			m_keys[key] = SDL_GetScancodeFromName(keyElement->Attribute("key"));
+			const char *keyName = nullptr;
+			if (keyElement->QueryStringAttribute("scancode", &keyName) == tinyxml2::XMLError::XML_SUCCESS)
+				m_keys[key] = SDL_GetKeyFromScancode(SDL_GetScancodeFromName(keyName));
+			else if (keyElement->QueryStringAttribute("keycode", &keyName) == tinyxml2::XMLError::XML_SUCCESS)
+				m_keys[key] = SDL_GetKeyFromName(keyName);
+			else
+				DEBUG("Key '", keyElement->Attribute("name"), "' is invalid");
 
-			if(m_keys[key] == SDL_SCANCODE_UNKNOWN) {
-				DEBUG("Key '", keyElement->Attribute("key"), "' not recognized");
+			if(m_keys[key] == SDLK_UNKNOWN) {
+				DEBUG("Key '", keyName, "' not recognized");
 			}
 
 			InputHandler::addKey(key);
@@ -51,11 +57,11 @@ void KeyboardHandler::loadKeysFromFile(const std::string &filename) {
 
 bool KeyboardHandler::isKeyPressed(GameKey key) {
 	const u8 *keyboardState = SDL_GetKeyboardState(nullptr);
-	SDL_Scancode keyScancode = m_keys[key];
+	SDL_Keycode keyScancode = m_keys[key];
 
-	m_keysPressed[key] = keyboardState[keyScancode];
+	m_keysPressed[key] = keyboardState[SDL_GetScancodeFromKey(keyScancode)];
 
-	return keyboardState[keyScancode];
+	return m_keysPressed[key];
 }
 
 } // namespace gk
