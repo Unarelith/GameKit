@@ -35,10 +35,10 @@ void KeyboardHandler::loadKeysFromFile(const std::string &filename) {
 		GameKey key = 0;
 		tinyxml2::XMLElement *keyElement = keys->FirstChildElement("key");
 		while (keyElement) {
-			const char *keyName = nullptr;
-			if (keyElement->QueryStringAttribute("scancode", &keyName) == tinyxml2::XMLError::XML_SUCCESS)
+			const char *keyName;
+			if ((keyName =  keyElement->Attribute("scancode")))
 				m_keys[key] = SDL_GetKeyFromScancode(SDL_GetScancodeFromName(keyName));
-			else if (keyElement->QueryStringAttribute("keycode", &keyName) == tinyxml2::XMLError::XML_SUCCESS)
+			else if ((keyName = keyElement->Attribute("keycode")))
 				m_keys[key] = SDL_GetKeyFromName(keyName);
 			else
 				DEBUG("Key '", keyElement->Attribute("name"), "' is invalid");
