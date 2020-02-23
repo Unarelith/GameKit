@@ -45,7 +45,8 @@ class RenderTarget {
 
 		View *getView() { return m_view; }
 		const View *getView() const { return m_view; }
-		void setView(View &view) { m_view = &view; m_viewChanged = true; }
+		// FIXME: const_cast shouldn't be used here but it's required for OpenMiner
+		void setView(const View &view) { m_view = const_cast<View*>(&view); m_viewChanged = true; }
 		void disableView() { m_view = nullptr; }
 
 	private:
