@@ -39,6 +39,7 @@ class Camera : public View {
 		virtual ~Camera() = default;
 
 		const Vector3f &getPosition() const override { return m_position; }
+		const Vector3d &getDPosition() const { return m_position_d; }
 		const Vector3f &getDirection() const { return m_direction; }
 		const Vector3f &getUpVector() const { return m_upVector; }
 
@@ -49,6 +50,9 @@ class Camera : public View {
 
 		void setPosition(float x, float y, float z) { setPosition(Vector3f(x, y, z)); }
 		void setPosition(const Vector3f &position);
+
+		void setDPosition(double x, double y, double z) { setDPosition(Vector3d(x, y, z)); }
+		void setDPosition(const Vector3d &position);
 
 		void setDirection(float x, float y, float z) { setDirection(Vector3f(x, y, z)); }
 		void setDirection(const Vector3f &direction);
@@ -68,6 +72,7 @@ class Camera : public View {
 		const Transform &getViewTransform() const override;
 
 	private:
+		Vector3d m_position_d{0, 0, 0};
 		Vector3f m_direction{0, 0, -1};
 		Vector3f m_upVector{0, 1, 0};
 

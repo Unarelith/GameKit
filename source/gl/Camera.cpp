@@ -32,11 +32,17 @@ Camera::Camera(float fov, float near, float far) {
 	m_nearPlane = near;
 	m_farPlane = far;
 
-	setPosition(0, 0, 0);
+	setDPosition(0, 0, 0);
 }
 
 void Camera::setPosition(const Vector3f &position) {
 	m_position = position;
+	m_viewTransformUpdated = false;
+}
+
+void Camera::setDPosition(const Vector3d &position) {
+	m_position_d = position;
+	m_position = Vector3f(position.x, position.y, position.z);
 	m_viewTransformUpdated = false;
 }
 
