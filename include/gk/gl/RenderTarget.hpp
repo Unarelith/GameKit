@@ -43,8 +43,9 @@ class RenderTarget {
 
 		virtual const View &getDefaultView() const = 0;
 
+		View *getView() { return m_view; }
 		const View *getView() const { return m_view; }
-		void setView(const View &view) { m_view = &view; m_viewChanged = true; }
+		void setView(View &view) { m_view = &view; m_viewChanged = true; }
 		void disableView() { m_view = nullptr; }
 
 	private:
@@ -56,7 +57,7 @@ class RenderTarget {
 		void applyCurrentView(const RenderStates &states);
 
 		bool m_viewChanged = false;
-		const View *m_view = nullptr;
+		View *m_view = nullptr;
 
 		IntRect m_previousViewport;
 };
