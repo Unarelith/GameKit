@@ -80,8 +80,9 @@ class View {
 		mutable Transform m_transform;
 		mutable Transform m_viewTransform;
 
-	private:
 		Vector3f m_position;
+
+	private:
 		Vector2f m_size;
 
 		float m_rotation = 0.0f;

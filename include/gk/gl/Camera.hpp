@@ -68,7 +68,6 @@ class Camera : public View {
 		const Transform &getViewTransform() const override;
 
 	private:
-		Vector3f m_position{0, 0, 0};
 		Vector3f m_direction{0, 0, -1};
 		Vector3f m_upVector{0, 1, 0};
 
