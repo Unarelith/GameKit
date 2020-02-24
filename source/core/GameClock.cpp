@@ -85,7 +85,7 @@ void GameClock::measureLastFrameDuration() {
 
 void GameClock::computeFramesPerSecond() {
 	if (m_fpsTimer.time() > 1000) {
-		fps = m_frames / (m_fpsTimer.time() / 1000.0f);
+		fps = floor(m_frames / (m_fpsTimer.time() / 1000.0) + 0.5);
 
 		m_fpsTimer.reset();
 		m_fpsTimer.start();
