@@ -95,9 +95,6 @@ class Box {
 		void setPosition(Vector3<T> vector3) { x = vector3.x; y = vector3.y; z = vector3.z; }
 		void setSize(Vector3<T> vector3) { sizeX = vector3.x; sizeY = vector3.y; sizeZ = vector3.z; }
 
-		Box operator+(const Vector3<T> &vector3) const { return Box{x + vector3.x, y + vector3.y, z + vector3.z, sizeX, sizeY, sizeZ}; }
-		Box operator-(const Vector3<T> &vector3) const { return Box{x - vector3.x, y - vector3.y, z - vector3.z, sizeX, sizeY, sizeZ}; }
-
 		Box &operator+=(const Vector3<T> &vector3) { *this = operator+(vector3); return *this; }
 		Box &operator-=(const Vector3<T> &vector3) { *this = operator-(vector3); return *this; }
 
@@ -108,6 +105,16 @@ class Box {
 		T sizeX = 0;
 		T sizeY = 0;
 		T sizeZ = 0;
+
+		template<typename U>
+		auto operator+(const Vector3<U> &vector3) const -> Box<decltype(this->x + vector3.x)> {
+			return {x + vector3.x, y + vector3.y, z + vector3.z, sizeX, sizeY, sizeZ};
+		}
+
+		template<typename U>
+		auto operator-(const Vector3<T> &vector3) const -> Box<decltype(this->x - vector3.x)> {
+			return {x - vector3.x, y - vector3.y, z - vector3.z, sizeX, sizeY, sizeZ};
+		}
 };
 
 using IntBox = Box<int>;
