@@ -43,22 +43,7 @@ class Vector3 {
 		template<typename U>
 		Vector3(const Vector3<U> &vector3) : x(vector3.x), y(vector3.y), z(vector3.z) {}
 
-		float cross(const Vector3<T> &vector3) const { return x * vector3.x + y * vector3.y + z * vector3.z; }
-
-		Vector3 operator+(const Vector3<T> &vector3) const { return Vector3{x + vector3.x, y + vector3.y, z + vector3.z}; }
-		Vector3 operator+(T n) const { return Vector3{x + n, y + n, z + n}; }
-
-		Vector3 operator-(const Vector3<T> &vector3) const { return Vector3{x - vector3.x, y - vector3.y, z - vector3.z}; }
-		Vector3 operator-()                          const { return Vector3{-x, -y, -z}; }
-		Vector3 operator*(T n)                       const { return Vector3{x * n, y * n, z * n}; }
-
-		Vector3 operator/(T n) const {
-			if(n != 0) {
-				return Vector3{x / n, y / n, z / n};
-			} else {
-				throw std::overflow_error("Divide by zero exception");
-			}
-		}
+		Vector3 operator-() const { return Vector3{-x, -y, -z}; }
 
 		Vector3 &operator=(T n)                     { x = n; y = n; z = n; return *this; }
 		Vector3 &operator+=(const Vector3 &vector3) { *this = operator+(vector3); return *this; }
@@ -78,10 +63,44 @@ class Vector3 {
 		T x;
 		T y;
 		T z;
+
+		// Operators
+		auto cross(const Vector3<T> &vector3) const {
+			return x * vector3.x + y * vector3.y + z * vector3.z;
+		}
+
+		template<typename U>
+		auto operator+(const Vector3<U> &vector3) const -> Vector3<decltype(x + vector3.x)> {
+			return {x + vector3.x, y + vector3.y, z + vector3.z};
+		}
+
+		template<typename U>
+		auto operator+(U n) const -> Vector3<decltype(x + n)> {
+			return {x + n, y + n, z + n};
+		}
+
+		template<typename U>
+		auto operator-(const Vector3<U> &vector3) const -> Vector3<decltype(x - vector3.x)> {
+			return {x - vector3.x, y - vector3.y, z - vector3.z};
+		}
+
+		template<typename U>
+		auto operator*(U n) const -> Vector3<decltype(x * n)> {
+			return {x * n, y * n, z * n};
+		}
+
+		template<typename U>
+		auto operator/(U n) const -> Vector3<decltype(x / n)> {
+			if(n != 0) {
+				return {x / n, y / n, z / n};
+			} else {
+				throw std::overflow_error("Divide by zero exception");
+			}
+		}
 };
 
-template<typename T>
-Vector3<T> operator*(T n, Vector3<T> &vector3) { return vector3.operator*(n); }
+template<typename T, typename U>
+Vector3<T> operator*(T n, Vector3<U> &vector3) { return vector3.operator*(n); }
 
 using Vector3i = Vector3<int>;
 using Vector3u = Vector3<unsigned int>;

@@ -40,22 +40,7 @@ class Vector2 {
 		template<typename U>
 		Vector2(const Vector2<U> &vector2) : x(vector2.x), y(vector2.y) {}
 
-		float cross(const Vector2<T> &vector2) const { return x * vector2.x + y * vector2.y; }
-
-		Vector2 operator+(const Vector2<T> &vector2) const { return Vector2{x + vector2.x, y + vector2.y}; }
-		Vector2 operator+(T n) const { return Vector2{x + n, y + n}; }
-
-		Vector2 operator-(const Vector2<T> &vector2) const { return Vector2{x - vector2.x, y - vector2.y}; }
-		Vector2 operator-()                          const { return Vector2{-x, -y}; }
-		Vector2 operator*(T n)                       const { return Vector2{x * n, y * n}; }
-
-		Vector2 operator/(T n) const {
-			if(n != 0) {
-				return Vector2{x / n, y / n};
-			} else {
-				throw std::overflow_error("Divide by zero exception");
-			}
-		}
+		Vector2 operator-() const { return Vector2{-x, -y}; }
 
 		Vector2 &operator=(T n)                     { x = n; y = n; return *this; }
 		Vector2 &operator+=(const Vector2 &vector2) { *this = operator+(vector2); return *this; }
@@ -72,10 +57,44 @@ class Vector2 {
 
 		T x;
 		T y;
+
+		// Operators
+		auto cross(const Vector2<T> &vector2) const {
+			return x * vector2.x + y * vector2.y;
+		}
+
+		template<typename U>
+		auto operator+(const Vector2<U> &vector2) const -> Vector2<decltype(x + vector2.x)> {
+			return {x + vector2.x, y + vector2.y};
+		}
+
+		template<typename U>
+		auto operator+(U n) const -> Vector2<decltype(x + n)> {
+			return {x + n, y + n};
+		}
+
+		template<typename U>
+		auto operator-(const Vector2<U> &vector2) const -> Vector2<decltype(x - vector2.x)> {
+			return {x - vector2.x, y - vector2.y};
+		}
+
+		template<typename U>
+		auto operator*(U n) const -> Vector2<decltype(x * n)> {
+			return {x * n, y * n};
+		}
+
+		template<typename U>
+		auto operator/(U n) const -> Vector2<decltype(x / n)> {
+			if(n != 0) {
+				return {x / n, y / n};
+			} else {
+				throw std::overflow_error("Divide by zero exception");
+			}
+		}
 };
 
-template<typename T>
-Vector2<T> operator*(T n, Vector2<T> &vector2) { return vector2.operator*(n); }
+template<typename T, typename U>
+auto operator*(T n, Vector2<U> &vector2) { return vector2.operator*(n); }
 
 using Vector2i = Vector2<int>;
 using Vector2u = Vector2<unsigned int>;

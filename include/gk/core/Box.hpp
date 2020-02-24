@@ -107,12 +107,12 @@ class Box {
 		T sizeZ = 0;
 
 		template<typename U>
-		auto operator+(const Vector3<U> &vector3) const -> Box<decltype(this->x + vector3.x)> {
+		auto operator+(const Vector3<U> &vector3) const -> Box<decltype(x + vector3.x)> {
 			return {x + vector3.x, y + vector3.y, z + vector3.z, sizeX, sizeY, sizeZ};
 		}
 
 		template<typename U>
-		auto operator-(const Vector3<T> &vector3) const -> Box<decltype(this->x - vector3.x)> {
+		auto operator-(const Vector3<T> &vector3) const -> Box<decltype(x - vector3.x)> {
 			return {x - vector3.x, y - vector3.y, z - vector3.z, sizeX, sizeY, sizeZ};
 		}
 };
