@@ -47,7 +47,8 @@ class Window : public RenderTarget {
 
 		void onEvent(const SDL_Event &event);
 
-		void setVerticalSyncEnabled(bool enabled);
+		bool isVerticalSyncEnabled() { return m_isVerticalSyncEnabled; }
+		void setVerticalSyncEnabled(bool isVerticalSyncEnabled);
 
 		Mode getWindowMode() const { return m_windowMode; }
 		void setWindowMode(Mode mode);
@@ -78,6 +79,8 @@ class Window : public RenderTarget {
 		View m_defaultView;
 
 		Mode m_windowMode = Mode::Windowed;
+
+		bool m_isVerticalSyncEnabled = false;
 };
 
 } // namespace gk
