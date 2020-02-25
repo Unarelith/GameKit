@@ -63,6 +63,8 @@ class ResourceHandler {
 			return *std::static_pointer_cast<T>(it->second);
 		}
 
+		void clear() { m_resources.clear(); }
+
 		template<typename ResourceLoader>
 		static auto loadConfigFile(const char *xmlFilename) -> typename std::enable_if<std::is_base_of<IResourceLoader, ResourceLoader>::value>::type {
 			ResourceLoader loader;

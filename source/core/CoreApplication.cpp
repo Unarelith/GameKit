@@ -81,6 +81,8 @@ int CoreApplication::run(bool isProtected) {
 		runGame();
 	}
 
+	m_resourceHandler.clear();
+
 	return 0;
 }
 
