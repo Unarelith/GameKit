@@ -24,6 +24,8 @@
  *
  * =====================================================================================
  */
+#include <cmath>
+
 #include "gk/core/SDLHeaders.hpp"
 #include "gk/core/GameClock.hpp"
 
