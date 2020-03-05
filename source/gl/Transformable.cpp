@@ -87,10 +87,7 @@ void Transformable::rotate(float angle) {
 }
 
 void Transformable::rotate(float angle, const Vector3f &axis) {
-	Transform newRotation;
-	newRotation.rotate(angle, axis);
-
-	m_rotationTransform = newRotation * m_rotationTransform;
+	m_rotationTransform.rotate(angle, axis);
 
 	m_transformNeedUpdate = true;
 }

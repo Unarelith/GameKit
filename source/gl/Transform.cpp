@@ -44,8 +44,7 @@ Transform& Transform::translate(float x, float y, float z) {
 }
 
 Transform& Transform::rotate(float angle, const Vector3f& axis) {
-	float rotationAngle = angle * RADIANS_PER_DEGREES;
-	m_matrix = glm::rotate(m_matrix, rotationAngle, {axis.x, axis.y, axis.z});
+	m_matrix = glm::rotate(m_matrix, glm::radians(angle), {axis.x, axis.y, axis.z});
 	return *this;
 }
 
