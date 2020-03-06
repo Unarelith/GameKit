@@ -101,7 +101,7 @@ const Transform &View::getViewTransform() const {
 		positionTransform.translate(m_size.x / 2.f - m_position.x, m_size.y / 2.f - m_position.y);
 
 		Transform rotationTransform;
-		rotationTransform.rotate(m_rotation * M_PI / 180.0f);
+		rotationTransform.rotate(m_rotation);
 
 		m_viewTransform = positionTransform * rotationTransform;
 
