@@ -27,20 +27,26 @@
 #ifndef GK_INTTYPES_HPP_
 #define GK_INTTYPES_HPP_
 
-using s8  = signed char;
-using s16 = signed short;
-using s32 = signed int;
+#include <cstdint>
 
-using u8  = unsigned char;
-using u16 = unsigned short;
-using u32 = unsigned int;
+using s8  = int8_t;
+using s16 = int16_t;
+using s32 = int32_t;
+using s64 = int64_t;
 
-#if defined(_MSC_VER)
-	using s64 = signed __int64;
-	using u64 = unsigned __int64;
-#else
-	using s64 = signed long long;
-	using u64 = unsigned long long;
-#endif
+using u8  = uint8_t;
+using u16 = uint16_t;
+using u32 = uint32_t;
+using u64 = uint64_t;
+
+using s8f  = int_fast8_t;
+using s16f = int_fast16_t;
+using s32f = int_fast32_t;
+using s64f = int_fast64_t;
+
+using u8f  = uint_fast8_t;
+using u16f = uint_fast16_t;
+using u32f = uint_fast32_t;
+using u64f = uint_fast64_t;
 
 #endif // GK_INTTYPES_HPP_
