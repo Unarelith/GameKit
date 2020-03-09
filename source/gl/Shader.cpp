@@ -196,6 +196,10 @@ void Shader::setUniform(const std::string &name, float x, float y) const {
 	glCheck(glUniform2f(uniform(name), x, y));
 }
 
+void Shader::setUniform(const std::string &name, const gk::Color &color) const {
+	glCheck(glUniform4f(uniform(name), color.r, color.g, color.b, color.a));
+}
+
 void Shader::setUniform(const std::string &name, const glm::mat4 &matrix) const {
 	glCheck(glUniformMatrix4fv(uniform(name), 1, GL_FALSE, glm::value_ptr(matrix)));
 }

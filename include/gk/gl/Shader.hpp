@@ -34,6 +34,7 @@
 #include <glm/glm.hpp>
 
 #include "gk/gl/OpenGL.hpp"
+#include "gk/graphics/Color.hpp"
 
 namespace gk {
 
@@ -63,6 +64,7 @@ class Shader {
 
 		void setUniform(const std::string &name, int n) const;
 		void setUniform(const std::string &name, float x, float y) const;
+		void setUniform(const std::string &name, const gk::Color &color) const;
 		void setUniform(const std::string &name, const glm::mat4 &matrix) const;
 		void setUniform(const std::string &name, const Transform &transform) const;
 
