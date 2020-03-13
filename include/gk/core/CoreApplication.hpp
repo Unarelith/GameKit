@@ -29,6 +29,7 @@
 
 #include "gk/core/ApplicationStateStack.hpp"
 #include "gk/core/ArgumentParser.hpp"
+#include "gk/core/EventHandler.hpp"
 #include "gk/core/GameClock.hpp"
 #include "gk/core/SDLLoader.hpp"
 #include "gk/core/Window.hpp"
@@ -123,6 +124,8 @@ class CoreApplication {
 		RenderStates m_renderStates = RenderStates::Default;   ///< The default render states
 
 		ArgumentParser m_argumentParser;                       ///< Helper for argument management
+
+		EventHandler m_eventHandler;                           ///< Class responsible to store events and listeners
 };
 
 } // namespace gk

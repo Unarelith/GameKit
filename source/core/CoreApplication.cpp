@@ -44,6 +44,8 @@ void CoreApplication::init() {
 	ApplicationStateStack::setInstance(m_stateStack);
 	ResourceHandler::setInstance(m_resourceHandler);
 
+	m_stateStack.setEventHandler(m_eventHandler);
+
 	m_argumentParser.addArgument("mute", {"", "--no-sound"});
 	m_argumentParser.parse();
 	if (m_argumentParser.getArgument("mute").isFound)
@@ -117,6 +119,8 @@ void CoreApplication::mainLoop() {
 
 	while(m_window.isOpen() && m_stateStack.size()) {
 		handleEvents();
+
+		m_eventHandler.processEvents();
 
 		m_clock.updateGame([&] {
 			if (!m_stateStack.empty())

@@ -35,6 +35,7 @@
 namespace gk {
 
 class ApplicationStateStack;
+class EventHandler;
 
 ////////////////////////////////////////////////////////////
 /// \brief Abstract base class for game states
@@ -101,6 +102,14 @@ class ApplicationState : public Drawable, public Transformable, public NonCopyab
 		////////////////////////////////////////////////////////////
 		void setStateStack(ApplicationStateStack *stateStack) { m_stateStack = stateStack; }
 
+		////////////////////////////////////////////////////////////
+		/// \brief Set the event handler
+		///
+		/// \param eventHandler The event handler
+		///
+		////////////////////////////////////////////////////////////
+		void setEventHandler(EventHandler *eventHandler) { m_eventHandler = eventHandler; }
+
 	protected:
 		////////////////////////////////////////////////////////////
 		/// \brief Draw the sprite to a render target
@@ -117,6 +126,8 @@ class ApplicationState : public Drawable, public Transformable, public NonCopyab
 		ApplicationState *m_parent = nullptr;          ///< Parent to this state
 
 		ApplicationStateStack *m_stateStack = nullptr; ///< Stack where this state belongs to
+
+		EventHandler *m_eventHandler = nullptr;        ///< The event handler
 };
 
 } // namespace gk

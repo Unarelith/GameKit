@@ -34,6 +34,8 @@
 
 namespace gk {
 
+class EventHandler;
+
 ////////////////////////////////////////////////////////////
 /// \brief Stack containing ApplicationState instances
 ///
@@ -52,6 +54,7 @@ class ApplicationStateStack {
 		auto push(Args &&...args) -> typename std::enable_if<std::is_base_of<ApplicationState, T>::value, T&>::type {
 			m_states.emplace(std::make_shared<T>(std::forward<Args>(args)...));
 			m_states.top()->setStateStack(this);
+			m_states.top()->setEventHandler(m_eventHandler);
 			return static_cast<T&>(top());
 		}
 
@@ -102,6 +105,16 @@ class ApplicationStateStack {
 		std::size_t size() const { return m_states.size(); }
 
 		////////////////////////////////////////////////////////////
+		/// \brief Set the event handler
+		///
+		/// \param eventHandler The event handler
+		///
+		////////////////////////////////////////////////////////////
+		void setEventHandler(EventHandler &eventHandler) {
+			m_eventHandler = &eventHandler;
+		}
+
+		////////////////////////////////////////////////////////////
 		/// \brief Get the current singleton instance
 		///
 		/// \return Current singleton instance
@@ -133,6 +146,8 @@ class ApplicationStateStack {
 
 		std::stack<std::shared_ptr<ApplicationState>> m_states; ///< Stack containing the states
 		std::stack<std::shared_ptr<ApplicationState>> m_trash;  ///< Removed states waiting to be deleted
+
+		EventHandler *m_eventHandler = nullptr;                 ///< The event handler
 };
 
 } // namespace gk
