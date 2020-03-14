@@ -47,7 +47,13 @@ class EventHandler {
 		template<typename T, typename F, typename I>
 		void addListener(F &&func, I *instance) {
 			std::lock_guard<std::mutex> lock(m_mutex);
-			getListenerList<T>().addListener(std::bind(func, instance, std::placeholders::_1));
+			getListenerList<T>().addListener(std::bind(func, instance, std::placeholders::_1), instance);
+		}
+
+		void removeListeners(void *instance) {
+			std::lock_guard<std::mutex> lock(m_mutex);
+			for (auto &it : m_listenerLists)
+				it.second->removeListeners(instance);
 		}
 
 		template<typename T>

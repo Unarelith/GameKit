@@ -31,18 +31,35 @@
 #include <queue>
 #include <vector>
 
+#include "gk/core/IntTypes.hpp"
+
 namespace gk {
 
 class IEventListenerList {
 	public:
 		virtual void processEvents() = 0;
+
+		virtual void removeListeners(void *instance) = 0;
 };
 
 template<typename T>
 class EventListenerList : public IEventListenerList {
 	public:
 		void addListener(std::function<void(const T &)> &&function) {
-			m_listeners.emplace_back(function);
+			m_listeners.emplace_back(function, nullptr);
+		}
+
+		void addListener(std::function<void(const T &)> &&function, void *instance) {
+			m_listeners.emplace_back(function, instance);
+		}
+
+		void removeListeners(void *instance) {
+			for (auto it = m_listeners.begin() ; it != m_listeners.end() ;) {
+				if (it->second == instance)
+					m_listeners.erase(it);
+				else
+					++it;
+			}
 		}
 
 		void pushEvent(const T &event) {
@@ -59,14 +76,14 @@ class EventListenerList : public IEventListenerList {
 				const T &event = m_events.front();
 				m_events.pop();
 				for (auto &listener : m_listeners) {
-					listener(event);
+					listener.first(event);
 				}
 			}
 		}
 
 	private:
 		std::queue<T> m_events;
-		std::vector<std::function<void(const T &)>> m_listeners;
+		std::vector<std::pair<std::function<void(const T &)>, void *>> m_listeners;
 };
 
 } // namespace gk

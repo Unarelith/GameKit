@@ -27,6 +27,7 @@
 #ifndef GK_APPLICATIONSTATE_HPP_
 #define GK_APPLICATIONSTATE_HPP_
 
+#include "gk/core/EventHandler.hpp"
 #include "gk/core/SDLHeaders.hpp"
 #include "gk/gl/Drawable.hpp"
 #include "gk/gl/Transformable.hpp"
@@ -35,7 +36,6 @@
 namespace gk {
 
 class ApplicationStateStack;
-class EventHandler;
 
 ////////////////////////////////////////////////////////////
 /// \brief Abstract base class for game states
@@ -61,13 +61,24 @@ class ApplicationState : public Drawable, public Transformable, public NonCopyab
 		/// \brief Virtual destructor
 		///
 		////////////////////////////////////////////////////////////
-		virtual ~ApplicationState() = default;
+		virtual ~ApplicationState() {
+			m_eventHandler->removeListeners(this);
+		}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Defaulted move assignment operator
 		///
 		////////////////////////////////////////////////////////////
 		ApplicationState &operator=(ApplicationState &&) = default;
+
+		////////////////////////////////////////////////////////////
+		/// \brief Initialize the state
+		///
+		/// This is where you will be able to use `m_stateStack`
+		/// and `m_eventHandler` pointers
+		///
+		////////////////////////////////////////////////////////////
+		virtual void init() {}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Do an action in response to an SDL event
