@@ -29,12 +29,14 @@
 
 namespace gk {
 
-ArgumentParser::ArgumentParser(int argc, char **argv) {
+ArgumentParser::ArgumentParser() {
+	addArgument("help", {"", "--help"});
+}
+
+ArgumentParser::ArgumentParser(int argc, char **argv) : ArgumentParser() {
 	for (int i = 0 ; i < argc ; ++i) {
 		m_argv.emplace_back(argv[i]);
 	}
-
-	addArgument("help", {"", "--help"});
 }
 
 void ArgumentParser::parse() {

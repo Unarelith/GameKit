@@ -42,6 +42,7 @@ void CoreApplication::init() {
 	Mouse::setWindow(&m_window);
 
 	ApplicationStateStack::setInstance(m_stateStack);
+	GameClock::setInstance(m_clock);
 	ResourceHandler::setInstance(m_resourceHandler);
 
 	m_stateStack.setEventHandler(m_eventHandler);
@@ -117,7 +118,7 @@ void CoreApplication::handleEvents() {
 void CoreApplication::mainLoop() {
 	m_clock.startFpsTimer();
 
-	while(m_window.isOpen() && m_stateStack.size()) {
+	while(m_window.isOpen() && !m_stateStack.empty()) {
 		handleEvents();
 
 		m_eventHandler.processEvents();

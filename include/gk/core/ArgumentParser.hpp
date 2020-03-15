@@ -43,6 +43,7 @@ struct Argument {
 
 class ArgumentParser {
 	public:
+		ArgumentParser();
 		ArgumentParser(int argc, char **argv);
 
 		void parse();

@@ -28,6 +28,7 @@
 #define GK_GAMECLOCK_HPP_
 
 #include <functional>
+#include <mutex>
 
 #include "gk/core/Timer.hpp"
 
@@ -35,24 +36,36 @@ namespace gk {
 
 class GameClock {
 	public:
-		static u32 getTicks(bool realTime = false);
-		static u16 getFpsAverage() { return fps; }
+		u32 getTicks(bool realTime = false);
+		u16 getFpsAverage() const { return m_fps; }
 
 		void updateGame(std::function<void(void)> updateFunc);
 		void drawGame(std::function<void(void)> drawFunc);
 
 		void waitForNextFrame();
 
-		void startFpsTimer() { m_fpsTimer.start(); }
+		void startFpsTimer() {
+			m_fpsTimer = getTicks(true);
+		}
 
-		void setTimestep(u8 timestep) { m_timestep = timestep; }
+		void setTimestep(u8 timestep) {
+			std::lock_guard<std::mutex> lock(m_mutex);
+			m_timestep = timestep;
+		}
+
+		static GameClock &getInstance() { return *s_instance; }
+		static void setInstance(GameClock &clock) { s_instance = &clock; }
 
 	private:
 		void measureLastFrameDuration();
 		void computeFramesPerSecond();
 
-		static u32 ticks;
-		static u16 fps;
+		static GameClock *s_instance;
+
+		u32 m_ticks = 0;
+		u16 m_fps = 0;
+
+		std::mutex m_mutex;
 
 		u32 m_lastFrameDate = 0;
 		u32 m_lag = 0;
@@ -61,7 +74,7 @@ class GameClock {
 		u8 m_timestep = 6;
 		u8 m_numUpdates = 0;
 
-		Timer m_fpsTimer{true};
+		u32 m_fpsTimer = 0;
 		u16 m_frames = 0;
 };
 

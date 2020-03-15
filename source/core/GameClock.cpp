@@ -31,24 +31,29 @@
 
 namespace gk {
 
-u32 GameClock::ticks = 0;
-u16 GameClock::fps = 0;
+GameClock *GameClock::s_instance = nullptr;
 
 u32 GameClock::getTicks(bool realTime) {
+	std::lock_guard<std::mutex> lock(m_mutex);
+
 	if(realTime) {
 		return SDL_GetTicks();
 	} else {
-		return ticks;
+		return m_ticks;
 	}
 }
 
 void GameClock::updateGame(std::function<void(void)> updateFunc) {
+	std::unique_lock<std::mutex> lock(m_mutex);
+
 	m_numUpdates = 0;
 
 	while(m_lag >= m_timestep && m_numUpdates < 10) {
-		ticks += m_timestep;
+		m_ticks += m_timestep;
 
+		lock.unlock();
 		updateFunc();
+		lock.lock();
 
 		m_lag -= m_timestep;
 		m_numUpdates++;
@@ -56,27 +61,43 @@ void GameClock::updateGame(std::function<void(void)> updateFunc) {
 }
 
 void GameClock::drawGame(std::function<void(void)> drawFunc) {
+	std::unique_lock<std::mutex> lock(m_mutex);
+
 	if(m_numUpdates > 0) {
+		lock.unlock();
 		drawFunc();
+		lock.lock();
 		++m_frames;
 	}
+
+	lock.unlock();
 
 	computeFramesPerSecond();
 	waitForNextFrame();
 }
 
 void GameClock::waitForNextFrame() {
-	u32 lastFrameDuration = getTicks(true) - m_timeDropped - m_lastFrameDate;
+	u32 currentTicks = getTicks(true);
+
+	std::unique_lock<std::mutex> lock(m_mutex);
+
+	u32 lastFrameDuration = currentTicks - m_timeDropped - m_lastFrameDate;
 
 	if(lastFrameDuration < m_timestep) {
 		SDL_Delay(m_timestep - lastFrameDuration);
 	}
 
+	lock.unlock();
+
 	measureLastFrameDuration();
 }
 
 void GameClock::measureLastFrameDuration() {
-	u32 now = getTicks(true) - m_timeDropped;
+	u32 currentTicks = getTicks(true);
+
+	std::lock_guard<std::mutex> lock(m_mutex);
+
+	u32 now = currentTicks - m_timeDropped;
 	u32 lastFrameDuration = now - m_lastFrameDate;
 
 	m_lastFrameDate = now;
@@ -85,16 +106,18 @@ void GameClock::measureLastFrameDuration() {
 	if(m_lag >= 200) {
 		m_timeDropped += m_lag - m_timestep;
 		m_lag = m_timestep;
-		m_lastFrameDate = getTicks(true) - m_timeDropped;
+		m_lastFrameDate = currentTicks - m_timeDropped;
 	}
 }
 
 void GameClock::computeFramesPerSecond() {
-	if (m_fpsTimer.time() > 1000) {
-		fps = floor(m_frames / (m_fpsTimer.time() / 1000.0) + 0.5);
+	u32 currentTicks = getTicks(true);
 
-		m_fpsTimer.reset();
-		m_fpsTimer.start();
+	std::unique_lock<std::mutex> lock(m_mutex);
+
+	if (currentTicks - m_fpsTimer > 1000) {
+		m_fps = floor(m_frames / ((currentTicks - m_fpsTimer) / 1000.0) + 0.5);
+		m_fpsTimer = currentTicks;
 
 		m_frames = 0;
 	}

@@ -44,8 +44,8 @@ bool InputHandler::isKeyPressedOnce(GameKey key) {
 }
 
 bool InputHandler::isKeyPressedWithDelay(GameKey key, u16 delay) {
-	if(isKeyPressed(key) && GameClock::getTicks() - m_lastTimePressed[key] > delay) {
-		m_lastTimePressed[key] = GameClock::getTicks();
+	if(isKeyPressed(key) && GameClock::getInstance().getTicks() - m_lastTimePressed[key] > delay) {
+		m_lastTimePressed[key] = GameClock::getInstance().getTicks();
 		return true;
 	} else {
 		if(!isKeyPressed(key)) m_lastTimePressed[key] = 0;
