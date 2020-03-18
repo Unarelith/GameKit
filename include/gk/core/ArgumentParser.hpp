@@ -27,15 +27,22 @@
 #ifndef GK_ARGUMENTPARSER_HPP_
 #define GK_ARGUMENTPARSER_HPP_
 
+#include <map>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 namespace gk {
 
 struct Argument {
+	Argument(const std::string &_shortName, const std::string &_longName, const std::string &_desc)
+		: shortName(_shortName), longName(_longName), desc(_desc), hasParameter(false) {}
+	Argument(const std::string &_shortName, const std::string &_longName, const std::string &_desc, const std::string &_paramName)
+		: shortName(_shortName), longName(_longName), desc(_desc), paramName(_paramName), hasParameter(true) {}
+
 	std::string shortName;
 	std::string longName;
+	std::string desc;
+	std::string paramName;
 	bool hasParameter = false;
 	std::string parameter = "";
 	bool isFound = false;
@@ -56,7 +63,7 @@ class ArgumentParser {
 
 	private:
 		std::vector<std::string> m_argv;
-		std::unordered_map<std::string, Argument> m_arguments;
+		std::map<std::string, Argument> m_arguments;
 };
 
 } // namespace gk

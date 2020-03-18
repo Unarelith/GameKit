@@ -24,13 +24,15 @@
  *
  * =====================================================================================
  */
+#include <algorithm>
+
 #include "gk/core/ArgumentParser.hpp"
 #include "gk/core/Debug.hpp"
 
 namespace gk {
 
 ArgumentParser::ArgumentParser() {
-	addArgument("help", {"", "--help"});
+	addArgument("help", {"", "--help", "Display help on commandline options."});
 }
 
 ArgumentParser::ArgumentParser(int argc, char **argv) : ArgumentParser() {
@@ -55,9 +57,32 @@ void ArgumentParser::parse() {
 }
 
 void ArgumentParser::printHelp() {
-	std::cout << "Available options:" << std::endl;
-	for (auto &it : m_arguments)
-		std::cout << "  " << it.second.longName << "/" << it.second.shortName << std::endl;
+	std::cout << "Usage: " << m_argv[0] << " [options]" << std::endl << std::endl;
+	std::cout << "Options:" << std::endl;
+
+	unsigned int maxLineLength = 0;
+	std::vector<std::pair<std::string, const Argument &>> args;
+	for (auto &it : m_arguments) {
+		std::string arg;
+		if (!it.second.shortName.empty())
+			arg = it.second.shortName + ", " + it.second.longName;
+		else
+			arg = it.second.longName;
+
+		if (it.second.hasParameter)
+			arg += " <" + it.second.paramName + ">";
+
+		args.emplace_back(arg, it.second);
+
+		maxLineLength = std::max<unsigned int>(maxLineLength, arg.size());
+	}
+
+	for (auto &it : args) {
+		if (it.first.size() < maxLineLength)
+			it.first.append(maxLineLength - it.first.size(), ' ');
+
+		std::cout << "  " << it.first << "  " << it.second.desc << std::endl;
+	}
 }
 
 void ArgumentParser::debug() {

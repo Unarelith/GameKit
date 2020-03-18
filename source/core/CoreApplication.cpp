@@ -47,7 +47,7 @@ void CoreApplication::init() {
 
 	m_stateStack.setEventHandler(m_eventHandler);
 
-	m_argumentParser.addArgument("mute", {"", "--no-sound"});
+	m_argumentParser.addArgument("mute", {"", "--mute", "Mute the program."});
 	m_argumentParser.parse();
 	if (m_argumentParser.getArgument("mute").isFound)
 		AudioPlayer::setMuteState(true);
