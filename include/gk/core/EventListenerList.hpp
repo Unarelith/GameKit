@@ -37,6 +37,8 @@ namespace gk {
 
 class IEventListenerList {
 	public:
+		virtual ~IEventListenerList() = default;
+
 		virtual void processEvents() = 0;
 
 		virtual void removeListeners(void *instance) = 0;
@@ -53,7 +55,7 @@ class EventListenerList : public IEventListenerList {
 			m_listeners.emplace_back(function, instance);
 		}
 
-		void removeListeners(void *instance) {
+		void removeListeners(void *instance) override {
 			for (auto it = m_listeners.begin() ; it != m_listeners.end() ;) {
 				if (it->second == instance)
 					m_listeners.erase(it);
