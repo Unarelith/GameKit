@@ -59,8 +59,8 @@ class Vector3 {
 		bool operator!=(const Vector3<T> &vector3) const { return !operator==(vector3); }
 
 		// Needed if Vector3 is used as a key in a std::map
-		bool operator<(const Vector3<T> &vector3) const { return x < vector3.x && y <= vector3.y && z <= vector3.z; }
-		bool operator>(const Vector3<T> &vector3) const { return x > vector3.x && y >= vector3.y && z >= vector3.z; }
+		bool operator<(const Vector3<T> &vector3) const { return x < vector3.x && y < vector3.y && z < vector3.z; }
+		bool operator>(const Vector3<T> &vector3) const { return x > vector3.x && y > vector3.y && z > vector3.z; }
 
 		Vector2<T> xy() const { return Vector2<T>(x, y); }
 

@@ -56,8 +56,8 @@ class Vector2 {
 		bool operator!=(const Vector2<T> &vector2) const { return !operator==(vector2); }
 
 		// Needed if Vector2 is used as a key in a std::map
-		bool operator<(const Vector2<T> &vector2) const { return x < vector2.x && y <= vector2.y; }
-		bool operator>(const Vector2<T> &vector2) const { return x > vector2.x && y >= vector2.y; }
+		bool operator<(const Vector2<T> &vector2) const { return x < vector2.x && y < vector2.y; }
+		bool operator>(const Vector2<T> &vector2) const { return x > vector2.x && y > vector2.y; }
 
 		T x;
 		T y;
