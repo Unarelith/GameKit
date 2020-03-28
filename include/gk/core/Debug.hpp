@@ -38,11 +38,11 @@
 #define _FILE (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
 
 #ifdef DEBUG_ENABLED
-	#define DEBUG(...) { std::cout << gk::Debug::textColor(gk::Debug::TextColor::Red, true) << _FILE << ":" << __LINE__ << ":" << gk::Debug::textColor(); gk::Debug::print(__VA_ARGS__); }
-	#define TRACE(s) { DEBUG("Function called: " #s); s }
+	#define DEBUG(...) do { std::cout << gk::Debug::textColor(gk::Debug::TextColor::Red, true) << _FILE << ":" << __LINE__ << ":" << gk::Debug::textColor(); gk::Debug::print(__VA_ARGS__); } while (false);
+	#define TRACE(s) do { DEBUG("Function called: " #s); s } while (false);
 #else
-	#define DEBUG(...) {}
-	#define TRACE(s) { s }
+	#define DEBUG(...) do {} while (false);
+	#define TRACE(s) do { s } while (false);
 #endif
 
 namespace gk {
