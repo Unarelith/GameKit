@@ -24,24 +24,16 @@
  *
  * =====================================================================================
  */
-#ifndef GK_UTILS_HPP_
-#define GK_UTILS_HPP_
-
-#include <regex>
-#include <sstream>
+#include "gk/core/Utils.hpp"
 
 namespace gk {
 
-template <typename T>
-std::string toString(const T value, const int n = 6) {
-	std::ostringstream out;
-	out.precision(n);
-	out << std::fixed << value;
-	return out.str();
-}
+bool regexMatch(const std::string &str, const std::string &regex) {
+	std::regex re(regex);
+	std::cmatch m;
 
-bool regexMatch(const std::string &str, const std::string &regex);
+	return std::regex_match(str.c_str(), m, re);
+}
 
 } // namespace gk
 
-#endif // GK_UTILS_HPP_

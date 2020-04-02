@@ -11,6 +11,7 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Mouse.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/SDLLoader.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Timer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/core/Utils.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Window.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/XMLFile.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/input/GamePad.cpp
