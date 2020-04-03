@@ -29,6 +29,7 @@
 
 #include <regex>
 #include <sstream>
+#include <vector>
 
 namespace gk {
 
@@ -41,6 +42,14 @@ std::string toString(const T value, const int n = 6) {
 }
 
 bool regexMatch(const std::string &str, const std::string &regex);
+
+template<typename... Args>
+std::string makeString(Args &&...args) {
+	std::ostringstream stream;
+	std::vector<int> tmp{0, ((void)(stream << args << " "), 0)...};
+
+	return stream.str();
+}
 
 } // namespace gk
 

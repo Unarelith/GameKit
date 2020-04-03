@@ -24,37 +24,10 @@
  *
  * =====================================================================================
  */
-#ifndef GK_EXCEPTION_HPP_
-#define GK_EXCEPTION_HPP_
+#include "gk/core/LoggerUtils.hpp"
 
-#include <exception>
-#include <string>
+gk::Logger &operator<<(gk::Logger &stream, const gk::Color &color) {
+	stream.addSpace();
+	return stream << "gk::Color(" << color.r * 255 << ", " << color.g * 255 << ", " << color.b * 255 << ", " << color.a * 255 << ")";
+}
 
-#include "gk/core/Debug.hpp"
-#include "gk/core/Utils.hpp"
-
-#define EXCEPTION(...) (gk::Exception(__LINE__, _FILE, __VA_ARGS__))
-
-namespace gk {
-
-class Exception {
-	public:
-		template<typename... Args>
-		Exception(u16 line, const std::string &filename, Args... args) noexcept {
-			m_errorMsg = Logger::textColor(LoggerColor::Red, true);
-			m_errorMsg += "at " + filename + ":" + std::to_string(line) + ": ";
-			m_errorMsg += makeString(std::forward<Args>(args)...);
-			m_errorMsg += Logger::textColor();
-		}
-
-		virtual const char *what() const noexcept {
-			return m_errorMsg.c_str();
-		}
-
-	private:
-		std::string m_errorMsg;
-};
-
-} // namespace gk
-
-#endif // GK_EXCEPTION_HPP_

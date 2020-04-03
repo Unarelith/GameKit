@@ -14,9 +14,9 @@ TODO
 # Features
 
 • DONE: `Camera` should inherit from `View` but it causes issues in `OpenMiner` and `CloneBand`
-• TODO: Add more generic `Vertex`, `RenderStates` and `RenderTarget` classes
+• DONE: Add more generic `Vertex`, `RenderStates` and `RenderTarget` classes
+• DONE: Replace `DEBUG` macro by a real log system
 • TODO: Add basic network support via `SDL_net`
-• TODO: Replace `DEBUG` macro by a real log system
 
 ## Audio
 

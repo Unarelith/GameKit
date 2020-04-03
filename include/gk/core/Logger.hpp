@@ -24,37 +24,61 @@
  *
  * =====================================================================================
  */
-#ifndef GK_EXCEPTION_HPP_
-#define GK_EXCEPTION_HPP_
+#ifndef GK_LOGGER_HPP_
+#define GK_LOGGER_HPP_
 
-#include <exception>
+#include <iostream>
 #include <string>
+#include <sstream>
 
-#include "gk/core/Debug.hpp"
-#include "gk/core/Utils.hpp"
-
-#define EXCEPTION(...) (gk::Exception(__LINE__, _FILE, __VA_ARGS__))
+#include "gk/core/IntTypes.hpp"
 
 namespace gk {
 
-class Exception {
-	public:
-		template<typename... Args>
-		Exception(u16 line, const std::string &filename, Args... args) noexcept {
-			m_errorMsg = Logger::textColor(LoggerColor::Red, true);
-			m_errorMsg += "at " + filename + ":" + std::to_string(line) + ": ";
-			m_errorMsg += makeString(std::forward<Args>(args)...);
-			m_errorMsg += Logger::textColor();
-		}
+enum LoggerColor {
+	White = 0,
+	Red = 31,
+	Blue = 36
+};
 
-		virtual const char *what() const noexcept {
-			return m_errorMsg.c_str();
+class Logger {
+	public:
+		Logger(const char *file = nullptr, int line = -1) : m_file(file), m_line(line) {}
+		~Logger() { print(); }
+
+		void setColor(LoggerColor color) { m_color = color; }
+		void setBold(bool isBold) { m_isBold = isBold; }
+
+		void addSpace() { if (!m_stream.str().empty()) m_stream << " "; }
+
+		template<typename T>
+		Logger &operator<<(const T &object) { m_stream << object; return *this; }
+
+		static std::string textColor(u8 color = LoggerColor::White, bool bold = false) {
+#ifdef DEBUG_COLOR
+			return std::string("\33[0;") + ((color < 10) ? "0" : "") + std::to_string(color) + ";0" + ((bold) ? "1" : "0") + "m";
+#else
+			(void)color;
+			(void)bold;
+			return "";
+#endif
 		}
 
 	private:
-		std::string m_errorMsg;
+		void print() {
+			std::cout << m_file << ":" << m_line << ": "
+				<< textColor(m_color) << m_stream.str() << textColor() << std::endl;
+		}
+
+		const char *m_file = nullptr;
+		int m_line = -1;
+
+		LoggerColor m_color = LoggerColor::White;
+		bool m_isBold = false;
+
+		std::stringstream m_stream;
 };
 
 } // namespace gk
 
-#endif // GK_EXCEPTION_HPP_
+#endif // GK_LOGGER_HPP_

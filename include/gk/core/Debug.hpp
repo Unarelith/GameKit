@@ -28,56 +28,29 @@
 #define GK_DEBUG_HPP_
 
 #include <cstring>
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <vector>
 
-#include "gk/core/IntTypes.hpp"
+#include "gk/core/LoggerUtils.hpp"
+#include "gk/core/Utils.hpp"
 
 #define _FILE (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
 
+#define gkDebug(...)    (gk::Logger(_FILE, __LINE__) << gk::makeString(__VA_ARGS__))
+#define gkInfo(...)     (gk::Logger(_FILE, __LINE__) << gk::makeString(__VA_ARGS__))
+#define gkError(...)    (gk::Logger(_FILE, __LINE__) << gk::makeString(__VA_ARGS__))
+#define gkWarning(...)  (gk::Logger(_FILE, __LINE__) << gk::makeString(__VA_ARGS__))
+
+// This part is deprecated
 #ifdef DEBUG_ENABLED
-	#define DEBUG(...) do { std::cout << gk::Debug::textColor(gk::Debug::TextColor::Red, true) << _FILE << ":" << __LINE__ << ":" << gk::Debug::textColor(); gk::Debug::print(__VA_ARGS__); } while (false);
 	#define TRACE(s) do { DEBUG("Function called: " #s); s } while (false);
+
+	#define DEBUG(...) do { \
+		gk::Logger logger(_FILE, __LINE__); \
+		logger.setColor(gk::LoggerColor::Red); \
+		logger << gk::makeString(__VA_ARGS__); \
+	} while (false);
 #else
 	#define DEBUG(...) do {} while (false);
 	#define TRACE(s) do { s } while (false);
 #endif
-
-namespace gk {
-
-namespace Debug {
-	enum TextColor {
-		White = 0,
-		Red = 31,
-		Blue = 36
-	};
-
-	inline std::string textColor(u8 color = TextColor::White, bool bold = false) {
-#ifdef DEBUG_COLOR
-		return std::string("\33[0;") + ((color < 10) ? "0" : "") + std::to_string(color) + ";0" + ((bold) ? "1" : "0") + "m";
-#else
-		(void)color;
-		(void)bold;
-		return std::string("");
-#endif
-	}
-
-	template<typename... Args>
-	std::string makeString(Args &&...args) {
-		std::ostringstream stream;
-		std::vector<int> tmp{0, ((void)(stream << args << " "), 0)...};
-
-		return stream.str();
-	}
-
-	template<typename... Args>
-	void print(Args &&...args) {
-		std::cerr << makeString(std::forward<Args>(args)...) << std::endl;
-	}
-}
-
-} // namespace gk
 
 #endif // GK_DEBUG_HPP_
