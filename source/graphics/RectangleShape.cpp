@@ -104,7 +104,7 @@ void RectangleShape::updateVertexBuffer() const {
 void RectangleShape::draw(RenderTarget &target, RenderStates states) const {
 	states.transform *= getTransform();
 
-	states.vertexAttributes = VertexAttribute::Only2d;
+	states.vertexAttributes = VertexAttribute::All;
 
 	glCheck(glDisable(GL_CULL_FACE));
 	glCheck(glDisable(GL_DEPTH_TEST));

@@ -36,6 +36,20 @@ namespace gk {
 
 const RenderStates RenderStates::Default{};
 
+RenderTarget::RenderTarget() {
+	m_attributes.emplace_back(VertexAttribute::Coord3d, "coord3d", 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, coord3d)));
+	m_attributes.emplace_back(VertexAttribute::Color, "color", 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, color)));
+	m_attributes.emplace_back(VertexAttribute::TexCoord, "texCoord", 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, texCoord)));
+}
+
+void RenderTarget::addVertexAttribute(u16 id, const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer) {
+	m_attributes.emplace_back(id, name, size, type, normalized, stride, pointer);
+}
+
+void RenderTarget::clearVertexAttributes() {
+	m_attributes.clear();
+}
+
 void RenderTarget::draw(const Drawable &drawable, const RenderStates &states) {
 	drawable.draw(*this, states);
 }
@@ -68,34 +82,11 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 
 	states.shader->setUniform("u_modelMatrix", states.transform);
 
-	if (states.vertexAttributes & VertexAttribute::Coord3d) {
-		states.shader->enableVertexAttribArray("coord3d");
-		glCheck(glVertexAttribPointer(states.shader->attrib("coord3d"), 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, coord3d))));
-	}
-
-	if (states.vertexAttributes & VertexAttribute::Normal) {
-		states.shader->enableVertexAttribArray("normal");
-		glCheck(glVertexAttribPointer(states.shader->attrib("normal"), 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, normal))));
-	}
-
-	if (states.vertexAttributes & VertexAttribute::TexCoord) {
-		states.shader->enableVertexAttribArray("texCoord");
-		glCheck(glVertexAttribPointer(states.shader->attrib("texCoord"), 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, texCoord))));
-	}
-
-	if (states.vertexAttributes & VertexAttribute::Color) {
-		states.shader->enableVertexAttribArray("color");
-		glCheck(glVertexAttribPointer(states.shader->attrib("color"), 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, color))));
-	}
-
-	if (states.vertexAttributes & VertexAttribute::LightValue) {
-		states.shader->enableVertexAttribArray("lightValue");
-		glCheck(glVertexAttribPointer(states.shader->attrib("lightValue"), 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, lightValue))));
-	}
-
-	if (states.vertexAttributes & VertexAttribute::AmbientOcclusion) {
-		states.shader->enableVertexAttribArray("ambientOcclusion");
-		glCheck(glVertexAttribPointer(states.shader->attrib("ambientOcclusion"), 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, ambientOcclusion))));
+	for (VertexAttributeData &attr : m_attributes) {
+		if (states.vertexAttributes & attr.id) {
+			states.shader->enableVertexAttribArray(attr.name);
+			glCheck(glVertexAttribPointer(states.shader->attrib(attr.name), attr.size, attr.type, attr.normalized, attr.stride, attr.pointer));
+		}
 	}
 
 	if (states.texture)
@@ -107,18 +98,11 @@ void RenderTarget::endDrawing(const RenderStates &states) {
 
 	Texture::bind(nullptr);
 
-	if (states.vertexAttributes & VertexAttribute::AmbientOcclusion)
-		states.shader->disableVertexAttribArray("ambientOcclusion");
-	if (states.vertexAttributes & VertexAttribute::LightValue)
-		states.shader->disableVertexAttribArray("lightValue");
-	if (states.vertexAttributes & VertexAttribute::Color)
-		states.shader->disableVertexAttribArray("color");
-	if (states.vertexAttributes & VertexAttribute::TexCoord)
-		states.shader->disableVertexAttribArray("texCoord");
-	if (states.vertexAttributes & VertexAttribute::Normal)
-		states.shader->disableVertexAttribArray("normal");
-	if (states.vertexAttributes & VertexAttribute::Coord3d)
-		states.shader->disableVertexAttribArray("coord3d");
+	for (VertexAttributeData &attr : m_attributes) {
+		if (states.vertexAttributes & attr.id) {
+			states.shader->disableVertexAttribArray(attr.name);
+		}
+	}
 
 	VertexBuffer::bind(nullptr);
 

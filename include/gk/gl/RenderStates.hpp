@@ -40,14 +40,10 @@ class Texture;
 namespace VertexAttribute {
 	enum {
 		Coord3d          = 1,
-		Normal           = 2,
-		TexCoord         = 4,
-		Color            = 8,
-		LightValue       = 16,
-		AmbientOcclusion = 32,
+		TexCoord         = 2,
+		Color            = 4,
 
-		Only2d      = Coord3d | TexCoord | Color,
-		All         = 0xff,
+		All              = Coord3d | TexCoord | Color,
 	};
 }
 
@@ -59,7 +55,7 @@ struct RenderStates {
 	const Texture *texture = nullptr;
 	const Shader *shader = nullptr;
 
-	u8 vertexAttributes = VertexAttribute::All;
+	u16 vertexAttributes = VertexAttribute::All;
 
 	static const RenderStates Default; // Defined in RenderTarget.cpp
 };

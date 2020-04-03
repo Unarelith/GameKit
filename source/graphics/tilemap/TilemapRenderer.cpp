@@ -75,7 +75,7 @@ void TilemapRenderer::draw(RenderTarget &target, RenderStates states) const {
 	if (!m_map) return;
 
 	states.texture = &m_map->tileset();
-	states.vertexAttributes = VertexAttribute::Only2d;
+	states.vertexAttributes = VertexAttribute::All;
 
 	glCheck(glDisable(GL_CULL_FACE));
 	glCheck(glDisable(GL_DEPTH_TEST));

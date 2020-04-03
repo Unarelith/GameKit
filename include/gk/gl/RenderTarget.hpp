@@ -27,6 +27,9 @@
 #ifndef GK_RENDERTARGET_HPP_
 #define GK_RENDERTARGET_HPP_
 
+#include <string>
+#include <vector>
+
 #include "gk/core/Rect.hpp"
 #include "gk/gl/OpenGL.hpp"
 #include "gk/gl/RenderStates.hpp"
@@ -37,8 +40,26 @@ namespace gk {
 class Drawable;
 class VertexBuffer;
 
+struct VertexAttributeData {
+	VertexAttributeData(u16 _id, const std::string &_name, GLint _size, GLenum _type, GLboolean _normalized, GLsizei _stride, const void *_pointer)
+		: id(_id), name(_name), size(_size), type(_type), normalized(_normalized), stride(_stride), pointer(_pointer) {}
+
+	u16 id;
+	std::string name;
+	GLint size;
+	GLenum type;
+	GLboolean normalized;
+	GLsizei stride;
+	const void *pointer;
+};
+
 class RenderTarget {
 	public:
+		RenderTarget();
+
+		void addVertexAttribute(u16 id, const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer);
+		void clearVertexAttributes();
+
 		void draw(const Drawable &drawable, const RenderStates &states = RenderStates::Default);
 		void draw(const VertexBuffer &vertexBuffer, GLenum mode, std::size_t firstVertex, std::size_t vertexCount, const RenderStates &states = RenderStates::Default);
 		void drawElements(const VertexBuffer &vertexBuffer, GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, const RenderStates &states = RenderStates::Default);
@@ -65,6 +86,8 @@ class RenderTarget {
 		View *m_view = nullptr;
 
 		IntRect m_previousViewport;
+
+		std::vector<VertexAttributeData> m_attributes;
 };
 
 } // namespace gk
