@@ -67,16 +67,14 @@ class SceneObject {
 		}
 
 		void debug() const {
-#ifdef DEBUG_ENABLED
-			DEBUG("=== Component list of object:", (void*)this, "===");
-			DEBUG("=== List address:", (void*)&m_components);
+			gkDebug() << "=== Component list of object:" << (void*)this << "===";
+			gkDebug() << "=== List address:" << (void*)&m_components;
 
 			for(auto &it : m_components) {
-				DEBUG(it.first, ":", (void*)it.second.get());
+				gkDebug() << it.first << ":" << (void*)it.second.get();
 			}
 
-			DEBUG("=== End of list. ===");
-#endif
+			gkDebug() << "=== End of list. ===";
 		}
 
 		const std::string &name() const { return m_name; }

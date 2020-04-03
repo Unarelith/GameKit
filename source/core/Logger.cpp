@@ -24,35 +24,36 @@
  *
  * =====================================================================================
  */
-#ifndef GK_UTILS_HPP_
-#define GK_UTILS_HPP_
-
-#include <regex>
-#include <sstream>
-#include <vector>
+#include "gk/core/Logger.hpp"
 
 namespace gk {
 
-template <typename T>
-std::string toString(const T value, const int n = 6) {
-	std::ostringstream out;
-	out.precision(n);
-	out << std::fixed << value;
-	return out.str();
+bool Logger::isEnabled = true;
+bool Logger::printFileAndLine = false;
+bool Logger::printWithColor = false;
+
+std::string Logger::textColor(LoggerColor color, bool bold) {
+	return (!printWithColor) ? ""
+		: std::string("\33[0;") + ((u8(color) < 10) ? "0" : "") + std::to_string(u8(color)) + ";0" + ((bold) ? "1" : "0") + "m";
 }
 
-bool regexMatch(const std::string &str, const std::string &regex);
+void Logger::print() {
+	if (!isEnabled) return;
 
-template<typename... Args>
-std::string makeString(Args &&...args) {
-	std::ostringstream stream;
-	std::vector<int> tmp{0, ((void)(stream << args << " "), 0)...};
+	std::cout << m_color;
 
-	return stream.str();
+	char levels[4] = {'D', 'I', 'W', 'E'};
+	std::cout << "[" + getCurrentTime("%H:%M:%S") + "] [" << levels[m_level] << "] ";
+
+	if (printFileAndLine)
+		std::cout << m_file << ":" << m_line << ": ";
+
+	std::cout << m_stream.str() << LoggerColor::White << std::endl;
 }
-
-std::string getCurrentTime(const char *format);
 
 } // namespace gk
 
-#endif // GK_UTILS_HPP_
+std::ostream &operator<<(std::ostream &stream, gk::LoggerColor color) {
+	return stream << gk::Logger::textColor(color);
+}
+

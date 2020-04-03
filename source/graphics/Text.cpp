@@ -108,7 +108,7 @@ void Text::update() const {
 			m_image.setPosRect(0, 0, m_texture->getSize().x, m_texture->getSize().y);
 	}
 	else
-		DEBUG("Unable to create text image for '" + m_string + "':", TTF_GetError());
+		gkError() << "Unable to create text image for" << m_string << ":" << TTF_GetError();
 
 	// FIXME: Save old style instead of restoring Normal
 	TTF_SetFontStyle(font, Style::Normal);

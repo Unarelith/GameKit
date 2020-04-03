@@ -90,7 +90,7 @@ void Window::onEvent(const SDL_Event &event) {
 
 void Window::setVerticalSyncEnabled(bool isVerticalSyncEnabled) {
 	if(SDL_GL_SetSwapInterval(isVerticalSyncEnabled) < 0) {
-		DEBUG("Warning: Can't enable VSync");
+		gkWarning() << "Can't enable VSync";
 	}
 	else {
 		m_isVerticalSyncEnabled = isVerticalSyncEnabled;

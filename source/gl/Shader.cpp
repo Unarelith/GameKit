@@ -174,7 +174,7 @@ GLint Shader::uniform(const std::string &name) const {
 	glCheck(uniform = glGetUniformLocation(m_program, name.c_str()));
 
 	if(uniform == -1) {
-		DEBUG("Could not bind uniform:", name);
+		gkDebug() << "Could not bind uniform:" << name;
 	}
 
 	return uniform;

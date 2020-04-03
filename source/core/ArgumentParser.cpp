@@ -86,10 +86,10 @@ void ArgumentParser::printHelp() {
 }
 
 void ArgumentParser::debug() {
-	DEBUG("========== ARGS ==========");
+	gkDebug() << "========== ARGS ==========";
 	for (auto &it : m_arguments)
-		DEBUG(it.second.longName, "/", it.second.shortName, "=", it.second.isFound);
-	DEBUG("==========================");
+		gkDebug() << it.second.longName.c_str() << "/" << it.second.shortName.c_str() << "=" <<  it.second.isFound;
+	gkDebug() << "==========================";
 }
 
 } // namespace gk

@@ -34,23 +34,11 @@
 
 #define _FILE (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
 
-#define gkDebug(...)    (gk::Logger(_FILE, __LINE__) << gk::makeString(__VA_ARGS__))
-#define gkInfo(...)     (gk::Logger(_FILE, __LINE__) << gk::makeString(__VA_ARGS__))
-#define gkError(...)    (gk::Logger(_FILE, __LINE__) << gk::makeString(__VA_ARGS__))
-#define gkWarning(...)  (gk::Logger(_FILE, __LINE__) << gk::makeString(__VA_ARGS__))
+#define gkDebug()    (gk::Logger(gk::Debug,   _FILE, __LINE__))
+#define gkInfo()     (gk::Logger(gk::Info,    _FILE, __LINE__))
+#define gkWarning()  (gk::Logger(gk::Warning, _FILE, __LINE__))
+#define gkError()    (gk::Logger(gk::Error,   _FILE, __LINE__))
 
-// This part is deprecated
-#ifdef DEBUG_ENABLED
-	#define TRACE(s) do { DEBUG("Function called: " #s); s } while (false);
-
-	#define DEBUG(...) do { \
-		gk::Logger logger(_FILE, __LINE__); \
-		logger.setColor(gk::LoggerColor::Red); \
-		logger << gk::makeString(__VA_ARGS__); \
-	} while (false);
-#else
-	#define DEBUG(...) do {} while (false);
-	#define TRACE(s) do { s } while (false);
-#endif
+#define gkTrace(s) do { gkInfo() << "Function called: " #s; s } while (false);
 
 #endif // GK_DEBUG_HPP_

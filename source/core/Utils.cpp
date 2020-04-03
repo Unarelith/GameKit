@@ -24,6 +24,9 @@
  *
  * =====================================================================================
  */
+#include <iomanip>
+#include <sstream>
+
 #include "gk/core/Utils.hpp"
 
 namespace gk {
@@ -33,6 +36,16 @@ bool regexMatch(const std::string &str, const std::string &regex) {
 	std::cmatch m;
 
 	return std::regex_match(str.c_str(), m, re);
+}
+
+std::string getCurrentTime(const char *format) {
+	std::time_t t = std::time(nullptr);
+	std::tm tm = *std::localtime(&t);
+
+	std::stringstream sstream;
+	sstream << std::put_time(&tm, format);
+
+	return sstream.str();
 }
 
 } // namespace gk

@@ -45,10 +45,10 @@ void KeyboardHandler::loadKeysFromFile(const std::string &filename) {
 			else if ((keyName = keyElement->Attribute("keycode")))
 				m_keys[key] = SDL_GetKeyFromName(keyName);
 			else
-				DEBUG("Key '", keyElement->Attribute("name"), "' is invalid");
+				gkWarning() << "Key '" << keyElement->Attribute("name") << "' is invalid";
 
 			if(m_keys[key] == SDLK_UNKNOWN) {
-				DEBUG("Key '", keyName, "' not recognized");
+				gkWarning() << "Key '" << keyName << "' not recognized";
 			}
 
 			InputHandler::addKey(key);

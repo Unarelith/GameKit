@@ -32,18 +32,27 @@
 #include <sstream>
 
 #include "gk/core/IntTypes.hpp"
+#include "gk/core/Utils.hpp"
 
 namespace gk {
 
-enum LoggerColor {
+enum class LoggerColor : u8 {
 	White = 0,
 	Red = 31,
 	Blue = 36
 };
 
+enum LogLevel : u8 {
+	Debug   = 0,
+	Info    = 1,
+	Warning = 2,
+	Error   = 3
+};
+
 class Logger {
 	public:
-		Logger(const char *file = nullptr, int line = -1) : m_file(file), m_line(line) {}
+		Logger(LogLevel level = LogLevel::Debug, const char *file = nullptr, int line = -1)
+			: m_level(level), m_file(file), m_line(line) {}
 		~Logger() { print(); }
 
 		void setColor(LoggerColor color) { m_color = color; }
@@ -52,25 +61,20 @@ class Logger {
 		void addSpace() { if (!m_stream.str().empty()) m_stream << " "; }
 
 		template<typename T>
-		Logger &operator<<(const T &object) { m_stream << object; return *this; }
+		Logger &operator<<(const T &object) { addSpace(); m_stream << object; return *this; }
+		Logger &operator<<(const char *str) { addSpace(); m_stream << str; return *this; }
+		Logger &operator<<(const std::string &str) { addSpace(); m_stream << "\"" << str << "\""; return *this; }
 
-		static std::string textColor(u8 color = LoggerColor::White, bool bold = false) {
-#ifdef DEBUG_COLOR
-			return std::string("\33[0;") + ((color < 10) ? "0" : "") + std::to_string(color) + ";0" + ((bold) ? "1" : "0") + "m";
-#else
-			(void)color;
-			(void)bold;
-			return "";
-#endif
-		}
+		static std::string textColor(LoggerColor color = LoggerColor::White, bool bold = false);
+
+		static bool isEnabled;
+		static bool printFileAndLine;
+		static bool printWithColor;
 
 	private:
-		void print() {
-#ifdef DEBUG_LINENO
-			std::cout << m_file << ":" << m_line << ": ";
-#endif
-			std::cout << textColor(m_color) << m_stream.str() << textColor() << std::endl;
-		}
+		void print();
+
+		LogLevel m_level;
 
 		const char *m_file = nullptr;
 		int m_line = -1;
@@ -82,5 +86,7 @@ class Logger {
 };
 
 } // namespace gk
+
+std::ostream &operator<<(std::ostream &stream, gk::LoggerColor color);
 
 #endif // GK_LOGGER_HPP_
