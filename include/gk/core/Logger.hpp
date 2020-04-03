@@ -66,8 +66,10 @@ class Logger {
 
 	private:
 		void print() {
-			std::cout << m_file << ":" << m_line << ": "
-				<< textColor(m_color) << m_stream.str() << textColor() << std::endl;
+#ifdef DEBUG_LINENO
+			std::cout << m_file << ":" << m_line << ": ";
+#endif
+			std::cout << textColor(m_color) << m_stream.str() << textColor() << std::endl;
 		}
 
 		const char *m_file = nullptr;
