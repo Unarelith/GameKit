@@ -43,7 +43,7 @@ TODO
 • TODO: Audio module
    ◦ TODO: AudioPlayer
    ◦ TODO: Music
-   ◦ TODO: Sound
+   ◦ DONE: Sound
 • TODO: Core module
    ◦ DONE: ApplicationState
    ◦ DONE: ApplicationStateStack
