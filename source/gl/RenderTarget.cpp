@@ -96,8 +96,6 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 void RenderTarget::endDrawing(const RenderStates &states) {
 	if (!states.shader) return;
 
-	Texture::bind(nullptr);
-
 	for (VertexAttributeData &attr : m_attributes) {
 		if (states.vertexAttributes & attr.id) {
 			states.shader->disableVertexAttribArray(attr.name);
@@ -105,8 +103,6 @@ void RenderTarget::endDrawing(const RenderStates &states) {
 	}
 
 	VertexBuffer::bind(nullptr);
-
-	Shader::bind(nullptr);
 }
 
 IntRect RenderTarget::getViewport(const View& view) const {

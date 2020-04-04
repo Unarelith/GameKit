@@ -106,14 +106,6 @@ class Texture : public NonCopyable {
 		void loadFromSurface(SDL_Surface *surface);
 
 		////////////////////////////////////////////////////////////
-		/// \brief Bind a texture for rendering
-		///
-		/// \param texture Pointer to the texture to bind, can be null to use no texture
-		///
-		////////////////////////////////////////////////////////////
-		static void bind(const Texture *texture);
-
-		////////////////////////////////////////////////////////////
 		/// \brief Return the filename of the texture
 		///
 		/// \return Texture filename
@@ -129,10 +121,20 @@ class Texture : public NonCopyable {
 		////////////////////////////////////////////////////////////
 		const gk::Vector2u &getSize() const { return m_size; }
 
+		////////////////////////////////////////////////////////////
+		/// \brief Bind a texture for rendering
+		///
+		/// \param texture Pointer to the texture to bind, can be null to use no texture
+		///
+		////////////////////////////////////////////////////////////
+		static void bind(const Texture *texture);
+
 	private:
 		////////////////////////////////////////////////////////////
 		// Member data
 		////////////////////////////////////////////////////////////
+		static const Texture *s_boundTexture;
+
 		std::string m_filename; ///< Texture filename
 
 		gk::Vector2u m_size;    ///< Size of the texture

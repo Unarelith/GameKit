@@ -68,11 +68,13 @@ class Shader {
 		void setUniform(const std::string &name, const glm::mat4 &matrix) const;
 		void setUniform(const std::string &name, const Transform &transform) const;
 
-		static void bind(const Shader *shader);
-
 		GLint program() const { return m_program; }
 
+		static void bind(const Shader *shader);
+
 	private:
+		static const Shader *s_boundShader;
+
 		std::vector<GLuint> m_vertexShaders;
 		std::vector<GLuint> m_fragmentShaders;
 

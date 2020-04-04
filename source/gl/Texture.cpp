@@ -30,6 +30,8 @@
 
 namespace gk {
 
+const Texture *Texture::s_boundTexture = nullptr;
+
 Texture::Texture(const std::string &filename) {
 	loadFromFile(filename);
 }
@@ -103,10 +105,9 @@ void Texture::loadFromSurface(SDL_Surface *surface) {
 }
 
 void Texture::bind(const Texture *texture) {
-	if(texture) {
-		glCheck(glBindTexture(GL_TEXTURE_2D, texture->m_texture));
-	} else {
-		glCheck(glBindTexture(GL_TEXTURE_2D, 0));
+	if (texture != s_boundTexture) {
+		glCheck(glBindTexture(GL_TEXTURE_2D, (texture) ? texture->m_texture : 0));
+		s_boundTexture = texture;
 	}
 }
 

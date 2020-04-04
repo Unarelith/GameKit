@@ -37,6 +37,8 @@
 
 namespace gk {
 
+const Shader *Shader::s_boundShader = nullptr;
+
 Shader::Shader(const std::string &vertexFilename, const std::string &fragmentFilename) {
 	loadFromFile(vertexFilename, fragmentFilename);
 }
@@ -209,10 +211,9 @@ void Shader::setUniform(const std::string &name, const Transform &transform) con
 }
 
 void Shader::bind(const Shader *shader) {
-	if(shader) {
-		glCheck(glUseProgram(shader->m_program));
-	} else {
-		glCheck(glUseProgram(0));
+	if (shader != s_boundShader) {
+		glCheck(glUseProgram((shader) ? shader->m_program : 0));
+		s_boundShader = shader;
 	}
 }
 
