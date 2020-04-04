@@ -30,6 +30,7 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/VertexBuffer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/View.cpp
 
+	${CMAKE_CURRENT_SOURCE_DIR}/graphics/BoxShape.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/Color.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/Font.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/graphics/Image.cpp
