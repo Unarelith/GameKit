@@ -47,9 +47,9 @@ class Transformable {
 		void setRotation(float angle) { setRotation(angle, {0, 0, 1}); }
 		void setRotation(float angle, const Vector3f &axis);
 
-		const Vector3f& getPosition() const { return m_position; }
-		const Vector3f& getOrigin() const { return m_origin; }
-		const Vector3f& getScale() const { return m_scale; }
+		const Vector3f &getPosition() const { return m_position; }
+		const Vector3f &getOrigin() const { return m_origin; }
+		const Vector3f &getScale() const { return m_scale; }
 		float getRotation() const { return m_rotation; }
 
 		void move(float offsetX, float offsetY, float offsetZ = 0);
@@ -61,8 +61,9 @@ class Transformable {
 		void rotate(float angle);
 		void rotate(float angle, const Vector3f &axis);
 
-		const Transform& getTransform() const;
-		// const Transform& getInverseTransform() const;
+		const Transform &getTransform() const;
+		const Transform &getRotationTransform() const { return m_rotationTransform; }
+		// const Transform &getInverseTransform() const;
 
 	private:
 		Vector3f m_position{0, 0, 0};
