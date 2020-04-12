@@ -50,7 +50,8 @@ class Transform {
 		Transform& scale(const Vector3f& factors) { return scale(factors.x, factors.y, factors.z); }
 
 		const float* getRawMatrix() const { return glm::value_ptr(m_matrix); }
-		const glm::mat4 getMatrix() const { return m_matrix; }
+		const glm::mat4 &getMatrix() const { return m_matrix; }
+		glm::mat4 &getMatrix() { return m_matrix; }
 
 		// Transform getInverse() const { return glm::inverse(m_matrix); }
 		// Transform getTranspose() const { return glm::transpose(m_matrix); }

@@ -62,8 +62,10 @@ class Transformable {
 		void rotate(float angle, const Vector3f &axis);
 
 		const Transform &getTransform() const;
-		const Transform &getRotationTransform() const { return m_rotationTransform; }
 		// const Transform &getInverseTransform() const;
+
+		const Transform &getRotationTransform() const { return m_rotationTransform; }
+		Transform &getRotationTransform() { return m_rotationTransform; }
 
 	private:
 		Vector3f m_position{0, 0, 0};
