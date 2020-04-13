@@ -3,7 +3,9 @@
 #------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 3.1)
 
-project(gamekit VERSION 0.0.1 LANGUAGES CXX)
+set(PROJECT_NAME gamekit)
+
+project(${PROJECT_NAME} VERSION 0.0.1 LANGUAGES CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -18,9 +20,9 @@ endif ()
 #------------------------------------------------------------------------------
 # Add executables
 #------------------------------------------------------------------------------
-add_library(${CMAKE_PROJECT_NAME} STATIC ${SOURCE_FILES})
+add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
-target_include_directories(${CMAKE_PROJECT_NAME}
+target_include_directories(${PROJECT_NAME}
 	PUBLIC
 		$<INSTALL_INTERFACE:include>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -33,8 +35,8 @@ target_include_directories(${CMAKE_PROJECT_NAME}
 #------------------------------------------------------------------------------
 include(GNUInstallDirs)
 
-install(TARGETS ${CMAKE_PROJECT_NAME}
-	EXPORT ${CMAKE_PROJECT_NAME}-export
+install(TARGETS ${PROJECT_NAME}
+	EXPORT ${PROJECT_NAME}-export
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	#INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
@@ -45,21 +47,21 @@ install(DIRECTORY include/gk DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 #------------------------------------------------------------------------------
 # Compiler flags
 #------------------------------------------------------------------------------
-target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -g)
-target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -DDEBUG_ENABLED -DDEBUG_COLOR)
+target_compile_options(${PROJECT_NAME} PRIVATE -g)
+target_compile_options(${PROJECT_NAME} PRIVATE -DDEBUG_ENABLED -DDEBUG_COLOR)
 
 if(NOT MSVC)
-	target_compile_options(${CMAKE_PROJECT_NAME} PRIVATE -Wall -Wextra -Wfatal-errors)
-	target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC -Wno-variadic-macros)
+	target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wfatal-errors)
+	target_compile_options(${PROJECT_NAME} PUBLIC -Wno-variadic-macros)
 endif()
 
 if(MSVC)
 	set(CMAKE_CXX_STANDARD 14)
 else()
-	target_compile_options(${CMAKE_PROJECT_NAME} PUBLIC -std=c++14)
+	target_compile_options(${PROJECT_NAME} PUBLIC -std=c++14)
 endif()
 
-# target_compile_features(${CMAKE_PROJECT_NAME} PUBLIC cxx_std_14)
+# target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
 
 #------------------------------------------------------------------------------
 # Packages
