@@ -31,16 +31,10 @@
 #include <string>
 #include <sstream>
 
-#include "gk/core/IntTypes.hpp"
+#include "gk/core/LoggerUtils.hpp"
 #include "gk/core/Utils.hpp"
 
 namespace gk {
-
-enum class LoggerColor : u8 {
-	White = 0,
-	Red = 31,
-	Blue = 36
-};
 
 enum LogLevel : u8 {
 	Debug   = 0,
@@ -86,7 +80,5 @@ class Logger {
 };
 
 } // namespace gk
-
-std::ostream &operator<<(std::ostream &stream, gk::LoggerColor color);
 
 #endif // GK_LOGGER_HPP_

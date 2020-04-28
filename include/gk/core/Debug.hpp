@@ -29,8 +29,7 @@
 
 #include <cstring>
 
-#include "gk/core/LoggerUtils.hpp"
-#include "gk/core/Utils.hpp"
+#include "gk/core/Logger.hpp"
 
 #define _FILE (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
 

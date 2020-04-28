@@ -27,7 +27,22 @@
 #ifndef GK_LOGGERUTILS_HPP_
 #define GK_LOGGERUTILS_HPP_
 
-#include "gk/core/Logger.hpp"
+#include <ostream>
+
+#include "gk/core/IntTypes.hpp"
+
+namespace gk {
+	enum class LoggerColor : u8 {
+		White = 0,
+		Red = 31,
+		Blue = 36
+	};
+}
+
+//======================================================================================
+// gk::LoggerColor
+//======================================================================================
+std::ostream &operator<<(std::ostream &stream, gk::LoggerColor color);
 
 //======================================================================================
 // gk::Vector2
@@ -35,8 +50,7 @@
 #include "gk/core/Vector2.hpp"
 
 template<typename T>
-gk::Logger &operator<<(gk::Logger &stream, const gk::Vector2<T> &vec) {
-	stream.addSpace();
+std::ostream &operator<<(std::ostream &stream, const gk::Vector2<T> &vec) {
 	return stream << "gk::Vector2(" << vec.x << ", " << vec.y << ")";
 }
 
@@ -46,8 +60,7 @@ gk::Logger &operator<<(gk::Logger &stream, const gk::Vector2<T> &vec) {
 #include "gk/core/Vector3.hpp"
 
 template<typename T>
-gk::Logger &operator<<(gk::Logger &stream, const gk::Vector3<T> &vec) {
-	stream.addSpace();
+std::ostream &operator<<(std::ostream &stream, const gk::Vector3<T> &vec) {
 	return stream << "gk::Vector3(" << vec.x << ", " << vec.y << ", " << vec.z << ")";
 }
 
@@ -57,8 +70,7 @@ gk::Logger &operator<<(gk::Logger &stream, const gk::Vector3<T> &vec) {
 #include "gk/core/Vector4.hpp"
 
 template<typename T>
-gk::Logger &operator<<(gk::Logger &stream, const gk::Vector4<T> &vec) {
-	stream.addSpace();
+std::ostream &operator<<(std::ostream &stream, const gk::Vector4<T> &vec) {
 	return stream << "gk::Vector4(" << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w << ")";
 }
 
@@ -67,7 +79,7 @@ gk::Logger &operator<<(gk::Logger &stream, const gk::Vector4<T> &vec) {
 //======================================================================================
 #include "gk/graphics/Color.hpp"
 
-gk::Logger &operator<<(gk::Logger &stream, const gk::Color &color);
+std::ostream &operator<<(std::ostream &stream, const gk::Color &color);
 
 //======================================================================================
 // gk::Rect
@@ -75,8 +87,7 @@ gk::Logger &operator<<(gk::Logger &stream, const gk::Color &color);
 #include "gk/core/Rect.hpp"
 
 template<typename T>
-gk::Logger &operator<<(gk::Logger &stream, const gk::Rect<T> &rect) {
-	stream.addSpace();
+std::ostream &operator<<(std::ostream &stream, const gk::Rect<T> &rect) {
 	return stream << "gk::Rect(" << rect.x << ", " << rect.y << ", " << rect.sizeX << ", " << rect.sizeY << ")";
 }
 
@@ -86,8 +97,7 @@ gk::Logger &operator<<(gk::Logger &stream, const gk::Rect<T> &rect) {
 #include "gk/core/Box.hpp"
 
 template<typename T>
-gk::Logger &operator<<(gk::Logger &stream, const gk::Box<T> &box) {
-	stream.addSpace();
+std::ostream &operator<<(std::ostream &stream, const gk::Box<T> &box) {
 	return stream << "gk::Box(" << box.x << ", " << box.y << ", " << box.z << ", " << box.sizeX << ", " << box.sizeY << ", " << box.sizeZ << ")";
 }
 

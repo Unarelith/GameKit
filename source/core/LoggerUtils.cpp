@@ -24,10 +24,14 @@
  *
  * =====================================================================================
  */
+#include "gk/core/Logger.hpp"
 #include "gk/core/LoggerUtils.hpp"
 
-gk::Logger &operator<<(gk::Logger &stream, const gk::Color &color) {
-	stream.addSpace();
+std::ostream &operator<<(std::ostream &stream, gk::LoggerColor color) {
+	return stream << gk::Logger::textColor(color);
+}
+
+std::ostream &operator<<(std::ostream &stream, const gk::Color &color) {
 	return stream << "gk::Color(" << color.r * 255 << ", " << color.g * 255 << ", " << color.b * 255 << ", " << color.a * 255 << ")";
 }
 

@@ -53,7 +53,3 @@ void Logger::print() {
 
 } // namespace gk
 
-std::ostream &operator<<(std::ostream &stream, gk::LoggerColor color) {
-	return stream << gk::Logger::textColor(color);
-}
-
