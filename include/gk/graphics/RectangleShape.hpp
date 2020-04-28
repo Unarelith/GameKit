@@ -74,10 +74,10 @@ class RectangleShape : public Drawable, public Transformable {
 		Color m_outlineColor{Color::White};
 		int m_outlineThickness = 0;
 
-		std::array<GLubyte, 6 * 5> m_indices{
+		std::array<GLubyte, 6 * 5> m_indices{{
 			0, 1, 3,
 			3, 1, 2
-		};
+		}};
 };
 
 } // namespace gk

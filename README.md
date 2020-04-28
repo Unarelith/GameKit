@@ -28,8 +28,7 @@ It's a small game engine built on top of SDL2 and OpenGL.
     - [glew](http://sourceforge.net/projects/glew/files/latest/download) or [glad](https://github.com/Dav1dde/glad) *(only required for Windows)*
     - [tinyxml2](http://leethomason.github.io/tinyxml2/)
     - _Linux users: Check your distribution repositories for packages._
-- Run `mkdir build && cd build` at the root of the project folder
-- Run `cmake .. && make && sudo make install`
+- Run `cmake -B build . && cmake --build build -j8 && sudo cmake --install build`
 
 ## License
 
