@@ -29,6 +29,7 @@ It's a small game engine built on top of SDL2 and OpenGL.
     - [tinyxml2](http://leethomason.github.io/tinyxml2/)
     - _Linux users: Check your distribution repositories for packages._
 - Run `cmake -B build . && cmake --build build -j8 && sudo cmake --install build`
+- Or `mkdir build && cd build && cmake .. && make -j8 && sudo make install` (for old CMake versions)
 
 ## License
 
