@@ -31,7 +31,7 @@
 #include <string>
 
 #include "gk/core/input/InputHandler.hpp"
-#include "gk/core/SDLHeaders.hpp"
+#include "gk/core/input/KeyboardUtils.hpp"
 
 namespace gk {
 
@@ -41,13 +41,12 @@ class KeyboardHandler : public InputHandler {
 
 		bool isKeyPressed(GameKey key);
 
-		SDL_Scancode getScancode(GameKey key) { return SDL_GetScancodeFromKey(m_keys[key]); }
-		SDL_Keycode getKeycode(GameKey key) { return m_keys[key]; }
-		std::string getKeyName(GameKey key) { return SDL_GetKeyName(m_keys[key]); }
-		void setKeycode(GameKey key, SDL_Keycode keycode) { m_keys[key] = keycode; }
+		sf::Keyboard::Key getKeycode(GameKey key) { return m_keys[key]; }
+		std::string getKeyName(GameKey key) { return KeyboardUtils::getNameFromKey(m_keys[key]); }
+		void setKeycode(GameKey key, sf::Keyboard::Key keycode) { m_keys[key] = keycode; }
 
 	protected:
-		std::map<GameKey, SDL_Keycode> m_keys;
+		std::map<GameKey, sf::Keyboard::Key> m_keys;
 };
 
 } // namespace gk

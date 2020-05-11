@@ -24,42 +24,18 @@
  *
  * =====================================================================================
  */
-#include "gk/core/input/KeyboardHandler.hpp"
-#include "gk/core/Debug.hpp"
-#include "gk/core/IntTypes.hpp"
-#include "gk/core/XMLFile.hpp"
+#ifndef GK_KEYBOARDUTILS_HPP_
+#define GK_KEYBOARDUTILS_HPP_
+
+#include <string>
+
+#include <SFML/Window/Keyboard.hpp>
 
 namespace gk {
-
-void KeyboardHandler::loadKeysFromFile(const std::string &filename) {
-	XMLFile doc(filename);
-
-	tinyxml2::XMLElement *keys = doc.FirstChildElement("keys").ToElement();
-	if (keys) {
-		GameKey key = 0;
-		tinyxml2::XMLElement *keyElement = keys->FirstChildElement("key");
-		while (keyElement) {
-			const char *keyName;
-			if ((keyName = keyElement->Attribute("keycode")))
-				m_keys[key] = KeyboardUtils::getKeyFromName(keyName);
-			else
-				gkWarning() << "Key '" << keyElement->Attribute("name") << "' is invalid";
-
-			if(m_keys[key] == sf::Keyboard::Unknown) {
-				gkWarning() << "Key '" << keyName << "' not recognized";
-			}
-
-			InputHandler::addKey(key);
-
-			++key;
-			keyElement = keyElement->NextSiblingElement("key");
-		}
+	namespace KeyboardUtils {
+		std::string getNameFromKey(sf::Keyboard::Key key);
+		sf::Keyboard::Key getKeyFromName(const std::string &name);
 	}
-}
-
-bool KeyboardHandler::isKeyPressed(GameKey key) {
-	return sf::Keyboard::isKeyPressed(m_keys[key]);
-}
-
 } // namespace gk
 
+#endif // GK_KEYBOARDUTILS_HPP_
