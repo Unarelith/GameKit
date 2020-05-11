@@ -32,12 +32,19 @@ namespace gk {
 
 Window *Mouse::s_window = nullptr;
 
-void Mouse::resetToWindowCenter() {
-	if (s_window)
-		sf::Mouse::setPosition({
+Vector2i Mouse::resetToWindowCenter() {
+	if (s_window) {
+		Vector2i windowCenter = {
 			static_cast<int>(s_window->sf::Window::getSize().x / 2),
-			static_cast<int>(s_window->sf::Window::getSize().y / 2)},
-		*s_window);
+			static_cast<int>(s_window->sf::Window::getSize().y / 2)
+		};
+
+		sf::Mouse::setPosition({windowCenter.x, windowCenter.y}, *s_window);
+
+		return windowCenter;
+	}
+
+	return {0, 0};
 }
 
 void Mouse::setCursorGrabbed(bool isGrabbed) {
