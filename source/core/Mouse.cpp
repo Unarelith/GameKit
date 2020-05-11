@@ -24,6 +24,7 @@
  *
  * =====================================================================================
  */
+#include <SFML/Window/Event.hpp>
 #include <SFML/Window/Mouse.hpp>
 
 #include "gk/core/Mouse.hpp"
@@ -32,19 +33,38 @@ namespace gk {
 
 Window *Mouse::s_window = nullptr;
 
-Vector2i Mouse::resetToWindowCenter() {
+Vector2i Mouse::s_lastMousePos{0, 0};
+Vector2f Mouse::s_lastDelta{0, 0};
+
+void Mouse::update(const sf::Event &event) {
 	if (s_window) {
-		Vector2i windowCenter = {
+		Vector2i mousePos(event.mouseMove.x, event.mouseMove.y);
+
+		const auto &windowSize = s_window->sf::Window::getSize();
+		Vector2i windowCenter(windowSize.x / 2, windowSize.y / 2);
+
+		if (s_lastMousePos.x != 0 && s_lastMousePos.y != 0)
+			s_lastDelta = mousePos - s_lastMousePos;
+
+		if (mousePos != windowCenter) {
+			resetToWindowCenter();
+			s_lastMousePos = windowCenter;
+		}
+		else {
+			s_lastMousePos = mousePos;
+		}
+	}
+}
+
+void Mouse::resetToWindowCenter() {
+	if (s_window) {
+		sf::Vector2i windowCenter = {
 			static_cast<int>(s_window->sf::Window::getSize().x / 2),
 			static_cast<int>(s_window->sf::Window::getSize().y / 2)
 		};
 
-		sf::Mouse::setPosition({windowCenter.x, windowCenter.y}, *s_window);
-
-		return windowCenter;
+		sf::Mouse::setPosition(windowCenter, *s_window);
 	}
-
-	return {0, 0};
 }
 
 void Mouse::setCursorGrabbed(bool isGrabbed) {
