@@ -42,6 +42,7 @@ class Mouse {
 		static void setCursorGrabbed(bool isGrabbed);
 
 		static Vector2i getPosition();
+		static void setPosition(const Vector2i &position);
 
 		static bool isInRect(const IntRect &rect);
 
