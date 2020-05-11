@@ -41,7 +41,7 @@ class Window : public RenderTarget, public sf::Window {
 		void open(const std::string &caption, u16 width, u16 height);
 		void clear();
 
-		Vector2u getSize() const override;
+		Vector2u getSize() const override { return m_size; }
 
 		const View &getDefaultView() const override { return m_defaultView; }
 

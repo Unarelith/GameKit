@@ -82,9 +82,9 @@ class ApplicationState : public Drawable, public Transformable, public NonCopyab
 		virtual void init() {}
 
 		////////////////////////////////////////////////////////////
-		/// \brief Do an action in response to an SDL event
+		/// \brief Do an action in response to an OS event
 		///
-		/// \param event The event sent from SDL
+		/// \param event The event sent from SFML
 		///
 		////////////////////////////////////////////////////////////
 		virtual void onEvent(const sf::Event &) {}

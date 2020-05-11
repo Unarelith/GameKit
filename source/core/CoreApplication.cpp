@@ -26,7 +26,6 @@
  */
 #include <ctime>
 
-#include "gk/audio/AudioPlayer.hpp"
 #include "gk/core/CoreApplication.hpp"
 #include "gk/core/Mouse.hpp"
 #include "gk/core/Exception.hpp"
@@ -47,10 +46,10 @@ void CoreApplication::init() {
 
 	m_stateStack.setEventHandler(m_eventHandler);
 
-	m_argumentParser.addArgument("mute", {"", "--mute", "Mute the program."});
+	// m_argumentParser.addArgument("mute", {"", "--mute", "Mute the program."});
 	m_argumentParser.parse();
-	if (m_argumentParser.getArgument("mute").isFound)
-		AudioPlayer::setMuteState(true);
+	// if (m_argumentParser.getArgument("mute").isFound)
+	// 	AudioPlayer::setMuteState(true);
 	// m_argumentParser.debug();
 }
 
