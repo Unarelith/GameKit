@@ -26,24 +26,27 @@
  */
 #include <cmath>
 
+#include <SFML/System.hpp>
+
 #include "gk/core/SDLHeaders.hpp"
 #include "gk/core/GameClock.hpp"
 
 namespace gk {
 
 GameClock *GameClock::s_instance = nullptr;
+sf::Clock GameClock::s_clock;
 
 u32 GameClock::getTicks(bool realTime) {
 	std::lock_guard<std::mutex> lock(m_mutex);
 
 	if(realTime) {
-		return SDL_GetTicks();
+		return s_clock.getElapsedTime().asMilliseconds();
 	} else {
 		return m_ticks;
 	}
 }
 
-void GameClock::updateGame(std::function<void(void)> updateFunc) {
+void GameClock::updateGame(const std::function<void(void)> &updateFunc) {
 	std::unique_lock<std::mutex> lock(m_mutex);
 
 	m_numUpdates = 0;
@@ -60,7 +63,7 @@ void GameClock::updateGame(std::function<void(void)> updateFunc) {
 	}
 }
 
-void GameClock::drawGame(std::function<void(void)> drawFunc) {
+void GameClock::drawGame(const std::function<void(void)> &drawFunc) {
 	std::unique_lock<std::mutex> lock(m_mutex);
 
 	if(m_numUpdates > 0) {
@@ -84,7 +87,7 @@ void GameClock::waitForNextFrame() {
 	u32 lastFrameDuration = currentTicks - m_timeDropped - m_lastFrameDate;
 
 	if(lastFrameDuration < m_timestep) {
-		SDL_Delay(m_timestep - lastFrameDuration);
+		sf::sleep(sf::milliseconds(m_timestep - lastFrameDuration));
 	}
 
 	lock.unlock();

@@ -16,7 +16,6 @@ TODO
 • DONE: `Camera` should inherit from `View` but it causes issues in `OpenMiner` and `CloneBand`
 • DONE: Add more generic `Vertex`, `RenderStates` and `RenderTarget` classes
 • DONE: Replace `DEBUG` macro by a real log system
-• TODO: Add basic network support via `SDL_net`
 
 ## Audio
 
@@ -24,11 +23,6 @@ TODO
 
 ## Network
 
-• TODO: Add basic classes like:
-   ◦ TODO: `gk::TcpListener`
-   ◦ TODO: `gk::TcpSocket`
-   ◦ TODO: `gk::UdpSocket`
-   ◦ TODO: `gk::Packet`
 • TODO: Add high-level features like:
    ◦ TODO: A game room system
    ◦ TODO: Easier server handling
@@ -40,10 +34,6 @@ TODO
 
 ## Documentation
 
-• TODO: Audio module
-   ◦ TODO: AudioPlayer
-   ◦ TODO: Music
-   ◦ DONE: Sound
 • TODO: Core module
    ◦ DONE: ApplicationState
    ◦ DONE: ApplicationStateStack
@@ -59,7 +49,6 @@ TODO
    ◦ TODO: KeyboardHandler
    ◦ TODO: Mouse
    ◦ DONE: Rect
-   ◦ TODO: SDLLoader
    ◦ DONE: Timer
    ◦ TODO: Vector2
    ◦ TODO: Vector3
@@ -68,7 +57,6 @@ TODO
 • TODO: Graphics module
    ◦ TODO: Camera
    ◦ DONE: Color
-   ◦ DONE: Font
    ◦ TODO: GLCheck
    ◦ DONE: IDrawable
    ◦ TODO: Image
@@ -78,8 +66,6 @@ TODO
    ◦ TODO: Shader
    ◦ TODO: Sprite
    ◦ TODO: SpriteAnimation
-   ◦ TODO: Text
-   ◦ DONE: Texture
    ◦ TODO: TiledImage
    ◦ TODO: Tilemap
    ◦ TODO: TilemapAnimator
