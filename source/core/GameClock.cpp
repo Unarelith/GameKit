@@ -28,7 +28,6 @@
 
 #include <SFML/System.hpp>
 
-#include "gk/core/SDLHeaders.hpp"
 #include "gk/core/GameClock.hpp"
 
 namespace gk {
