@@ -30,6 +30,8 @@
 #include <functional>
 #include <mutex>
 
+#include <SFML/System/Clock.hpp>
+
 #include "gk/core/Timer.hpp"
 
 namespace gk {
@@ -39,8 +41,8 @@ class GameClock {
 		u32 getTicks(bool realTime = false);
 		u16 getFpsAverage() const { return m_fps; }
 
-		void updateGame(std::function<void(void)> updateFunc);
-		void drawGame(std::function<void(void)> drawFunc);
+		void updateGame(const std::function<void(void)> &updateFunc);
+		void drawGame(const std::function<void(void)> &drawFunc);
 
 		void waitForNextFrame();
 
@@ -61,6 +63,7 @@ class GameClock {
 		void computeFramesPerSecond();
 
 		static GameClock *s_instance;
+		static sf::Clock s_clock;
 
 		u32 m_ticks = 0;
 		u16 m_fps = 0;

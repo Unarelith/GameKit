@@ -32,10 +32,13 @@
 #include "gk/core/IntTypes.hpp"
 #include "gk/gl/Transform.hpp"
 
+namespace sf {
+	class Texture;
+}
+
 namespace gk {
 
 class Shader;
-class Texture;
 
 namespace VertexAttribute {
 	enum {
@@ -52,7 +55,7 @@ struct RenderStates {
 	Transform viewMatrix;
 	Transform transform;
 
-	const Texture *texture = nullptr;
+	const sf::Texture *texture = nullptr;
 	const Shader *shader = nullptr;
 
 	u16 vertexAttributes = VertexAttribute::All;

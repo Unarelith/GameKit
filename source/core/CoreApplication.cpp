@@ -56,9 +56,6 @@ void CoreApplication::init() {
 
 int CoreApplication::run(bool isProtected) {
 	auto runGame = [&]() {
-		if (m_loadSDL)
-			m_sdlLoader.load();
-
 		init();
 		mainLoop();
 	};
@@ -93,8 +90,8 @@ void CoreApplication::createWindow(u16 screenWidth, u16 screenHeight, const char
 	m_window.open(windowTitle, screenWidth, screenHeight);
 }
 
-void CoreApplication::onEvent(const SDL_Event &event) {
-	if (event.type == SDL_QUIT) {
+void CoreApplication::onEvent(const sf::Event &event) {
+	if (event.type == sf::Event::Closed) {
 		m_window.close();
 	}
 }
@@ -104,11 +101,9 @@ void CoreApplication::handleEvents() {
 	if (!m_stateStack.empty())
 		currentState = &m_stateStack.top();
 
-	SDL_Event event;
-	while (SDL_PollEvent(&event)) {
+	sf::Event event;
+	while (m_window.pollEvent(event)) {
 		onEvent(event);
-
-		m_window.onEvent(event);
 
 		if (currentState && !m_stateStack.empty())
 			currentState->onEvent(event);

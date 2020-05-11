@@ -31,7 +31,6 @@
 #include "gk/core/ArgumentParser.hpp"
 #include "gk/core/EventHandler.hpp"
 #include "gk/core/GameClock.hpp"
-#include "gk/core/SDLLoader.hpp"
 #include "gk/core/Window.hpp"
 #include "gk/resource/ResourceHandler.hpp"
 
@@ -57,7 +56,7 @@ class CoreApplication {
 		///
 		/// \param isProtected Exceptions are catched if this parameter is set to `true` (default)
 		///
-		/// Loads SDL libraries, run init(), then mainLoop()
+		/// This function will run init(), then mainLoop().
 		///
 		////////////////////////////////////////////////////////////
 		int run(bool isProtected = true);
@@ -86,12 +85,12 @@ class CoreApplication {
 		////////////////////////////////////////////////////////////
 		/// \brief This function is called when a new window event is received
 		///
-		/// \param event Event received from SDL
+		/// \param event Event received from SFML
 		///
 		/// This function is automatically called by handleEvents()
 		///
 		////////////////////////////////////////////////////////////
-		virtual void onEvent(const SDL_Event &event);
+		virtual void onEvent(const sf::Event &event);
 
 		////////////////////////////////////////////////////////////
 		/// \brief Poll window events and send them to onEvent() and ApplicationStateStack
@@ -110,9 +109,6 @@ class CoreApplication {
 		////////////////////////////////////////////////////////////
 		// Member data
 		////////////////////////////////////////////////////////////
-		SDLLoader m_sdlLoader;                                 ///< Init and free SDL
-		bool m_loadSDL = true;                                 ///< If this flag is set to false, SDL won't be loaded
-
 		ApplicationStateStack m_stateStack;                    ///< Stack containing application states
 
 		GameClock m_clock;                                     ///< Simulated time system

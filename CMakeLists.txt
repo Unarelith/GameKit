@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.1)
 
 set(PROJECT_NAME gamekit)
 
-project(${PROJECT_NAME} VERSION 0.0.1 LANGUAGES CXX)
+project(${PROJECT_NAME})
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -22,7 +22,7 @@ endif ()
 #------------------------------------------------------------------------------
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
-add_dependencies(${PROJECT_NAME} sfml-system sfml-network sfml-graphics sfml-audio)
+add_dependencies(${PROJECT_NAME} sfml-system sfml-network sfml-graphics sfml-audio sfml-window)
 
 target_include_directories(${PROJECT_NAME}
 	PUBLIC
@@ -145,9 +145,5 @@ endif()
 #------------------------------------------------------------------------------
 # - SFML network
 #------------------------------------------------------------------------------
-set(SFML_STATIC TRUE)
-
-set(BUILD_SHARED_LIBS OFF)
-
 add_subdirectory(external/SFML)
 
