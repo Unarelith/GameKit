@@ -22,6 +22,8 @@ endif ()
 #------------------------------------------------------------------------------
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
+add_dependencies(${PROJECT_NAME} sfml-system sfml-network sfml-graphics sfml-audio)
+
 target_include_directories(${PROJECT_NAME}
 	PUBLIC
 		$<INSTALL_INTERFACE:include>
@@ -103,47 +105,6 @@ endif(NOT GLM_FOUND)
 include_directories(${GLM_INCLUDE_DIRS})
 
 #------------------------------------------------------------------------------
-# - SDL2, SDL2_image, SDL2_mixer, SDL2_ttf
-#------------------------------------------------------------------------------
-if (MSVC)
-	set(SDL2_PATH       ${WIN_LIBRARIES_PATH}/SDL2       CACHE BOOL "" FORCE)
-	set(SDL2_IMAGE_PATH ${WIN_LIBRARIES_PATH}/SDL2_image CACHE BOOL "" FORCE)
-	set(SDL2_MIXER_PATH ${WIN_LIBRARIES_PATH}/SDL2_mixer CACHE BOOL "" FORCE)
-	set(SDL2_TTF_PATH   ${WIN_LIBRARIES_PATH}/SDL2_ttf   CACHE BOOL "" FORCE)
-elseif (WIN32)
-	set(SDL2_PATH       ${WIN_LIBRARIES_PATH}/SDL2/i686-w64-mingw32       CACHE BOOL "" FORCE)
-	set(SDL2_IMAGE_PATH ${WIN_LIBRARIES_PATH}/SDL2_image/i686-w64-mingw32 CACHE BOOL "" FORCE)
-	set(SDL2_MIXER_PATH ${WIN_LIBRARIES_PATH}/SDL2_mixer/i686-w64-mingw32 CACHE BOOL "" FORCE)
-	set(SDL2_TTF_PATH   ${WIN_LIBRARIES_PATH}/SDL2_ttf/i686-w64-mingw32   CACHE BOOL "" FORCE)
-endif ()
-
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_mixer REQUIRED)
-find_package(SDL2_ttf REQUIRED)
-
-if(NOT SDL2_FOUND)
-	message(FATAL_ERROR "SDL2 not found!")
-endif(NOT SDL2_FOUND)
-
-if(NOT SDL2_IMAGE_FOUND)
-	message(FATAL_ERROR "SDL2_image not found!")
-endif(NOT SDL2_IMAGE_FOUND)
-
-if(NOT SDL2_MIXER_FOUND)
-	message(FATAL_ERROR "SDL2_mixer not found!")
-endif(NOT SDL2_MIXER_FOUND)
-
-if(NOT SDL2_TTF_FOUND)
-	message(FATAL_ERROR "SDL2_ttf not found!")
-endif(NOT SDL2_TTF_FOUND)
-
-include_directories(${SDL2_INCLUDE_DIRS}
-                    ${SDL2_IMAGE_INCLUDE_DIRS}
-                    ${SDL2_MIXER_INCLUDE_DIRS}
-                    ${SDL2_TTF_INCLUDE_DIRS})
-
-#------------------------------------------------------------------------------
 # - GLEW
 #------------------------------------------------------------------------------
 if (WIN32)
@@ -157,3 +118,36 @@ if (WIN32)
 
 	include_directories(${GLEW_INCLUDE_DIRS})
 endif ()
+
+#------------------------------------------------------------------------------
+# Submodules
+# from https://cliutils.gitlab.io/modern-cmake/chapters/projects/submodule.html
+#------------------------------------------------------------------------------
+find_package(Git QUIET)
+
+if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+	option(GIT_SUBMODULE "Check submodules during build" ON)
+	if(GIT_SUBMODULE)
+		message(STATUS "Submodule update")
+		execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+			RESULT_VARIABLE GIT_SUBMOD_RESULT)
+		if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+			message(FATAL_ERROR "git submodule update --init failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+		endif()
+	endif()
+endif()
+
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/SFML/CMakeLists.txt")
+    message(FATAL_ERROR "The submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
+endif()
+
+#------------------------------------------------------------------------------
+# - SFML network
+#------------------------------------------------------------------------------
+set(SFML_STATIC TRUE)
+
+set(BUILD_SHARED_LIBS OFF)
+
+add_subdirectory(external/SFML)
+
