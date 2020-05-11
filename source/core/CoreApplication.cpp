@@ -89,7 +89,7 @@ void CoreApplication::createWindow(sf::VideoMode mode, const sf::String &title, 
 	m_window.create(mode, title, style, settings);
 
 	auto desktop = sf::VideoMode::getDesktopMode();
-	m_window.setPosition(sf::Vector2i(
+	m_window.window().setPosition(sf::Vector2i(
 		desktop.width / 2 - m_window.getSize().x / 2,
 		desktop.height / 2 - m_window.getSize().y / 2
 	));
@@ -97,7 +97,7 @@ void CoreApplication::createWindow(sf::VideoMode mode, const sf::String &title, 
 
 void CoreApplication::onEvent(const sf::Event &event) {
 	if (event.type == sf::Event::Closed) {
-		m_window.close();
+		m_window.window().close();
 	}
 }
 
@@ -107,7 +107,7 @@ void CoreApplication::handleEvents() {
 		currentState = &m_stateStack.top();
 
 	sf::Event event;
-	while (m_window.pollEvent(event)) {
+	while (m_window.window().pollEvent(event)) {
 		onEvent(event);
 
 		if (currentState && !m_stateStack.empty())
@@ -118,7 +118,7 @@ void CoreApplication::handleEvents() {
 void CoreApplication::mainLoop() {
 	m_clock.startFpsTimer();
 
-	while(m_window.isOpen() && !m_stateStack.empty()) {
+	while(m_window.window().isOpen() && !m_stateStack.empty()) {
 		handleEvents();
 
 		m_eventHandler.processEvents();
@@ -136,7 +136,7 @@ void CoreApplication::mainLoop() {
 			if(!m_stateStack.empty())
 				m_window.draw(m_stateStack.top(), m_renderStates);
 
-			m_window.display();
+			m_window.window().display();
 		});
 	}
 }
