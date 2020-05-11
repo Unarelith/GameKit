@@ -56,6 +56,12 @@ Vector2i Mouse::getPosition() {
 	return {sf::Mouse::getPosition().x, sf::Mouse::getPosition().y};
 }
 
+void Mouse::setPosition(const Vector2i &position) {
+	if (s_window)
+		sf::Mouse::setPosition({position.x, position.y}, *s_window);
+	sf::Mouse::setPosition({position.x, position.y});
+}
+
 bool Mouse::isInRect(const IntRect &rect) {
 	return rect.contains(getPosition());
 }
