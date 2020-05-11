@@ -34,7 +34,7 @@ namespace gk {
 
 class Mouse {
 	public:
-		static void resetToWindowCenter();
+		static Vector2i resetToWindowCenter();
 
 		static void setWindow(Window *window) { s_window = window; }
 
