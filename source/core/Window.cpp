@@ -31,7 +31,7 @@
 
 namespace gk {
 
-void Window::open(const std::string &caption, u16 width, u16 height) {
+void Window::create(sf::VideoMode mode, const sf::String &title) {
 	sf::ContextSettings context;
 	context.depthBits = 24;
 	context.stencilBits = 8;
@@ -39,14 +39,14 @@ void Window::open(const std::string &caption, u16 width, u16 height) {
 	context.majorVersion = 2;
 	context.minorVersion = 1;
 
-	sf::Window::create(sf::VideoMode(width, height), caption, sf::Style::Close, context);
+	sf::Window::create(mode, title, sf::Style::Close, context);
 	if (!sf::Window::setActive())
 		throw EXCEPTION("Failed to open window");
 
-	m_size.x = width;
-	m_size.y = height;
+	m_size.x = mode.width;
+	m_size.y = mode.height;
 
-	m_defaultView.reset(FloatRect{0, 0, (float)width, (float)height});
+	m_defaultView.reset(FloatRect{0, 0, (float)m_size.x, (float)m_size.y});
 	setView(m_defaultView);
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__MINGW32__)

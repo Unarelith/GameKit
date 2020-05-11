@@ -51,6 +51,8 @@ void Mouse::setCursorVisible(bool isVisible) {
 }
 
 Vector2i Mouse::getPosition() {
+	if (s_window)
+		return {sf::Mouse::getPosition(*s_window).x, sf::Mouse::getPosition(*s_window).y};
 	return {sf::Mouse::getPosition().x, sf::Mouse::getPosition().y};
 }
 

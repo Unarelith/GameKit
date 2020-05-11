@@ -71,16 +71,15 @@ class CoreApplication {
 		virtual void init();
 
 		////////////////////////////////////////////////////////////
-		/// \brief Open window
+		/// \brief Create (or recreate) the window
 		///
-		/// \param screenWidth Window width
-		/// \param screenHeight Window height
-		/// \param windowTitle Window caption
+		/// If the window was already created, it closes it first.
 		///
-		/// Opens a new window with defined size and title.
+		/// \param mode     Video mode to use (defines the width, height and depth of the rendering area of the window)
+		/// \param title    Title of the window
 		///
 		////////////////////////////////////////////////////////////
-		void createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle);
+		void createWindow(sf::VideoMode mode, const sf::String &title);
 
 		////////////////////////////////////////////////////////////
 		/// \brief This function is called when a new window event is received

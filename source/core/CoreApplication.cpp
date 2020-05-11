@@ -85,8 +85,14 @@ int CoreApplication::run(bool isProtected) {
 	return 0;
 }
 
-void CoreApplication::createWindow(u16 screenWidth, u16 screenHeight, const char *windowTitle) {
-	m_window.open(windowTitle, screenWidth, screenHeight);
+void CoreApplication::createWindow(sf::VideoMode mode, const sf::String &title) {
+	m_window.create(mode, title);
+
+	auto desktop = sf::VideoMode::getDesktopMode();
+	m_window.setPosition(sf::Vector2i(
+		desktop.width / 2 - m_window.getSize().x / 2,
+		desktop.height / 2 - m_window.getSize().y / 2
+	));
 }
 
 void CoreApplication::onEvent(const sf::Event &event) {
