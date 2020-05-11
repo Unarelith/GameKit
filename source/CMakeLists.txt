@@ -14,6 +14,7 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/core/input/GamePad.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/input/InputHandler.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/input/KeyboardHandler.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/core/input/KeyboardUtils.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/Camera.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/GLCheck.cpp
