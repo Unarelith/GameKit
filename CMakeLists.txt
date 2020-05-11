@@ -32,6 +32,8 @@ target_include_directories(${PROJECT_NAME}
 		${CMAKE_CURRENT_SOURCE_DIR}/external
 )
 
+target_link_libraries(${PROJECT_NAME} sfml-system sfml-network sfml-graphics sfml-audio sfml-window)
+
 #------------------------------------------------------------------------------
 # Setup install rule
 #------------------------------------------------------------------------------
