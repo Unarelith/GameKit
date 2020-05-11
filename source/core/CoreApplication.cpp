@@ -85,8 +85,8 @@ int CoreApplication::run(bool isProtected) {
 	return 0;
 }
 
-void CoreApplication::createWindow(sf::VideoMode mode, const sf::String &title) {
-	m_window.create(mode, title);
+void CoreApplication::createWindow(sf::VideoMode mode, const sf::String &title, sf::Uint32 style, const sf::ContextSettings &settings) {
+	m_window.create(mode, title, style, settings);
 
 	auto desktop = sf::VideoMode::getDesktopMode();
 	m_window.setPosition(sf::Vector2i(

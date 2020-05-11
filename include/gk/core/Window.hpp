@@ -38,7 +38,7 @@ namespace gk {
 
 class Window : public RenderTarget, public sf::Window {
 	public:
-		void create(sf::VideoMode mode, const sf::String &title);
+		void create(sf::VideoMode mode, const sf::String &title, sf::Uint32 style = sf::Style::Default, const sf::ContextSettings &settings = sf::ContextSettings());
 		void clear();
 
 		Vector2u getSize() const override { return m_size; }

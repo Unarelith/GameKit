@@ -31,15 +31,8 @@
 
 namespace gk {
 
-void Window::create(sf::VideoMode mode, const sf::String &title) {
-	sf::ContextSettings context;
-	context.depthBits = 24;
-	context.stencilBits = 8;
-	context.antialiasingLevel = 4;
-	context.majorVersion = 2;
-	context.minorVersion = 1;
-
-	sf::Window::create(mode, title, sf::Style::Close, context);
+void Window::create(sf::VideoMode mode, const sf::String &title, sf::Uint32 style, const sf::ContextSettings &settings) {
+	sf::Window::create(mode, title, style, settings);
 	if (!sf::Window::setActive())
 		throw EXCEPTION("Failed to open window");
 
