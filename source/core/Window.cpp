@@ -72,15 +72,15 @@ void Window::clear() {
 
 void Window::onEvent(const sf::Event &event) {
 	if (event.type == sf::Event::Resized) {
-		setSize({event.size.width, event.size.height});
+		m_size.x = event.size.width;
+		m_size.y = event.size.height;
+
+		glCheck(glViewport(0, 0, m_size.x, m_size.y));
 	}
 }
 
 void Window::setSize(const Vector2u &size) {
 	m_window.setSize({size.x, size.y});
-	m_size = size;
-
-	glCheck(glViewport(0, 0, m_size.x, m_size.y));
 }
 
 void Window::setFullscreenMode(bool isFullscreenModeEnabled) {

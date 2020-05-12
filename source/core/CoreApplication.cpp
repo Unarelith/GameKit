@@ -95,10 +95,7 @@ void CoreApplication::createWindow(sf::VideoMode mode, const sf::String &title, 
 	));
 }
 
-void CoreApplication::onEvent(const sf::Event &event) {
-	if (event.type == sf::Event::Closed) {
-		m_window.window().close();
-	}
+void CoreApplication::onEvent(const sf::Event &) {
 }
 
 void CoreApplication::handleEvents() {
@@ -109,6 +106,8 @@ void CoreApplication::handleEvents() {
 	sf::Event event;
 	while (m_window.window().pollEvent(event)) {
 		onEvent(event);
+
+		m_window.onEvent(event);
 
 		if (currentState && !m_stateStack.empty())
 			currentState->onEvent(event);
