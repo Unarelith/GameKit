@@ -29,6 +29,7 @@
 #include "gk/core/Window.hpp"
 #include "gk/gl/GLCheck.hpp"
 #include "gk/gl/OpenGL.hpp"
+#include "gk/gl/Shader.hpp"
 #include "gk/core/Exception.hpp"
 
 namespace gk {
@@ -99,6 +100,11 @@ void Window::setFullscreenMode(bool isFullscreenModeEnabled) {
 			m_window.setPosition(m_basePosition);
 			setSize({m_baseSize.x, m_baseSize.y});
 		}
+
+		// FIXME: SFML pseudo-fullscreen mode doesn't keep info about bound shaders
+		//        So we need to reset it to make sure the shader will be bound
+		//        When this will be fixed, this line + Shader.hpp dependency can be removed
+		Shader::bind(nullptr);
 
 		m_window.setVerticalSyncEnabled(m_isVerticalSyncEnabled);
 
