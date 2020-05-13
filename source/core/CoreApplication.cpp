@@ -80,6 +80,8 @@ int CoreApplication::run(bool isProtected) {
 		runGame();
 	}
 
+	onExit();
+
 	m_resourceHandler.clear();
 
 	return 0;
@@ -93,9 +95,6 @@ void CoreApplication::createWindow(sf::VideoMode mode, const sf::String &title, 
 		desktop.width / 2 - m_window.getSize().x / 2,
 		desktop.height / 2 - m_window.getSize().y / 2
 	));
-}
-
-void CoreApplication::onEvent(const sf::Event &) {
 }
 
 void CoreApplication::handleEvents() {
@@ -117,6 +116,7 @@ void CoreApplication::handleEvents() {
 void CoreApplication::mainLoop() {
 	m_clock.startFpsTimer();
 
+	// FIXME: The window should probably be closed after the main loop ends
 	while(m_window.window().isOpen() && !m_stateStack.empty()) {
 		handleEvents();
 

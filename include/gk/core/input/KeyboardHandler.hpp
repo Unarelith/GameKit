@@ -39,7 +39,7 @@ class KeyboardHandler : public InputHandler {
 	public:
 		void loadKeysFromFile(const std::string &filename);
 
-		bool isKeyPressed(GameKey key);
+		bool isKeyPressed(GameKey key) override;
 
 		sf::Keyboard::Key getKeycode(GameKey key) { return m_keys[key]; }
 		std::string getKeyName(GameKey key) { return KeyboardUtils::getNameFromKey(m_keys[key]); }
