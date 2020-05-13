@@ -97,7 +97,13 @@ class CoreApplication {
 		/// This function is automatically called by handleEvents()
 		///
 		////////////////////////////////////////////////////////////
-		virtual void onEvent(const sf::Event &event);
+		virtual void onEvent(const sf::Event &) {}
+
+		////////////////////////////////////////////////////////////
+		/// \brief This function is called right before the program is closed
+		///
+		////////////////////////////////////////////////////////////
+		virtual void onExit() {}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Poll window events and send them to onEvent() and ApplicationStateStack
