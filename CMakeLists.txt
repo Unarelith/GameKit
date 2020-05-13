@@ -145,7 +145,10 @@ if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/SFML/CMakeLists.txt")
 endif()
 
 #------------------------------------------------------------------------------
-# - SFML network
+# - SFML
 #------------------------------------------------------------------------------
+set(SFML_STATIC TRUE)
+set(BUILD_SHARED_LIBS OFF)
+
 add_subdirectory(external/SFML)
 
