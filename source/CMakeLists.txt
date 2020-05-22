@@ -1,3 +1,6 @@
+#------------------------------------------------------------------------------
+# Add source files
+#------------------------------------------------------------------------------
 set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/core/ApplicationStateStack.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/ArgumentParser.cpp
@@ -50,5 +53,92 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/scene/movement/GamePadMovement.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/scene/view/HitboxView.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/scene/view/SpriteView.cpp
+)
 
-	PARENT_SCOPE)
+#------------------------------------------------------------------------------
+# Add executables
+#------------------------------------------------------------------------------
+add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
+
+if (WIN32)
+	add_dependencies(${PROJECT_NAME}
+	                 sfml-system
+	                 sfml-network
+	                 sfml-graphics
+	                 sfml-audio
+	                 sfml-window
+	                 tinyxml2
+	                 glm
+	                 libglew_static)
+else()
+	add_dependencies(${PROJECT_NAME}
+	                 sfml-system
+	                 sfml-network
+	                 sfml-graphics
+	                 sfml-audio
+	                 sfml-window
+	                 tinyxml2
+	                 glm)
+endif()
+
+target_include_directories(${PROJECT_NAME}
+	PUBLIC
+		$<INSTALL_INTERFACE:include>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
+	PRIVATE
+		${CMAKE_CURRENT_SOURCE_DIR}/../external
+)
+
+if (WIN32)
+	target_link_libraries(${PROJECT_NAME}
+	                      sfml-system
+	                      sfml-network
+	                      sfml-graphics
+	                      sfml-audio
+	                      sfml-window
+	                      tinyxml2
+	                      glm
+	                      libglew_static)
+else()
+	target_link_libraries(${PROJECT_NAME}
+	                      sfml-system
+	                      sfml-network
+	                      sfml-graphics
+	                      sfml-audio
+	                      sfml-window
+	                      tinyxml2
+	                      glm)
+endif()
+
+#------------------------------------------------------------------------------
+# Setup install rule
+#------------------------------------------------------------------------------
+include(GNUInstallDirs)
+
+install(TARGETS ${PROJECT_NAME}
+	EXPORT ${PROJECT_NAME}-export
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	#INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(DIRECTORY include/gk DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+#------------------------------------------------------------------------------
+# Compiler flags
+#------------------------------------------------------------------------------
+target_compile_options(${PROJECT_NAME} PRIVATE -g)
+target_compile_options(${PROJECT_NAME} PRIVATE -DDEBUG_ENABLED -DDEBUG_COLOR)
+
+if(NOT MSVC)
+	target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wfatal-errors)
+	target_compile_options(${PROJECT_NAME} PUBLIC -Wno-variadic-macros)
+endif()
+
+if(MSVC)
+	set(CMAKE_CXX_STANDARD 14)
+else()
+	target_compile_options(${PROJECT_NAME} PUBLIC -std=c++14)
+endif()
+
+# target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
