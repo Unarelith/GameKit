@@ -22,9 +22,6 @@ addons:
             - libxi-dev
             - g++-8
             - cmake
-            - cxxtest
-            - libtinyxml2-dev
-            - libglm-dev
 
 script:
   - mkdir build
