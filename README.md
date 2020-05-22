@@ -21,10 +21,9 @@ It's a small game engine built on top of SFML and OpenGL.
 ## How to compile
 
 - Dependencies:
-    - [CMake](http://www.cmake.org/download/)
-    - OpenGL >= 2.1, [glm](http://sourceforge.net/projects/ogl-math/files/latest/download?source=files)
-    - [glew](http://sourceforge.net/projects/glew/files/latest/download) or [glad](https://github.com/Dav1dde/glad) *(only required for Windows)*
-    - [tinyxml2](http://leethomason.github.io/tinyxml2/)
+    - A compiler with C++14 support
+    - `git` and [CMake](http://www.cmake.org/download/)
+    - OpenGL >= 2.1
     - _Linux users: Check your distribution repositories for packages._
 - Run `cmake -B build . && cmake --build build -j8 && sudo cmake --install build`
 - Or `mkdir build && cd build && cmake .. && make -j8 && sudo make install` (for old CMake versions)
