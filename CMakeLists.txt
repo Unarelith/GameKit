@@ -56,9 +56,9 @@ add_subdirectory(external/SFML)
 #------------------------------------------------------------------------------
 # - GLEW
 #------------------------------------------------------------------------------
-set(glew-cmake_BUILD_STATIC ON)
-set(glew-cmake_BUILD_SHARED OFF)
-set(glew-cmake_BUILD_MULTI_CONTEXT OFF)
+set(glew-cmake_BUILD_STATIC ON CACHE BOOL "")
+set(glew-cmake_BUILD_SHARED OFF CACHE BOOL "")
+set(glew-cmake_BUILD_MULTI_CONTEXT OFF CACHE BOOL "")
 
 add_subdirectory(external/glew)
 
