@@ -61,13 +61,15 @@ set(SOURCE_FILES
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
 add_dependencies(${PROJECT_NAME}
-                 sfml-system
-                 sfml-network
-                 sfml-graphics
-                 sfml-audio
-                 sfml-window
-                 tinyxml2
-                 glm)
+	sfml-system
+	sfml-network
+	sfml-graphics
+	sfml-audio
+	sfml-window
+	tinyxml2
+	libglew_static
+	glm
+)
 
 target_include_directories(${PROJECT_NAME}
 	PUBLIC
@@ -77,14 +79,16 @@ target_include_directories(${PROJECT_NAME}
 		${CMAKE_CURRENT_SOURCE_DIR}/../external
 )
 
-target_link_libraries(${PROJECT_NAME}
-                      sfml-system
-                      sfml-network
-                      sfml-graphics
-                      sfml-audio
-                      sfml-window
-                      tinyxml2
-                      glm)
+target_link_libraries(${PROJECT_NAME} PUBLIC
+	sfml-system
+	sfml-network
+	sfml-graphics
+	sfml-audio
+	sfml-window
+	tinyxml2
+	libglew_static
+	glm
+)
 
 #------------------------------------------------------------------------------
 # Setup install rule
