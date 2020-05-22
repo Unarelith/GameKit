@@ -60,26 +60,14 @@ set(SOURCE_FILES
 #------------------------------------------------------------------------------
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
-if (WIN32)
-	add_dependencies(${PROJECT_NAME}
-	                 sfml-system
-	                 sfml-network
-	                 sfml-graphics
-	                 sfml-audio
-	                 sfml-window
-	                 tinyxml2
-	                 glm
-	                 libglew_static)
-else()
-	add_dependencies(${PROJECT_NAME}
-	                 sfml-system
-	                 sfml-network
-	                 sfml-graphics
-	                 sfml-audio
-	                 sfml-window
-	                 tinyxml2
-	                 glm)
-endif()
+add_dependencies(${PROJECT_NAME}
+                 sfml-system
+                 sfml-network
+                 sfml-graphics
+                 sfml-audio
+                 sfml-window
+                 tinyxml2
+                 glm)
 
 target_include_directories(${PROJECT_NAME}
 	PUBLIC
@@ -89,26 +77,14 @@ target_include_directories(${PROJECT_NAME}
 		${CMAKE_CURRENT_SOURCE_DIR}/../external
 )
 
-if (WIN32)
-	target_link_libraries(${PROJECT_NAME}
-	                      sfml-system
-	                      sfml-network
-	                      sfml-graphics
-	                      sfml-audio
-	                      sfml-window
-	                      tinyxml2
-	                      glm
-	                      libglew_static)
-else()
-	target_link_libraries(${PROJECT_NAME}
-	                      sfml-system
-	                      sfml-network
-	                      sfml-graphics
-	                      sfml-audio
-	                      sfml-window
-	                      tinyxml2
-	                      glm)
-endif()
+target_link_libraries(${PROJECT_NAME}
+                      sfml-system
+                      sfml-network
+                      sfml-graphics
+                      sfml-audio
+                      sfml-window
+                      tinyxml2
+                      glm)
 
 #------------------------------------------------------------------------------
 # Setup install rule

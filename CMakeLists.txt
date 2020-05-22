@@ -56,13 +56,11 @@ add_subdirectory(external/SFML)
 #------------------------------------------------------------------------------
 # - GLEW
 #------------------------------------------------------------------------------
-if (WIN32)
-	set(glew-cmake_BUILD_STATIC ON)
-	set(glew-cmake_BUILD_SHARED OFF)
-	set(glew-cmake_BUILD_MULTI_CONTEXT OFF)
+set(glew-cmake_BUILD_STATIC ON)
+set(glew-cmake_BUILD_SHARED OFF)
+set(glew-cmake_BUILD_MULTI_CONTEXT OFF)
 
-	add_subdirectory(external/glew)
-endif ()
+add_subdirectory(external/glew)
 
 #------------------------------------------------------------------------------
 # - glm
