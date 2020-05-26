@@ -26,13 +26,32 @@
  */
 #include <ctime>
 
+#include <SFML/Config.hpp>
+
 #include "gk/core/CoreApplication.hpp"
 #include "gk/core/Mouse.hpp"
 #include "gk/core/Exception.hpp"
 
+static bool hasBeenInterrupted = false;
+
+#ifdef SFML_SYSTEM_LINUX
+
+#include <stdio.h>
+#include <signal.h>
+
+static void sigintHandler(int) {
+	signal(SIGINT, sigintHandler);
+	hasBeenInterrupted = true;
+}
+
+#endif // SFML_SYSTEM_LINUX
+
 namespace gk {
 
 CoreApplication::CoreApplication(int argc, char **argv) : m_argumentParser(argc, argv) {
+#ifdef SFML_SYSTEM_LINUX
+	signal(SIGINT, sigintHandler);
+#endif
 }
 
 void CoreApplication::init() {
@@ -117,7 +136,7 @@ void CoreApplication::mainLoop() {
 	m_clock.startFpsTimer();
 
 	// FIXME: The window should probably be closed after the main loop ends
-	while(m_window.window().isOpen() && !m_stateStack.empty()) {
+	while(m_window.window().isOpen() && !m_stateStack.empty() && !hasBeenInterrupted) {
 		handleEvents();
 
 		m_eventHandler.processEvents();
