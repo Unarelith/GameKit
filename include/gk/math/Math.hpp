@@ -29,6 +29,10 @@
 
 #include <cmath>
 
+#ifndef M_PI
+# define M_PI 3.14159265358979323846
+#endif
+
 namespace gk {
 
 constexpr double DEG_TO_RAD = M_PI / 180;
