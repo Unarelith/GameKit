@@ -58,7 +58,7 @@ class EventListenerList : public IEventListenerList {
 		void removeListeners(void *instance) override {
 			for (auto it = m_listeners.begin() ; it != m_listeners.end() ;) {
 				if (it->second == instance)
-					m_listeners.erase(it);
+					it = m_listeners.erase(it);
 				else
 					++it;
 			}
