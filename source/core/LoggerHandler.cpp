@@ -24,20 +24,23 @@
  *
  * =====================================================================================
  */
-#ifndef GK_DEBUG_HPP_
-#define GK_DEBUG_HPP_
-
-#include <cstring>
-
 #include "gk/core/LoggerHandler.hpp"
 
-#define _FILE (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+namespace gk {
 
-#define gkDebug()    (gk::LoggerHandler::getInstance().print(gk::Debug,   _FILE, __LINE__))
-#define gkInfo()     (gk::LoggerHandler::getInstance().print(gk::Info,    _FILE, __LINE__))
-#define gkWarning()  (gk::LoggerHandler::getInstance().print(gk::Warning, _FILE, __LINE__))
-#define gkError()    (gk::LoggerHandler::getInstance().print(gk::Error,   _FILE, __LINE__))
+LoggerHandler::InstanceMap LoggerHandler::s_instanceMap;
 
-#define gkTrace(s) do { gkInfo() << "Function called: " #s; s } while (false);
+Logger LoggerHandler::print(LogLevel level, const char *file, int line) {
+	return {level, file, line, m_name};
+}
 
-#endif // GK_DEBUG_HPP_
+LoggerHandler &LoggerHandler::getInstance() {
+	return *s_instanceMap.at(std::this_thread::get_id());
+}
+
+void LoggerHandler::setInstance(LoggerHandler &instance) {
+	s_instanceMap.emplace(std::this_thread::get_id(), &instance);
+}
+
+} // namespace gk
+

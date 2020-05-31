@@ -45,8 +45,8 @@ enum LogLevel : u8 {
 
 class Logger {
 	public:
-		Logger(LogLevel level = LogLevel::Debug, const char *file = nullptr, int line = -1)
-			: m_level(level), m_file(file), m_line(line) {}
+		Logger(LogLevel level = LogLevel::Debug, const char *file = nullptr, int line = -1, const std::string &sourceName = "")
+			: m_level(level), m_file(file), m_line(line), m_sourceName(sourceName) {}
 		~Logger() { print(); }
 
 		void setColor(LoggerColor color) { m_color = color; }
@@ -72,6 +72,8 @@ class Logger {
 
 		const char *m_file = nullptr;
 		int m_line = -1;
+
+		std::string m_sourceName;
 
 		LoggerColor m_color = LoggerColor::White;
 		bool m_isBold = false;

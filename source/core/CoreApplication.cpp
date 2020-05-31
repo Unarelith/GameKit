@@ -62,6 +62,7 @@ void CoreApplication::init() {
 	ApplicationStateStack::setInstance(m_stateStack);
 	GameClock::setInstance(m_clock);
 	ResourceHandler::setInstance(m_resourceHandler);
+	LoggerHandler::setInstance(m_loggerHandler);
 
 	m_stateStack.setEventHandler(m_eventHandler);
 

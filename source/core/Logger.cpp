@@ -40,13 +40,16 @@ std::string Logger::textColor(LoggerColor color, bool bold) {
 void Logger::print() {
 	if (!isEnabled) return;
 
-	std::cout << m_color;
+	std::cout << textColor(m_color, m_isBold);
 
 	char levels[4] = {'D', 'I', 'W', 'E'};
 	std::cout << "[" + getCurrentTime("%H:%M:%S") + "] [" << levels[m_level] << "] ";
 
 	if (printFileAndLine)
 		std::cout << m_file << ":" << m_line << ": ";
+
+	if (!m_sourceName.empty())
+		std::cout << "[" + m_sourceName + "] ";
 
 	std::cout << m_stream.str() << LoggerColor::White << std::endl;
 }

@@ -24,20 +24,35 @@
  *
  * =====================================================================================
  */
-#ifndef GK_DEBUG_HPP_
-#define GK_DEBUG_HPP_
+#ifndef GK_LOGGERHANDLER_HPP_
+#define GK_LOGGERHANDLER_HPP_
 
-#include <cstring>
+#include <thread>
+#include <unordered_map>
 
-#include "gk/core/LoggerHandler.hpp"
+#include "gk/core/Logger.hpp"
 
-#define _FILE (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
+namespace gk {
 
-#define gkDebug()    (gk::LoggerHandler::getInstance().print(gk::Debug,   _FILE, __LINE__))
-#define gkInfo()     (gk::LoggerHandler::getInstance().print(gk::Info,    _FILE, __LINE__))
-#define gkWarning()  (gk::LoggerHandler::getInstance().print(gk::Warning, _FILE, __LINE__))
-#define gkError()    (gk::LoggerHandler::getInstance().print(gk::Error,   _FILE, __LINE__))
+class LoggerHandler {
+	using InstanceMap = std::unordered_map<std::thread::id, LoggerHandler *>;
 
-#define gkTrace(s) do { gkInfo() << "Function called: " #s; s } while (false);
+	public:
+		LoggerHandler() = default;
 
-#endif // GK_DEBUG_HPP_
+		Logger print(LogLevel level, const char *file, int line);
+
+		void setName(const std::string &name) { m_name = name; }
+
+		static LoggerHandler &getInstance();
+		static void setInstance(LoggerHandler &instance);
+
+	private:
+		static InstanceMap s_instanceMap;
+
+		std::string m_name;
+};
+
+} // namespace gk
+
+#endif // GK_LOGGERHANDLER_HPP_

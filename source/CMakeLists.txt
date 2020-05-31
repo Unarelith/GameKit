@@ -8,6 +8,7 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Filesystem.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/GameClock.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Logger.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/core/LoggerHandler.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/LoggerUtils.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Mouse.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Timer.cpp

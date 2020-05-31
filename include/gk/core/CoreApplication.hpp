@@ -135,6 +135,8 @@ class CoreApplication {
 		ArgumentParser m_argumentParser;                       ///< Helper for argument management
 
 		EventHandler m_eventHandler;                           ///< Class responsible to store events and listeners
+
+		LoggerHandler m_loggerHandler;                         ///< Class responsible for log output
 };
 
 } // namespace gk
