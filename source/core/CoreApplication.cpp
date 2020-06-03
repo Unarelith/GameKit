@@ -76,6 +76,10 @@ void CoreApplication::init() {
 int CoreApplication::run(bool isProtected) {
 	auto runGame = [&]() {
 		init();
+
+		if (m_window.window().isOpen())
+			m_window.setupOpenGL();
+
 		mainLoop();
 	};
 

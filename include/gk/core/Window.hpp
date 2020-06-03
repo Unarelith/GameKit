@@ -55,6 +55,7 @@ class Window : public RenderTarget {
 		bool isVerticalSyncEnabled() const { return m_isVerticalSyncEnabled; }
 		void setVerticalSyncEnabled(bool isVerticalSyncEnabled);
 
+		void setupOpenGL() { if (m_glFlagsSetupFunc) m_glFlagsSetupFunc(); }
 		void setOpenGLFlagsSetupFunc(const std::function<void(void)> &func) { m_glFlagsSetupFunc = func; }
 
 		sf::Window &window() { return m_window; }
