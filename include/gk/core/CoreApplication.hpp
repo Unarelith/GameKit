@@ -97,7 +97,7 @@ class CoreApplication {
 		/// This function is automatically called by handleEvents()
 		///
 		////////////////////////////////////////////////////////////
-		virtual void onEvent(const sf::Event &) {}
+		virtual void onEvent(const sf::Event &event);
 
 		////////////////////////////////////////////////////////////
 		/// \brief This function is called right before the program is closed
@@ -137,6 +137,8 @@ class CoreApplication {
 		EventHandler m_eventHandler;                           ///< Class responsible to store events and listeners
 
 		LoggerHandler m_loggerHandler;                         ///< Class responsible for log output
+
+		gk::ApplicationState *m_currentState = nullptr;        ///< State used for handleEvents()
 };
 
 } // namespace gk

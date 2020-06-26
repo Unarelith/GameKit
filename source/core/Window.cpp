@@ -90,11 +90,10 @@ void Window::setFullscreenMode(bool isFullscreenModeEnabled) {
 			m_basePosition = m_window.getPosition();
 			m_baseSize = m_size;
 
-			m_window.create(m_mode, m_title, m_style | sf::Style::Fullscreen, m_settings);
+			sf::VideoMode mode = sf::VideoMode::getFullscreenModes().at(0);
+			m_window.create(mode, m_title, m_style | sf::Style::Fullscreen, m_settings);
 		}
 		else {
-			// FIXME: Find the best available fullscreen video mode
-
 			m_window.create(m_mode, m_title, m_style & (~sf::Style::Fullscreen), m_settings);
 
 			m_window.setPosition(m_basePosition);

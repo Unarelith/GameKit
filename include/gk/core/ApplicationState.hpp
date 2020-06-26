@@ -92,11 +92,8 @@ class ApplicationState : public Drawable, public Transformable, public NonCopyab
 		////////////////////////////////////////////////////////////
 		/// \brief Execute actions every game tick
 		///
-		/// This is a pure virtual function that has to be implemented
-		/// by the derived class to define what the state should do.
-		///
 		////////////////////////////////////////////////////////////
-		virtual void update() = 0;
+		virtual void update() {}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Get the parent of this state

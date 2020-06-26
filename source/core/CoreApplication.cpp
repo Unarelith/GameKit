@@ -122,19 +122,21 @@ void CoreApplication::createWindow(sf::VideoMode mode, const sf::String &title, 
 }
 
 void CoreApplication::handleEvents() {
-	gk::ApplicationState *currentState = nullptr;
+	m_currentState = nullptr;
 	if (!m_stateStack.empty())
-		currentState = &m_stateStack.top();
+		m_currentState = &m_stateStack.top();
 
 	sf::Event event;
 	while (m_window.window().pollEvent(event)) {
 		onEvent(event);
-
-		m_window.onEvent(event);
-
-		if (currentState && !m_stateStack.empty())
-			currentState->onEvent(event);
 	}
+}
+
+void CoreApplication::onEvent(const sf::Event &event) {
+	m_window.onEvent(event);
+
+	if (m_currentState && !m_stateStack.empty())
+		m_currentState->onEvent(event);
 }
 
 void CoreApplication::mainLoop() {
