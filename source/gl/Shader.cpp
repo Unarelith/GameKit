@@ -196,6 +196,10 @@ void Shader::setUniform(const std::string &name, int n) const {
 	glCheck(glUniform1i(uniform(name), n));
 }
 
+void Shader::setUniform(const std::string &name, float n) const {
+	glCheck(glUniform1f(uniform(name), n));
+}
+
 void Shader::setUniform(const std::string &name, float x, float y) const {
 	glCheck(glUniform2f(uniform(name), x, y));
 }
