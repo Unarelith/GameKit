@@ -48,7 +48,7 @@ class Shader {
 
 		void loadFromFile(const std::string &vertexFilename, const std::string &fragementFilename);
 
-		void createProgram();
+		void createProgram(bool useDefaultAttributeLocationBinding = true);
 		void linkProgram();
 
 		void bindAttributeLocation(GLuint index, const std::string &name);
@@ -80,7 +80,7 @@ class Shader {
 
 		std::unordered_map<std::string, GLuint> m_attributes;
 
-		GLuint m_program;
+		GLuint m_program = 0;
 };
 
 } // namespace gk

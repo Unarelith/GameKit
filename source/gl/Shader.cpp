@@ -54,7 +54,8 @@ Shader::~Shader() {
 		m_fragmentShaders.pop_back();
 	}
 
-	glCheck(glDeleteProgram(m_program));
+	if (m_program != 0)
+		glCheck(glDeleteProgram(m_program));
 }
 
 void Shader::loadFromFile(const std::string &vertexFilename, const std::string &fragmentFilename) {
@@ -66,10 +67,11 @@ void Shader::loadFromFile(const std::string &vertexFilename, const std::string &
 	linkProgram();
 }
 
-void Shader::createProgram() {
+void Shader::createProgram(bool useDefaultAttributeLocationBinding) {
 	glCheck(m_program = glCreateProgram());
 
-	defaultAttributeLocationBinding();
+	if (useDefaultAttributeLocationBinding)
+		defaultAttributeLocationBinding();
 }
 
 void Shader::linkProgram() {
@@ -116,12 +118,6 @@ void Shader::addShader(GLenum type, const std::string &filename) {
 	GLuint shader;
 	glCheck(shader = glCreateShader(type));
 
-	if(type == GL_VERTEX_SHADER) {
-		m_vertexShaders.push_back(shader);
-	} else {
-		m_fragmentShaders.push_back(shader);
-	}
-
 	std::ifstream file(filename);
 	if(!file) {
 		glCheck(glDeleteShader(shader));
@@ -161,6 +157,12 @@ void Shader::addShader(GLenum type, const std::string &filename) {
 	}
 
 	glCheck(glAttachShader(m_program, shader));
+
+	if(type == GL_VERTEX_SHADER) {
+		m_vertexShaders.push_back(shader);
+	} else {
+		m_fragmentShaders.push_back(shader);
+	}
 }
 
 GLint Shader::attrib(const std::string &name) const {

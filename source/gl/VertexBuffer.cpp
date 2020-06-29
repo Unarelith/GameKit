@@ -39,7 +39,8 @@ VertexBuffer::VertexBuffer(VertexBuffer &&vertexBuffer) {
 }
 
 VertexBuffer::~VertexBuffer() noexcept {
-	glCheck(glDeleteBuffers(1, &m_id));
+	if (m_id != 0)
+		glCheck(glDeleteBuffers(1, &m_id));
 }
 
 void VertexBuffer::setData(GLsizeiptr size, const GLvoid *data, GLenum usage) const {

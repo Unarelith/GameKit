@@ -63,7 +63,8 @@ class ApplicationState : public Drawable, public Transformable, public NonCopyab
 		///
 		////////////////////////////////////////////////////////////
 		virtual ~ApplicationState() {
-			m_eventHandler->removeListeners(this);
+			if (m_eventHandler)
+				m_eventHandler->removeListeners(this);
 		}
 
 		////////////////////////////////////////////////////////////
