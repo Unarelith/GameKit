@@ -78,6 +78,23 @@ inline double cosDeg(double angle) {
 	return (fabs(angle) > 45.) ? sinDeg(90. - fabs(angle)) : cos(angle * DEG_TO_RAD);
 }
 
+// Positive integer-only modulo
+inline unsigned int pmod(int value, unsigned int m) {
+	return (value % m + m) % m;
+}
+
+// Positive floating-point modulo
+inline float pfmodf(float value, float m) {
+	return value < 0 ? std::fmod(value, m) + m : std::fmod(value, m);
+}
+
+inline double pfmod(double value, double m) {
+	return value < 0 ? std::fmod(value, m) + m : std::fmod(value, m);
+}
+
+inline long double pfmodl(long double value, long double m) {
+	return value < 0 ? std::fmod(value, m) + m : std::fmod(value, m);
+}
 
 } // namespace gk
 
