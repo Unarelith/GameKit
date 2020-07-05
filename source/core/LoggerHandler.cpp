@@ -31,7 +31,7 @@ namespace gk {
 LoggerHandler::InstanceMap LoggerHandler::s_instanceMap;
 
 Logger LoggerHandler::print(LogLevel level, const char *file, int line) {
-	return {level, file, line, m_name};
+	return {level >= m_maxLevel ? level : LogLevel::None, file, line, m_name};
 }
 
 LoggerHandler &LoggerHandler::getInstance() {

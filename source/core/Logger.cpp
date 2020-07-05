@@ -38,7 +38,7 @@ std::string Logger::textColor(LoggerColor color, bool bold) {
 }
 
 void Logger::print() {
-	if (!isEnabled) return;
+	if (!isEnabled || m_level == LogLevel::None) return;
 
 	std::cout << textColor(m_color, m_isBold);
 

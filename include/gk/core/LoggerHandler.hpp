@@ -42,6 +42,9 @@ class LoggerHandler {
 
 		Logger print(LogLevel level, const char *file, int line);
 
+		LogLevel maxLevel() const { return m_maxLevel; }
+		void setMaxLevel(LogLevel maxLevel) { m_maxLevel = maxLevel; }
+
 		void setName(const std::string &name) { m_name = name; }
 
 		static LoggerHandler &getInstance();
@@ -51,6 +54,8 @@ class LoggerHandler {
 		static InstanceMap s_instanceMap;
 
 		std::string m_name;
+
+		LogLevel m_maxLevel = LogLevel::Debug;
 };
 
 } // namespace gk
