@@ -32,6 +32,7 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 	option(GIT_SUBMODULE "Check submodules during build" ON)
 	if(GIT_SUBMODULE)
 		message(STATUS "Submodule update")
+		execute_process(COMMAND ${GIT_EXECUTABLE} submodule sync --recursive WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 		execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
 			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
 			RESULT_VARIABLE GIT_SUBMOD_RESULT)
@@ -41,17 +42,16 @@ if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
 	endif()
 endif()
 
-if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/SFML/CMakeLists.txt")
+if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/tinyxml2/CMakeLists.txt")
     message(FATAL_ERROR "The submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
 endif()
 
-#------------------------------------------------------------------------------
-# - SFML
-#------------------------------------------------------------------------------
-set(SFML_STATIC TRUE)
 set(BUILD_SHARED_LIBS OFF)
 
-add_subdirectory(external/SFML)
+#------------------------------------------------------------------------------
+# - SDL2
+#------------------------------------------------------------------------------
+add_subdirectory(external/SDL2)
 
 #------------------------------------------------------------------------------
 # - GLEW

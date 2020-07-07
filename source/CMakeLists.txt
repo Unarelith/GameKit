@@ -63,11 +63,8 @@ set(SOURCE_FILES
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
 add_dependencies(${PROJECT_NAME}
-	sfml-system
-	sfml-network
-	sfml-graphics
-	sfml-audio
-	sfml-window
+	SDL2main
+	SDL2
 	tinyxml2
 	libglew_static
 	glm
@@ -82,11 +79,8 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-	sfml-system
-	sfml-network
-	sfml-graphics
-	sfml-audio
-	sfml-window
+	SDL2main
+	SDL2
 	tinyxml2
 	libglew_static
 	glm
