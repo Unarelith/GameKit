@@ -89,8 +89,12 @@ void Texture::loadFromSurface(SDL_Surface *surface) {
 	GLenum format;
 	if (surface->format->BytesPerPixel == 4) {
 		format = (surface->format->Rmask == 0x000000ff) ? GL_RGBA : GL_BGRA;
-	} else {
+	}
+	else if (surface->format->BytesPerPixel == 3) {
 		format = (surface->format->Rmask == 0x000000ff) ? GL_RGB : GL_BGR;
+	}
+	else {
+		throw EXCEPTION("Unable to load '" + m_filename + "': The image file is not valid");
 	}
 
 	glCheck(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_size.x, m_size.y, 0, format, GL_UNSIGNED_BYTE, surface->pixels));
