@@ -40,12 +40,14 @@ void KeyboardHandler::loadKeysFromFile(const std::string &filename) {
 		tinyxml2::XMLElement *keyElement = keys->FirstChildElement("key");
 		while (keyElement) {
 			const char *keyName;
-			if ((keyName = keyElement->Attribute("keycode")))
-				m_keys[key] = KeyboardUtils::getKeyFromName(keyName);
+			if ((keyName =  keyElement->Attribute("scancode")))
+				m_keys[key] = SDL_GetKeyFromScancode(SDL_GetScancodeFromName(keyName));
+			else if ((keyName = keyElement->Attribute("keycode")))
+				m_keys[key] = SDL_GetKeyFromName(keyName);
 			else
 				gkWarning() << "Key '" << keyElement->Attribute("name") << "' is invalid";
 
-			if(m_keys[key] == sf::Keyboard::Unknown) {
+			if(m_keys[key] == SDLK_UNKNOWN) {
 				gkWarning() << "Key '" << keyName << "' not recognized";
 			}
 
@@ -58,7 +60,12 @@ void KeyboardHandler::loadKeysFromFile(const std::string &filename) {
 }
 
 bool KeyboardHandler::isKeyPressed(GameKey key) {
-	return sf::Keyboard::isKeyPressed(m_keys[key]);
+	const u8 *keyboardState = SDL_GetKeyboardState(nullptr);
+	SDL_Keycode keyScancode = m_keys[key];
+
+	m_keysPressed[key] = keyboardState[SDL_GetScancodeFromKey(keyScancode)];
+
+	return m_keysPressed[key];
 }
 
 } // namespace gk

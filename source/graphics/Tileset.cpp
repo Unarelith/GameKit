@@ -37,7 +37,7 @@ Tileset::Tileset(const std::string &filename, const std::string &configFile) {
 }
 
 void Tileset::load(const std::string &filename, const std::string &configFile) {
-	sf::Texture::loadFromFile(filename);
+	Texture::loadFromFile(filename);
 
 	XMLFile doc(configFile);
 

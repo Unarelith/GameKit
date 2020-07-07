@@ -27,11 +27,10 @@
 #ifndef GK_IMAGE_HPP_
 #define GK_IMAGE_HPP_
 
-#include <SFML/Graphics/Texture.hpp>
-
 #include "gk/graphics/Color.hpp"
 #include "gk/core/Rect.hpp"
 #include "gk/gl/Drawable.hpp"
+#include "gk/gl/Texture.hpp"
 #include "gk/gl/Transformable.hpp"
 #include "gk/gl/VertexBuffer.hpp"
 
@@ -41,11 +40,11 @@ class Image : public Drawable, public Transformable {
 	public:
 		Image() = default;
 		Image(const std::string &textureName);
-		Image(const sf::Texture &texture);
+		Image(const Texture &texture);
 
 		void load(const Image &image);
 		void load(const std::string &textureName);
-		void load(const sf::Texture &texture);
+		void load(const Texture &texture);
 
 		void setTexture(const std::string &textureName);
 
@@ -67,7 +66,7 @@ class Image : public Drawable, public Transformable {
 
 		void draw(RenderTarget &target, RenderStates states) const override;
 
-		const sf::Texture *m_texture = nullptr;
+		const Texture *m_texture = nullptr;
 
 		VertexBuffer m_vbo;
 

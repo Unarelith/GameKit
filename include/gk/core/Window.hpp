@@ -27,56 +27,68 @@
 #ifndef GK_WINDOW_HPP_
 #define GK_WINDOW_HPP_
 
-#include <functional>
+#include <memory>
 #include <string>
 
-#include <SFML/Window/Window.hpp>
-
 #include "gk/core/IntTypes.hpp"
+#include "gk/core/SDLHeaders.hpp"
 #include "gk/gl/RenderTarget.hpp"
 
 namespace gk {
 
 class Window : public RenderTarget {
 	public:
-		void create(sf::VideoMode mode, const sf::String &title, sf::Uint32 style = sf::Style::Default, const sf::ContextSettings &settings = sf::ContextSettings());
+		enum Mode {
+			Windowed,
+			Fullscreen,
+			Borderless
+		};
+
+		void open(const std::string &caption, u16 width, u16 height);
+
 		void clear();
+		void display();
 
-		void onEvent(const sf::Event &event);
+		void onEvent(const SDL_Event &event);
 
-		Vector2u getSize() const override { return m_size; }
-		void setSize(const Vector2u &size);
+		bool isVerticalSyncEnabled() { return m_isVerticalSyncEnabled; }
+		void setVerticalSyncEnabled(bool isVerticalSyncEnabled);
+
+		Mode getWindowMode() const { return m_windowMode; }
+		void setWindowMode(Mode mode);
+
+		Vector2u getSize() const override;
+		void resize(unsigned int width, unsigned int height);
+
+		void close() { m_isOpen = false; }
+		bool isOpen() const { return m_isOpen; }
+
+		SDL_Window *window() const { return m_window.get(); }
 
 		const View &getDefaultView() const override { return m_defaultView; }
-
-		bool isFullscreenModeEnabled() const { return m_isFullscreenModeEnabled; }
-		void setFullscreenMode(bool isFullscreenModeEnabled);
-
-		bool isVerticalSyncEnabled() const { return m_isVerticalSyncEnabled; }
-		void setVerticalSyncEnabled(bool isVerticalSyncEnabled);
 
 		void setupOpenGL() { if (m_glFlagsSetupFunc) m_glFlagsSetupFunc(); }
 		void setOpenGLFlagsSetupFunc(const std::function<void(void)> &func) { m_glFlagsSetupFunc = func; }
 
-		sf::Window &window() { return m_window; }
-
 	private:
 		static void initOpenGL();
 
-		sf::Window m_window;
+		using SDL_WindowPtr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;
+		using SDL_GLContextPtr = std::unique_ptr<void, decltype(&SDL_GL_DeleteContext)>;
 
-		sf::VideoMode m_mode;
-		sf::String m_title;
-		sf::Uint32 m_style;
-		sf::ContextSettings m_settings;
+		SDL_WindowPtr m_window{nullptr, SDL_DestroyWindow};
+		SDL_GLContextPtr m_context{nullptr, SDL_GL_DeleteContext};
 
-		Vector2u m_size{0, 0};
+		Vector2u m_size;
 		Vector2u m_baseSize{0, 0};
-		sf::Vector2i m_basePosition{0, 0};
+		Vector2i m_basePosition{0, 0};
+
+		bool m_isOpen;
 
 		View m_defaultView;
 
-		bool m_isFullscreenModeEnabled = false;
+		Mode m_windowMode = Mode::Windowed;
+
 		bool m_isVerticalSyncEnabled = false;
 
 		std::function<void(void)> m_glFlagsSetupFunc;

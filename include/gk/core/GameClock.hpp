@@ -30,8 +30,6 @@
 #include <functional>
 #include <mutex>
 
-#include <SFML/System/Clock.hpp>
-
 #include "gk/core/Timer.hpp"
 
 namespace gk {
@@ -63,7 +61,6 @@ class GameClock {
 		void computeFramesPerSecond();
 
 		static GameClock *s_instance;
-		static sf::Clock s_clock;
 
 		u32 m_ticks = 0;
 		u16 m_fps = 0;

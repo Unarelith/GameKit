@@ -32,10 +32,10 @@
 namespace gk {
 
 Image::Image(const std::string &textureName) {
-	load(ResourceHandler::getInstance().get<sf::Texture>(textureName));
+	load(ResourceHandler::getInstance().get<Texture>(textureName));
 }
 
-Image::Image(const sf::Texture &texture) {
+Image::Image(const Texture &texture) {
 	load(texture);
 }
 
@@ -54,10 +54,10 @@ void Image::load(const Image &image) {
 }
 
 void Image::load(const std::string &textureName) {
-	load(ResourceHandler::getInstance().get<sf::Texture>(textureName));
+	load(ResourceHandler::getInstance().get<Texture>(textureName));
 }
 
-void Image::load(const sf::Texture &texture) {
+void Image::load(const Texture &texture) {
 	m_texture = &texture;
 
 	m_width = m_texture->getSize().x;
@@ -68,7 +68,7 @@ void Image::load(const sf::Texture &texture) {
 }
 
 void Image::setTexture(const std::string &textureName) {
-	m_texture = &ResourceHandler::getInstance().get<sf::Texture>(textureName);
+	m_texture = &ResourceHandler::getInstance().get<Texture>(textureName);
 }
 
 void Image::setClipRect(float x, float y, u16 width, u16 height) {

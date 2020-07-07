@@ -24,152 +24,134 @@
  *
  * =====================================================================================
  */
-#ifndef GK_APPLICATIONSTATE_HPP_
-#define GK_APPLICATIONSTATE_HPP_
+#ifndef GK_TEXTURE_HPP_
+#define GK_TEXTURE_HPP_
 
-#include "gk/core/EventHandler.hpp"
+#include <string>
+
+#include "gk/core/IntTypes.hpp"
 #include "gk/core/SDLHeaders.hpp"
-#include "gk/gl/Drawable.hpp"
-#include "gk/gl/Transformable.hpp"
+#include "gk/core/Vector2.hpp"
+#include "gk/gl/OpenGL.hpp"
 #include "gk/utils/NonCopyable.hpp"
 
 namespace gk {
 
-class ApplicationStateStack;
-
 ////////////////////////////////////////////////////////////
-/// \brief Abstract base class for game states
+/// \brief Image living on the graphics card that can be used for drawing
 ///
 ////////////////////////////////////////////////////////////
-class ApplicationState : public Drawable, public Transformable, public NonCopyable {
+class Texture : public NonCopyable {
 	public:
 		////////////////////////////////////////////////////////////
 		/// \brief Default constructor
 		///
-		/// \param parent The parent of this state
+		/// Creates an empty texture.
 		///
 		////////////////////////////////////////////////////////////
-		ApplicationState(ApplicationState *parent = nullptr) : m_parent(parent) {}
+		Texture() = default;
 
 		////////////////////////////////////////////////////////////
-		/// \brief Defaulted move constructor
+		/// \brief Load the texture from a file on the disk
+		///
+		/// \param filename Relative or absolute path to the file
 		///
 		////////////////////////////////////////////////////////////
-		ApplicationState(ApplicationState &&) = default;
+		Texture(const std::string &filename);
 
 		////////////////////////////////////////////////////////////
-		/// \brief Virtual destructor
+		/// \brief Load the texture from a SDL_Surface
+		///
+		/// \param surface Pointer to the surface where the data is stored
 		///
 		////////////////////////////////////////////////////////////
-		virtual ~ApplicationState() {
-			if (m_eventHandler)
-				m_eventHandler->removeListeners(this);
-		}
+		Texture(SDL_Surface *surface);
 
 		////////////////////////////////////////////////////////////
-		/// \brief Defaulted move assignment operator
+		/// \brief Move constructor
+		///
+		/// \param texture instance to move
 		///
 		////////////////////////////////////////////////////////////
-		ApplicationState &operator=(ApplicationState &&) = default;
+		Texture(Texture &&texture);
 
 		////////////////////////////////////////////////////////////
-		/// \brief Initialize the state
-		///
-		/// This is where you will be able to use `m_stateStack`
-		/// and `m_eventHandler` pointers
+		/// \brief Destructor
 		///
 		////////////////////////////////////////////////////////////
-		virtual void init() {}
+		~Texture() noexcept;
 
 		////////////////////////////////////////////////////////////
-		/// \brief Do an action in response to an OS event
+		/// \brief Move assignement operator
 		///
-		/// \param event The event sent from SFML
+		/// \param texture instance to move
 		///
 		////////////////////////////////////////////////////////////
-		virtual void onEvent(const SDL_Event &) {}
+		Texture &operator=(Texture &&texture);
 
 		////////////////////////////////////////////////////////////
-		/// \brief Execute actions every game tick
+		/// \brief Load the texture from a file on the disk
+		///
+		/// \param filename Relative or absolute path to the file
 		///
 		////////////////////////////////////////////////////////////
-		virtual void update() {}
+		void loadFromFile(const std::string &filename);
 
 		////////////////////////////////////////////////////////////
-		/// \brief Get the parent of this state
+		/// \brief Load the texture from a SDL_Surface
 		///
-		/// \return The parent of this state
+		/// \param surface Pointer to the surface where the data is stored
 		///
 		////////////////////////////////////////////////////////////
-		ApplicationState *parent() { return m_parent; }
+		void loadFromSurface(SDL_Surface *surface);
 
 		////////////////////////////////////////////////////////////
-		/// \brief Change the stack this state belongs to
+		/// \brief Return the filename of the texture
 		///
-		/// \param stateStack The new state stack
+		/// \return Texture filename
 		///
 		////////////////////////////////////////////////////////////
-		void setStateStack(ApplicationStateStack *stateStack) { m_stateStack = stateStack; }
+		const std::string &filename() const { return m_filename; }
 
 		////////////////////////////////////////////////////////////
-		/// \brief Set the event handler
+		/// \brief Return the size of the texture
 		///
-		/// \param eventHandler The event handler
+		/// \return Size in pixels
 		///
 		////////////////////////////////////////////////////////////
-		void setEventHandler(EventHandler *eventHandler) { m_eventHandler = eventHandler; }
+		const gk::Vector2u &getSize() const { return m_size; }
 
-	protected:
 		////////////////////////////////////////////////////////////
-		/// \brief Draw the sprite to a render target
+		/// \brief Bind a texture for rendering
 		///
-		/// \param target Render target to draw to
-		/// \param states Current render states
+		/// \param texture Pointer to the texture to bind, can be null to use no texture
 		///
 		////////////////////////////////////////////////////////////
-		void draw(RenderTarget &, RenderStates) const override {}
+		static void bind(const Texture *texture);
 
+	private:
 		////////////////////////////////////////////////////////////
 		// Member data
 		////////////////////////////////////////////////////////////
-		ApplicationState *m_parent = nullptr;          ///< Parent to this state
+		static const Texture *s_boundTexture;
 
-		ApplicationStateStack *m_stateStack = nullptr; ///< Stack where this state belongs to
+		std::string m_filename; ///< Texture filename
 
-		EventHandler *m_eventHandler = nullptr;        ///< The event handler
+		gk::Vector2u m_size;    ///< Size of the texture
+
+		GLuint m_texture = 0;   ///< Internal OpenGL texture ID
 };
 
 } // namespace gk
 
-#endif // GK_APPLICATIONSTATE_HPP_
+#endif // GK_TEXTURE_HPP_
 
 ////////////////////////////////////////////////////////////
-/// \class gk::ApplicationState
-/// \ingroup core
+/// \class gk::Texture
+/// \ingroup graphics
 ///
-/// gk::ApplicationState is a very simple base class for designing your own game states.
+/// gk::Texture is an overlay to OpenGL texture system.
 ///
-/// Example:
-/// \code
-/// class MyState : public gk::ApplicationState {
-///     public:
-///         MyState(gk::ApplicationState *parent = nullptr) : gk::ApplicationState(parent) {
-///             ...
-///         }
-///
-///         void update() override {
-///             ...
-///         }
-///
-///     private:
-///         void draw(gk::RenderTarget &target, gk::RenderStates states) const override {
-///             ...
-///         }
-///
-///         ...
-/// };
-/// \endcode
-///
-/// \see gk::ApplicationStateStack
+/// \see gk::Image, gk::Sprite
 ///
 ////////////////////////////////////////////////////////////

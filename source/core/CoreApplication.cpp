@@ -26,15 +26,14 @@
  */
 #include <ctime>
 
-#include <SFML/Config.hpp>
-
+#include "gk/core/Config.hpp"
 #include "gk/core/CoreApplication.hpp"
 #include "gk/core/Mouse.hpp"
 #include "gk/core/Exception.hpp"
 
 static bool hasBeenInterrupted = false;
 
-#ifdef SFML_SYSTEM_LINUX
+#ifdef GK_SYSTEM_LINUX
 
 #include <stdio.h>
 #include <signal.h>
@@ -44,12 +43,12 @@ static void sigintHandler(int) {
 	hasBeenInterrupted = true;
 }
 
-#endif // SFML_SYSTEM_LINUX
+#endif // GK_SYSTEM_LINUX
 
 namespace gk {
 
 CoreApplication::CoreApplication(int argc, char **argv) : m_argumentParser(argc, argv) {
-#ifdef SFML_SYSTEM_LINUX
+#ifdef GK_SYSTEM_LINUX
 	signal(SIGINT, sigintHandler);
 #endif
 }
@@ -75,9 +74,12 @@ void CoreApplication::init() {
 
 int CoreApplication::run(bool isProtected) {
 	auto runGame = [&]() {
+		if (m_loadSDL)
+			m_sdlLoader.load();
+
 		init();
 
-		if (m_window.window().isOpen())
+		if (m_window.isOpen())
 			m_window.setupOpenGL();
 
 		mainLoop();
@@ -111,14 +113,8 @@ int CoreApplication::run(bool isProtected) {
 	return 0;
 }
 
-void CoreApplication::createWindow(sf::VideoMode mode, const sf::String &title, sf::Uint32 style, const sf::ContextSettings &settings) {
-	m_window.create(mode, title, style, settings);
-
-	auto desktop = sf::VideoMode::getDesktopMode();
-	m_window.window().setPosition(sf::Vector2i(
-		desktop.width / 2 - m_window.getSize().x / 2,
-		desktop.height / 2 - m_window.getSize().y / 2
-	));
+void CoreApplication::createWindow(u16 width, u16 height, const std::string &title) {
+	m_window.open(title, width, height);
 }
 
 void CoreApplication::handleEvents() {
@@ -126,13 +122,13 @@ void CoreApplication::handleEvents() {
 	if (!m_stateStack.empty())
 		m_currentState = &m_stateStack.top();
 
-	sf::Event event;
-	while (m_window.window().pollEvent(event)) {
+	SDL_Event event;
+	while (SDL_PollEvent(&event)) {
 		onEvent(event);
 	}
 }
 
-void CoreApplication::onEvent(const sf::Event &event) {
+void CoreApplication::onEvent(const SDL_Event &event) {
 	m_window.onEvent(event);
 
 	if (m_currentState && !m_stateStack.empty())
@@ -143,7 +139,7 @@ void CoreApplication::mainLoop() {
 	m_clock.startFpsTimer();
 
 	// FIXME: The window should probably be closed after the main loop ends
-	while(m_window.window().isOpen() && !m_stateStack.empty() && !hasBeenInterrupted) {
+	while(m_window.isOpen() && !m_stateStack.empty() && !hasBeenInterrupted) {
 		handleEvents();
 
 		m_eventHandler.processEvents();
@@ -161,7 +157,7 @@ void CoreApplication::mainLoop() {
 			if(!m_stateStack.empty())
 				m_window.draw(m_stateStack.top(), m_renderStates);
 
-			m_window.window().display();
+			m_window.display();
 		});
 	}
 }

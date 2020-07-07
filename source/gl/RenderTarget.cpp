@@ -24,12 +24,11 @@
  *
  * =====================================================================================
  */
-#include <SFML/Graphics/Texture.hpp>
-
 #include "gk/gl/GLCheck.hpp"
 #include "gk/gl/Drawable.hpp"
 #include "gk/gl/RenderTarget.hpp"
 #include "gk/gl/Shader.hpp"
+#include "gk/gl/Texture.hpp"
 #include "gk/gl/Vertex.hpp"
 #include "gk/gl/VertexBuffer.hpp"
 
@@ -91,7 +90,7 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 	}
 
 	if (states.texture)
-		sf::Texture::bind(states.texture);
+		Texture::bind(states.texture);
 }
 
 void RenderTarget::endDrawing(const RenderStates &states) {
