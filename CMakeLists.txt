@@ -10,6 +10,15 @@ project(${PROJECT_NAME})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 #------------------------------------------------------------------------------
+# Overwrite message function for clean output
+#------------------------------------------------------------------------------
+function(message)
+    if (NOT MESSAGE_QUIET)
+        _message(${ARGN})
+    endif()
+endfunction()
+
+#------------------------------------------------------------------------------
 # Packages
 #------------------------------------------------------------------------------
 # - OpenGL
@@ -52,8 +61,10 @@ set(BUILD_STATIC_LIBS ON CACHE BOOL "")
 #------------------------------------------------------------------------------
 # - SDL2
 #------------------------------------------------------------------------------
+set(MESSAGE_QUIET ON)
 add_subdirectory(external/SDL2)
 add_subdirectory(external/SDL2_image)
+unset(MESSAGE_QUIET)
 
 #------------------------------------------------------------------------------
 # - GLEW
