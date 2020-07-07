@@ -64,10 +64,12 @@ set(SOURCE_FILES
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
 add_dependencies(${PROJECT_NAME}
-	SDL2
+	SDL2main
+	SDL2-static
+	SDL2_image
 	tinyxml2
 	libglew_static
-	glm
+	glm_static
 )
 
 target_include_directories(${PROJECT_NAME}
@@ -79,10 +81,12 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-	SDL2
+	SDL2main
+	SDL2-static
+	SDL2_image
 	tinyxml2
 	libglew_static
-	glm
+	glm_static
 )
 
 #------------------------------------------------------------------------------

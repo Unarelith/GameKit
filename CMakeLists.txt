@@ -46,12 +46,14 @@ if(NOT EXISTS "${PROJECT_SOURCE_DIR}/external/tinyxml2/CMakeLists.txt")
     message(FATAL_ERROR "The submodules were not downloaded! GIT_SUBMODULE was turned off or failed. Please update submodules and try again.")
 endif()
 
-set(BUILD_SHARED_LIBS OFF)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "")
+set(BUILD_STATIC_LIBS ON CACHE BOOL "")
 
 #------------------------------------------------------------------------------
 # - SDL2
 #------------------------------------------------------------------------------
 add_subdirectory(external/SDL2)
+add_subdirectory(external/SDL2_image)
 
 #------------------------------------------------------------------------------
 # - GLEW

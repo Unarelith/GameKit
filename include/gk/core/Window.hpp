@@ -27,6 +27,7 @@
 #ifndef GK_WINDOW_HPP_
 #define GK_WINDOW_HPP_
 
+#include <functional>
 #include <memory>
 #include <string>
 
