@@ -84,8 +84,6 @@ void Texture::loadFromSurface(SDL_Surface *surface) {
 	if (m_texture == 0)
 		glCheck(glGenTextures(1, &m_texture));
 
-	bind(this);
-
 	GLenum format;
 	if (surface->format->BytesPerPixel == 4) {
 		format = (surface->format->Rmask == 0x000000ff) ? GL_RGBA : GL_BGRA;
@@ -94,8 +92,11 @@ void Texture::loadFromSurface(SDL_Surface *surface) {
 		format = (surface->format->Rmask == 0x000000ff) ? GL_RGB : GL_BGR;
 	}
 	else {
-		throw EXCEPTION("Unable to load '" + m_filename + "': The image file is not valid");
+		gkError() << ("Unable to load '" + m_filename + "': The image file is not using true colors").c_str();
+		return;
 	}
+
+	bind(this);
 
 	glCheck(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_size.x, m_size.y, 0, format, GL_UNSIGNED_BYTE, surface->pixels));
 
