@@ -12,6 +12,7 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/core/LoggerHandler.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/LoggerUtils.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Mouse.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/core/SDLLoader.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Timer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Utils.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/Window.cpp
@@ -19,12 +20,12 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/core/input/GamePad.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/input/InputHandler.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/core/input/KeyboardHandler.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/core/input/KeyboardUtils.cpp
 
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/Camera.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/GLCheck.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/RenderTarget.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/Shader.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/gl/Texture.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/Transform.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/Transformable.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/VertexBuffer.cpp
@@ -63,7 +64,6 @@ set(SOURCE_FILES
 add_library(${PROJECT_NAME} STATIC ${SOURCE_FILES})
 
 add_dependencies(${PROJECT_NAME}
-	SDL2main
 	SDL2
 	tinyxml2
 	libglew_static
@@ -79,7 +79,6 @@ target_include_directories(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} PUBLIC
-	SDL2main
 	SDL2
 	tinyxml2
 	libglew_static

@@ -24,42 +24,20 @@
  *
  * =====================================================================================
  */
-#ifndef GK_RENDERSTATES_HPP_
-#define GK_RENDERSTATES_HPP_
+#ifndef GK_SDLHEADERS_HPP_
+#define GK_SDLHEADERS_HPP_
 
-#include <glm/matrix.hpp>
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__ANDROID__)
+	#include "SDL.h"
+	#include "SDL_image.h"
+	#include "SDL_mixer.h"
+	#include "SDL_ttf.h"
+#else
+	#include <SDL2/SDL.h>
+	#include <SDL2/SDL_image.h>
+	#include <SDL2/SDL_mixer.h>
+	#include <SDL2/SDL_ttf.h>
+#endif
 
-#include "gk/core/IntTypes.hpp"
-#include "gk/gl/Transform.hpp"
+#endif // GK_SDLHEADERS_HPP_
 
-namespace gk {
-
-class Shader;
-class Texture;
-
-namespace VertexAttribute {
-	enum {
-		Coord3d          = 1,
-		TexCoord         = 2,
-		Color            = 4,
-
-		All              = Coord3d | TexCoord | Color,
-	};
-}
-
-struct RenderStates {
-	Transform projectionMatrix;
-	Transform viewMatrix;
-	Transform transform;
-
-	const Texture *texture = nullptr;
-	const Shader *shader = nullptr;
-
-	u16 vertexAttributes = VertexAttribute::All;
-
-	static const RenderStates Default; // Defined in RenderTarget.cpp
-};
-
-} // namespace gk
-
-#endif // GK_RENDERSTATES_HPP_

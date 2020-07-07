@@ -24,37 +24,38 @@
  *
  * =====================================================================================
  */
-#include <SFML/Window/Event.hpp>
-
 #include "gk/core/Window.hpp"
 #include "gk/gl/GLCheck.hpp"
 #include "gk/gl/OpenGL.hpp"
-#include "gk/gl/Shader.hpp"
 #include "gk/core/Exception.hpp"
 
 namespace gk {
 
-void Window::create(sf::VideoMode mode, const sf::String &title, sf::Uint32 style, const sf::ContextSettings &settings) {
-	m_window.create(mode, title, style, settings);
-	if (!m_window.setActive())
-		throw EXCEPTION("Failed to open window");
+void Window::open(const std::string &caption, u16 width, u16 height) {
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
-	m_mode = mode;
-	m_title = title;
-	m_style = style;
-	m_settings = settings;
+	m_window.reset(SDL_CreateWindow(caption.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN));
+	if(!m_window) {
+		throw EXCEPTION("Window initialization failed:", SDL_GetError());
+	}
 
-	m_size.x = mode.width;
-	m_size.y = mode.height;
+	m_context.reset(SDL_GL_CreateContext(m_window.get()));
+	if(!m_context) {
+		throw EXCEPTION("OpenGL context creation failed:", SDL_GetError());
+	}
 
-	m_defaultView.reset(FloatRect{0, 0, (float)m_size.x, (float)m_size.y});
+	m_size.x = width;
+	m_size.y = height;
+
+	m_defaultView.reset(FloatRect{0, 0, (float)width, (float)height});
 	setView(m_defaultView);
 
-	m_isFullscreenModeEnabled = (style & sf::Style::Fullscreen) != 0;
+	m_glFlagsSetupFunc = &initOpenGL;
 
-	m_glFlagsSetupFunc = &Window::initOpenGL;
+	m_isOpen = true;
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__) || defined(__MINGW32__)
+#if GK_SYSTEM_WINDOWS
 #ifdef USE_GLAD
 	if(!gladLoadGL()) {
 		throw EXCEPTION("glad init failed");
@@ -65,60 +66,77 @@ void Window::create(sf::VideoMode mode, const sf::String &title, sf::Uint32 styl
 	}
 #endif
 #endif
+
+	glCheck(glEnable(GL_BLEND));
+	glCheck(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+	glCheck(glEnable(GL_TEXTURE_2D));
 }
 
 void Window::clear() {
 	glCheck(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 
-void Window::onEvent(const sf::Event &event) {
-	if (event.type == sf::Event::Resized) {
-		m_size.x = event.size.width;
-		m_size.y = event.size.height;
-
-		glCheck(glViewport(0, 0, m_size.x, m_size.y));
-	}
+void Window::display() {
+	SDL_GL_SwapWindow(m_window.get());
 }
 
-void Window::setSize(const Vector2u &size) {
-	m_window.setSize({size.x, size.y});
-}
+void Window::onEvent(const SDL_Event &event) {
+	if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
+		glViewport(0, 0, event.window.data1, event.window.data2);
 
-void Window::setFullscreenMode(bool isFullscreenModeEnabled) {
-	if (m_isFullscreenModeEnabled != isFullscreenModeEnabled) {
-		if (isFullscreenModeEnabled) {
-			m_basePosition = m_window.getPosition();
-			m_baseSize = m_size;
-
-			sf::VideoMode mode = sf::VideoMode::getFullscreenModes().at(0);
-			m_window.create(mode, m_title, m_style | sf::Style::Fullscreen, m_settings);
-		}
-		else {
-			m_window.create(m_mode, m_title, m_style & (~sf::Style::Fullscreen), m_settings);
-
-			m_window.setPosition(m_basePosition);
-			setSize({m_baseSize.x, m_baseSize.y});
-		}
-
-		// FIXME: SFML pseudo-fullscreen mode doesn't keep info about bound shaders
-		//        So we need to reset it to make sure the shader will be bound
-		//        When this will be fixed, this line + Shader.hpp dependency can be removed
-		Shader::bind(nullptr);
-
-		m_window.setVerticalSyncEnabled(m_isVerticalSyncEnabled);
-
-		if (m_glFlagsSetupFunc)
-			m_glFlagsSetupFunc();
-
-		m_isFullscreenModeEnabled = isFullscreenModeEnabled;
+		m_size.x = event.window.data1;
+		m_size.y = event.window.data2;
 	}
 }
 
 void Window::setVerticalSyncEnabled(bool isVerticalSyncEnabled) {
-	if (m_isVerticalSyncEnabled != isVerticalSyncEnabled) {
-		m_window.setVerticalSyncEnabled(isVerticalSyncEnabled);
+	if(SDL_GL_SetSwapInterval(isVerticalSyncEnabled) < 0) {
+		gkWarning() << "Can't enable VSync";
+	}
+	else {
 		m_isVerticalSyncEnabled = isVerticalSyncEnabled;
 	}
+}
+
+void Window::setWindowMode(Mode mode) {
+	if (m_windowMode != mode) {
+		if (mode == Mode::Windowed) {
+			SDL_SetWindowFullscreen(m_window.get(), 0);
+			SDL_SetWindowSize(m_window.get(), m_baseSize.x, m_baseSize.y);
+			SDL_SetWindowPosition(m_window.get(), m_basePosition.x, m_basePosition.y);
+		}
+		else {
+			m_baseSize = m_size;
+
+			SDL_GetWindowPosition(m_window.get(), &m_basePosition.x, &m_basePosition.y);
+			SDL_SetWindowFullscreen(m_window.get(), (mode == Mode::Fullscreen) ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP);
+
+			SDL_DisplayMode desktopMode;
+			if (SDL_GetDesktopDisplayMode(0, &desktopMode) == 0)
+				SDL_SetWindowDisplayMode(m_window.get(), &desktopMode);
+		}
+
+		m_windowMode = mode;
+	}
+}
+
+Vector2u Window::getSize() const {
+	if (m_windowMode == Mode::Windowed)
+		return m_size;
+	else {
+		int w, h;
+		SDL_GetWindowSize(m_window.get(), &w, &h);
+
+		return Vector2u{
+			static_cast<unsigned int>(w),
+			static_cast<unsigned int>(h)
+		};
+	}
+}
+
+void Window::resize(unsigned int width, unsigned int height) {
+	SDL_SetWindowSize(m_window.get(), width, height);
 }
 
 void Window::initOpenGL() {

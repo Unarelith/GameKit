@@ -29,9 +29,8 @@
 
 #include <vector>
 
-#include <SFML/Graphics/Texture.hpp>
-
 #include "gk/core/IntTypes.hpp"
+#include "gk/gl/Texture.hpp"
 
 namespace gk {
 
@@ -56,7 +55,7 @@ class Tile {
 		u16 m_type = 0;
 };
 
-class Tileset : public sf::Texture {
+class Tileset : public Texture {
 	public:
 		Tileset() = default;
 		Tileset(const Tileset &) = delete;

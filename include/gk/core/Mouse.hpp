@@ -34,7 +34,6 @@ namespace gk {
 
 class Mouse {
 	public:
-		static void update(const sf::Event &event);
 		static void resetToWindowCenter();
 
 		static void setWindow(Window *window) { s_window = window; }
@@ -43,17 +42,11 @@ class Mouse {
 		static void setCursorGrabbed(bool isGrabbed);
 
 		static Vector2i getPosition();
-		static void setPosition(const Vector2i &position);
 
 		static bool isInRect(const IntRect &rect);
 
-		static const Vector2f &getDelta() { return s_lastDelta; }
-
 	private:
 		static Window *s_window;
-
-		static Vector2i s_lastMousePos;
-		static Vector2f s_lastDelta;
 };
 
 } // namespace gk

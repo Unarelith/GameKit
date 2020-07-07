@@ -24,72 +24,29 @@
  *
  * =====================================================================================
  */
-#include <SFML/Window/Event.hpp>
-#include <SFML/Window/Mouse.hpp>
-
 #include "gk/core/Mouse.hpp"
+#include "gk/core/SDLHeaders.hpp"
 
 namespace gk {
 
 Window *Mouse::s_window = nullptr;
 
-Vector2i Mouse::s_lastMousePos{0, 0};
-Vector2f Mouse::s_lastDelta{0, 0};
-
-void Mouse::update(const sf::Event &event) {
-	if (s_window) {
-		Vector2i mousePos(event.mouseMove.x, event.mouseMove.y);
-
-		const auto &windowSize = s_window->getSize();
-		Vector2i windowCenter(windowSize.x / 2, windowSize.y / 2);
-
-		if (s_lastMousePos.x != 0 && s_lastMousePos.y != 0)
-			s_lastDelta = mousePos - s_lastMousePos;
-
-		if (mousePos != windowCenter) {
-			resetToWindowCenter();
-			s_lastMousePos = windowCenter;
-		}
-		else {
-			s_lastMousePos = mousePos;
-		}
-	}
-}
-
 void Mouse::resetToWindowCenter() {
-	if (s_window) {
-		sf::Vector2i windowCenter = {
-			static_cast<int>(s_window->getSize().x / 2),
-			static_cast<int>(s_window->getSize().y / 2)
-		};
-
-		sf::Mouse::setPosition(windowCenter, s_window->window());
-	}
+	SDL_WarpMouseInWindow(s_window->window(), s_window->getSize().x / 2, s_window->getSize().y / 2);
 }
 
-void Mouse::setCursorGrabbed(bool isGrabbed) {
-	if (s_window)
-		s_window->window().setMouseCursorGrabbed(isGrabbed);
+void Mouse::setCursorGrabbed(bool grabbed) {
+	SDL_SetRelativeMouseMode((SDL_bool)grabbed);
 }
 
-void Mouse::setCursorVisible(bool isVisible) {
-	if (s_window)
-		s_window->window().setMouseCursorVisible(isVisible);
+void Mouse::setCursorVisible(bool visible) {
+	SDL_ShowCursor(visible);
 }
 
 Vector2i Mouse::getPosition() {
-	if (s_window) {
-		const auto &mousePos = sf::Mouse::getPosition(s_window->window());
-		return {mousePos.x, mousePos.y};
-	}
-
-	return {sf::Mouse::getPosition().x, sf::Mouse::getPosition().y};
-}
-
-void Mouse::setPosition(const Vector2i &position) {
-	if (s_window)
-		sf::Mouse::setPosition({position.x, position.y}, s_window->window());
-	sf::Mouse::setPosition({position.x, position.y});
+	Vector2i pos;
+	SDL_GetMouseState(&pos.x, &pos.y);
+	return pos;
 }
 
 bool Mouse::isInRect(const IntRect &rect) {

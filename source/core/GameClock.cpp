@@ -26,20 +26,18 @@
  */
 #include <cmath>
 
-#include <SFML/System.hpp>
-
+#include "gk/core/SDLHeaders.hpp"
 #include "gk/core/GameClock.hpp"
 
 namespace gk {
 
 GameClock *GameClock::s_instance = nullptr;
-sf::Clock GameClock::s_clock;
 
 u32 GameClock::getTicks(bool realTime) {
 	std::lock_guard<std::mutex> lock(m_mutex);
 
 	if(realTime) {
-		return s_clock.getElapsedTime().asMilliseconds();
+		return SDL_GetTicks();
 	} else {
 		return m_ticks;
 	}
@@ -86,7 +84,7 @@ void GameClock::waitForNextFrame() {
 	u32 lastFrameDuration = currentTicks - m_timeDropped - m_lastFrameDate;
 
 	if(lastFrameDuration < m_timestep) {
-		sf::sleep(sf::milliseconds(m_timestep - lastFrameDuration));
+		SDL_Delay(m_timestep - lastFrameDuration);
 	}
 
 	lock.unlock();

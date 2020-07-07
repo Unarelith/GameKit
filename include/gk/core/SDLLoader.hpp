@@ -24,42 +24,30 @@
  *
  * =====================================================================================
  */
-#ifndef GK_RENDERSTATES_HPP_
-#define GK_RENDERSTATES_HPP_
-
-#include <glm/matrix.hpp>
-
-#include "gk/core/IntTypes.hpp"
-#include "gk/gl/Transform.hpp"
+#ifndef GK_SDLLOADER_HPP_
+#define GK_SDLLOADER_HPP_
 
 namespace gk {
 
-class Shader;
-class Texture;
+class SDLLoader {
+	public:
+		SDLLoader() = default;
+		SDLLoader(const SDLLoader &) = delete;
+		SDLLoader(SDLLoader &&) = delete;
+		~SDLLoader();
 
-namespace VertexAttribute {
-	enum {
-		Coord3d          = 1,
-		TexCoord         = 2,
-		Color            = 4,
+		SDLLoader& operator=(const SDLLoader &) = delete;
+		SDLLoader& operator=(SDLLoader &&) = delete;
 
-		All              = Coord3d | TexCoord | Color,
-	};
-}
+		void load();
 
-struct RenderStates {
-	Transform projectionMatrix;
-	Transform viewMatrix;
-	Transform transform;
-
-	const Texture *texture = nullptr;
-	const Shader *shader = nullptr;
-
-	u16 vertexAttributes = VertexAttribute::All;
-
-	static const RenderStates Default; // Defined in RenderTarget.cpp
+	private:
+		bool m_sdlInitialized = false;
+		bool m_imgInitialized = false;
+		// bool m_ttfInitialized = false;
+		// bool m_mixInitialized = false;
 };
 
-} // namespace gk
+}
 
-#endif // GK_RENDERSTATES_HPP_
+#endif // GK_SDLLOADER_HPP_

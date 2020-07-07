@@ -31,6 +31,7 @@
 #include "gk/core/ArgumentParser.hpp"
 #include "gk/core/EventHandler.hpp"
 #include "gk/core/GameClock.hpp"
+#include "gk/core/SDLLoader.hpp"
 #include "gk/core/Window.hpp"
 #include "gk/resource/ResourceHandler.hpp"
 
@@ -81,23 +82,22 @@ class CoreApplication {
 		/// advanced OpenGL context settings such as antialiasing,
 		/// depth-buffer bits, etc.
 		///
-		/// \param mode     Video mode to use (defines the width, height and depth of the rendering area of the window)
+		/// \param width    Width of the window
+		/// \param height   Height of the window
 		/// \param title    Title of the window
-		/// \param style    %Window style, a bitwise OR combination of sf::Style enumerators
-		/// \param settings Additional settings for the underlying OpenGL context
 		///
 		////////////////////////////////////////////////////////////
-		void createWindow(sf::VideoMode mode, const sf::String &title, sf::Uint32 style = sf::Style::Default, const sf::ContextSettings &settings = sf::ContextSettings());
+		void createWindow(u16 width, u16 height, const std::string &title);
 
 		////////////////////////////////////////////////////////////
 		/// \brief This function is called when a new window event is received
 		///
-		/// \param event Event received from SFML
+		/// \param event Event received from SDL
 		///
 		/// This function is automatically called by handleEvents()
 		///
 		////////////////////////////////////////////////////////////
-		virtual void onEvent(const sf::Event &event);
+		virtual void onEvent(const SDL_Event &event);
 
 		////////////////////////////////////////////////////////////
 		/// \brief This function is called right before the program is closed
@@ -122,6 +122,9 @@ class CoreApplication {
 		////////////////////////////////////////////////////////////
 		// Member data
 		////////////////////////////////////////////////////////////
+		SDLLoader m_sdlLoader;                                 ///< Init and free SDL
+		bool m_loadSDL = true;                                 ///< If this flag is set to false, SDL won't be loaded
+
 		ApplicationStateStack m_stateStack;                    ///< Stack containing application states
 
 		GameClock m_clock;                                     ///< Simulated time system
