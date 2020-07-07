@@ -244,7 +244,6 @@ using FloatRect = Rect<float>;
 /// \ingroup core
 ///
 /// This part of the documentation has been taken from SFML
-/// Once the migration to SFML 2.6 is done, this file will be removed
 ///
 /// A rectangle is defined by its top-left corner and its size.
 /// It is a very simple class defined for convenience, so

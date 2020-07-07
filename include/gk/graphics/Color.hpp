@@ -146,7 +146,6 @@ class Color {
 /// \ingroup graphics
 ///
 /// This part of the documentation has been taken from SFML
-/// Once the migration to SFML 2.6 is done, this file will be removed
 ///
 /// gk::Color is a simple color class composed of 4 components:
 /// \li Red
