@@ -84,7 +84,7 @@ class ApplicationState : public Drawable, public Transformable, public NonCopyab
 		////////////////////////////////////////////////////////////
 		/// \brief Do an action in response to an OS event
 		///
-		/// \param event The event sent from SFML
+		/// \param event The event sent from SDL
 		///
 		////////////////////////////////////////////////////////////
 		virtual void onEvent(const SDL_Event &) {}

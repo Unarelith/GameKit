@@ -8,7 +8,7 @@
 
 GameKit is a library I made to avoid duplicating code in my projets.
 
-It's a small game engine built on top of SFML and OpenGL.
+It's a small game engine built on top of SDL2 and OpenGL.
 
 ## Documentation
 

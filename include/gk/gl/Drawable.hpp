@@ -69,7 +69,6 @@ class Drawable {
 /// \ingroup graphics
 ///
 /// This part of the documentation has been taken from SFML.
-/// Once the migration to 2.6 is done, this file will be removed.
 ///
 /// gk::Drawable is a very simple base class that allows objects
 /// of derived classes to be drawn to a gk::RenderTarget.
