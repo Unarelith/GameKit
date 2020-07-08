@@ -31,6 +31,8 @@
 #include <sstream>
 #include <vector>
 
+struct SDL_Surface;
+
 namespace gk {
 
 template <typename T>
@@ -52,6 +54,8 @@ std::string makeString(Args &&...args) {
 }
 
 std::string getCurrentTime(const char *format);
+
+SDL_Surface *flipSDLSurface(SDL_Surface *surface) noexcept;
 
 } // namespace gk
 

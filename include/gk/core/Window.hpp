@@ -71,6 +71,8 @@ class Window : public RenderTarget {
 		void setupOpenGL() { if (m_glFlagsSetupFunc) m_glFlagsSetupFunc(); }
 		void setOpenGLFlagsSetupFunc(const std::function<void(void)> &func) { m_glFlagsSetupFunc = func; }
 
+		static bool saveScreenshot(int x, int y, int w, int h, const std::string &filename) noexcept;
+
 	private:
 		static void initOpenGL();
 
