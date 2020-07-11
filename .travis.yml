@@ -22,12 +22,14 @@ addons:
             - libxi-dev
             - g++-8
             - cmake
+            - cxxtest
 
 script:
   - mkdir build
   - cd build
   - cmake ..
   - make -j8
+  - ./gamekit_tests
 
 notifications:
   email: false

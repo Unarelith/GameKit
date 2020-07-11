@@ -90,3 +90,19 @@ add_subdirectory(external/tinyxml2)
 #------------------------------------------------------------------------------
 add_subdirectory(source)
 
+#------------------------------------------------------------------------------
+# Unit testing
+#------------------------------------------------------------------------------
+find_package(CxxTest QUIET)
+
+if(CXXTEST_FOUND)
+	include_directories(${CXXTEST_INCLUDE_DIRS})
+	enable_testing()
+
+	file(GLOB_RECURSE TEST_FILES tests/*.hpp)
+	CXXTEST_ADD_TEST(${CMAKE_PROJECT_NAME}_tests unit-test.cpp ${TEST_FILES})
+	target_link_libraries(${CMAKE_PROJECT_NAME}_tests ${PROJECT_NAME})
+else()
+	message(WARNING "CxxTest not found!")
+endif()
+
