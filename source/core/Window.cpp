@@ -24,6 +24,7 @@
  *
  * =====================================================================================
  */
+#include "gk/core/Config.hpp"
 #include "gk/core/Utils.hpp"
 #include "gk/core/Window.hpp"
 #include "gk/gl/GLCheck.hpp"
@@ -52,11 +53,9 @@ void Window::open(const std::string &caption, u16 width, u16 height) {
 	m_defaultView.reset(FloatRect{0, 0, (float)width, (float)height});
 	setView(m_defaultView);
 
-	m_glFlagsSetupFunc = &initOpenGL;
-
 	m_isOpen = true;
 
-#if GK_SYSTEM_WINDOWS
+#ifdef GK_SYSTEM_WINDOWS
 #ifdef USE_GLAD
 	if(!gladLoadGL()) {
 		throw EXCEPTION("glad init failed");
@@ -170,13 +169,6 @@ bool Window::saveScreenshot(int x, int y, int w, int h, const std::string &filen
 	SDL_FreeSurface(surf);
 	delete[] pixels;
 	return true;
-}
-
-void Window::initOpenGL() {
-	glCheck(glEnable(GL_TEXTURE_2D));
-
-	glCheck(glEnable(GL_BLEND));
-	glCheck(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 }
 
 } // namespace gk

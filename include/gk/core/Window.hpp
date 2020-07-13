@@ -27,7 +27,6 @@
 #ifndef GK_WINDOW_HPP_
 #define GK_WINDOW_HPP_
 
-#include <functional>
 #include <memory>
 #include <string>
 
@@ -68,9 +67,6 @@ class Window : public RenderTarget {
 
 		const View &getDefaultView() const override { return m_defaultView; }
 
-		void setupOpenGL() { if (m_glFlagsSetupFunc) m_glFlagsSetupFunc(); }
-		void setOpenGLFlagsSetupFunc(const std::function<void(void)> &func) { m_glFlagsSetupFunc = func; }
-
 		static bool saveScreenshot(int x, int y, int w, int h, const std::string &filename) noexcept;
 
 	private:
@@ -93,8 +89,6 @@ class Window : public RenderTarget {
 		Mode m_windowMode = Mode::Windowed;
 
 		bool m_isVerticalSyncEnabled = false;
-
-		std::function<void(void)> m_glFlagsSetupFunc;
 };
 
 } // namespace gk

@@ -79,9 +79,6 @@ int CoreApplication::run(bool isProtected) {
 
 		init();
 
-		if (m_window.isOpen())
-			m_window.setupOpenGL();
-
 		mainLoop();
 	};
 

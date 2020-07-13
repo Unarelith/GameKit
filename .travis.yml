@@ -19,7 +19,6 @@ addons:
             - libflac-dev
             - libegl1-mesa-dev
             - libgles2-mesa-dev
-            - libxi-dev
             - g++-8
             - cmake
             - cxxtest

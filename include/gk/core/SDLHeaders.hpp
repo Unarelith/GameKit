@@ -27,8 +27,7 @@
 #ifndef GK_SDLHEADERS_HPP_
 #define GK_SDLHEADERS_HPP_
 
-#include "SDL.h"
-#include "SDL_image.h"
+#include <SDL.h>
+#include <SDL_image.h>
 
 #endif // GK_SDLHEADERS_HPP_
-
