@@ -67,7 +67,6 @@ set(MESSAGE_QUIET ON)
 
 add_subdirectory(external/SDL2)
 
-set(PNG_SHARED OFF CACHE BOOL "")
 set(PNG_TESTS OFF CACHE BOOL "")
 add_subdirectory(external/SDL2_image)
 
