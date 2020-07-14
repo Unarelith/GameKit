@@ -46,6 +46,7 @@ class Image : public Drawable, public Transformable {
 		void load(const std::string &textureName);
 		void load(const Texture &texture);
 
+		const Texture *texture() const { return m_texture; }
 		void setTexture(const std::string &textureName);
 
 		const FloatRect &clipRect() const { return m_clipRect; }
