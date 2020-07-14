@@ -71,13 +71,15 @@ void RenderTarget::drawElements(const VertexBuffer &vertexBuffer, GLenum mode, G
 void RenderTarget::beginDrawing(const RenderStates &states) {
 	if (!states.shader) return;
 
+	static const Shader *previousShader = nullptr;
+
 	Shader::bind(states.shader);
 
 	if (!m_view) {
 		states.shader->setUniform("u_projectionMatrix", states.projectionMatrix);
 		states.shader->setUniform("u_viewMatrix", states.viewMatrix);
 	}
-	else if (m_viewChanged)
+	else if (m_viewChanged || states.shader != previousShader)
 		applyCurrentView(states);
 
 	states.shader->setUniform("u_modelMatrix", states.transform);
@@ -91,6 +93,8 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 
 	if (states.texture)
 		Texture::bind(states.texture);
+
+	previousShader = states.shader;
 }
 
 void RenderTarget::endDrawing(const RenderStates &states) {
