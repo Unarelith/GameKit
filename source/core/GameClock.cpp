@@ -34,11 +34,11 @@ namespace gk {
 GameClock *GameClock::s_instance = nullptr;
 
 u32 GameClock::getTicks(bool realTime) {
-	std::lock_guard<std::mutex> lock(m_mutex);
-
-	if(realTime) {
+	if (realTime) {
 		return SDL_GetTicks();
-	} else {
+	}
+	else {
+		std::lock_guard<std::mutex> lock(m_mutex);
 		return m_ticks;
 	}
 }
@@ -48,7 +48,7 @@ void GameClock::updateGame(const std::function<void(void)> &updateFunc) {
 
 	m_numUpdates = 0;
 
-	while(m_lag >= m_timestep && m_numUpdates < 10) {
+	while (m_lag >= m_timestep && m_numUpdates < 10) {
 		m_ticks += m_timestep;
 
 		lock.unlock();
@@ -63,7 +63,7 @@ void GameClock::updateGame(const std::function<void(void)> &updateFunc) {
 void GameClock::drawGame(const std::function<void(void)> &drawFunc) {
 	std::unique_lock<std::mutex> lock(m_mutex);
 
-	if(m_numUpdates > 0) {
+	if (m_numUpdates > 0) {
 		lock.unlock();
 		drawFunc();
 		lock.lock();
@@ -83,7 +83,7 @@ void GameClock::waitForNextFrame() {
 
 	u32 lastFrameDuration = currentTicks - m_timeDropped - m_lastFrameDate;
 
-	if(lastFrameDuration < m_timestep) {
+	if (lastFrameDuration < m_timestep) {
 		SDL_Delay(m_timestep - lastFrameDuration);
 	}
 
@@ -103,7 +103,7 @@ void GameClock::measureLastFrameDuration() {
 	m_lastFrameDate = now;
 	m_lag += lastFrameDuration;
 
-	if(m_lag >= 200) {
+	if (m_lag >= 200) {
 		m_timeDropped += m_lag - m_timestep;
 		m_lag = m_timestep;
 		m_lastFrameDate = currentTicks - m_timeDropped;
@@ -116,7 +116,7 @@ void GameClock::computeFramesPerSecond() {
 	std::unique_lock<std::mutex> lock(m_mutex);
 
 	if (currentTicks - m_fpsTimer > 1000) {
-		m_fps = floor(m_frames / ((currentTicks - m_fpsTimer) / 1000.0) + 0.5);
+		m_fps = floor(m_frames / ((currentTicks - m_fpsTimer) / 1000.0f) + 0.5f);
 		m_fpsTimer = currentTicks;
 
 		m_frames = 0;
