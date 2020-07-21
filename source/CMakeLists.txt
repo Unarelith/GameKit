@@ -111,7 +111,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE -DDEBUG_ENABLED -DDEBUG_COLOR)
 
 if(NOT MSVC)
 	target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wfatal-errors)
-	target_compile_options(${PROJECT_NAME} PUBLIC -Wno-variadic-macros)
+	target_compile_options(${PROJECT_NAME} PUBLIC -Wno-variadic-macros -pedantic -Wno-virtual-dtor)
 endif()
 
 if(MSVC)
