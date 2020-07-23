@@ -57,6 +57,19 @@ class Color {
 		////////////////////////////////////////////////////////////
 		Color(u8 _r, u8 _g, u8 _b, u8 _a = 255);
 
+		////////////////////////////////////////////////////////////
+		/// \brief Mix another color with a certain ratio
+		///
+		/// \param other Color to mix with
+		/// \param ratio Ratio of other to mix in
+		///
+		/// \return The mix (linear interpolation) between this color
+		/// and the \p other color. A \p ratio of 0.0f gives this
+		/// color; a ratio of 1.0f gives the \p other color.
+		///
+		////////////////////////////////////////////////////////////
+		Color &mix(const Color &other, const float ratio);
+
 		// Only used in Asylia
 		void invert() { r = 1 - r; g = 1 - g; b = 1 - b; }
 

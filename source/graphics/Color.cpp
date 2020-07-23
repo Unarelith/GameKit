@@ -25,6 +25,7 @@
  * =====================================================================================
  */
 #include "gk/graphics/Color.hpp"
+#include "gk/math/Math.hpp"
 
 namespace gk {
 
@@ -43,6 +44,15 @@ Color::Color(u8 _r, u8 _g, u8 _b, u8 _a) {
 	g = _g / 255.0f;
 	b = _b / 255.0f;
 	a = _a / 255.0f;
+}
+
+Color &Color::mix(const Color &other, const float ratio) {
+	Color c;
+	c.r = lerp(r, other.r, ratio);
+	c.g = lerp(g, other.g, ratio);
+	c.b = lerp(b, other.b, ratio);
+	c.a = lerp(a, other.a, ratio);
+	return c;
 }
 
 } // namespace gk
