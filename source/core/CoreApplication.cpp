@@ -53,7 +53,7 @@ CoreApplication::CoreApplication(int argc, char **argv) : m_argumentParser(argc,
 #endif
 }
 
-void CoreApplication::init() {
+bool CoreApplication::init() {
 	std::srand(std::time(nullptr));
 
 	Mouse::setWindow(&m_window);
@@ -70,16 +70,18 @@ void CoreApplication::init() {
 	// if (m_argumentParser.getArgument("mute").isFound)
 	// 	AudioPlayer::setMuteState(true);
 	// m_argumentParser.debug();
+
+	return true;
 }
 
 int CoreApplication::run(bool isProtected) {
+	bool isInitSuccessful = false;
 	auto runGame = [&]() {
 		if (m_loadSDL)
 			m_sdlLoader.load();
 
-		init();
-
-		mainLoop();
+		if ((isInitSuccessful = init()))
+			mainLoop();
 	};
 
 	if (isProtected) {
@@ -87,7 +89,7 @@ int CoreApplication::run(bool isProtected) {
 			runGame();
 		}
 		catch(const Exception &e) {
-			std::cerr << "Fatal error " << e.what() << std::endl;
+			gkDebug() << "Fatal error" << e.what();
 			return 1;
 		}
 		// catch(const std::exception &e) {
@@ -103,11 +105,15 @@ int CoreApplication::run(bool isProtected) {
 		runGame();
 	}
 
-	onExit();
+	if (isInitSuccessful) {
+		onExit();
 
-	m_resourceHandler.clear();
+		m_resourceHandler.clear();
 
-	return 0;
+		return 0;
+	}
+
+	return 1;
 }
 
 void CoreApplication::createWindow(u16 width, u16 height, const std::string &title) {

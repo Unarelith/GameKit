@@ -69,7 +69,7 @@ class CoreApplication {
 		/// This function is used to init engine and singletons.
 		///
 		////////////////////////////////////////////////////////////
-		virtual void init();
+		virtual bool init();
 
 		////////////////////////////////////////////////////////////
 		/// \brief Create (or recreate) the window
