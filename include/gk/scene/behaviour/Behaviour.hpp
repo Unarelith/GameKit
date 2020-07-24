@@ -33,6 +33,8 @@ namespace gk {
 
 class Behaviour {
 	public:
+		virtual ~Behaviour() = default;
+
 		virtual void update(SceneObject &object) = 0;
 };
 

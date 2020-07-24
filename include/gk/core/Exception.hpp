@@ -47,6 +47,8 @@ class Exception {
 			m_errorMsg += Logger::textColor();
 		}
 
+		virtual ~Exception() = default;
+
 		virtual const char *what() const noexcept {
 			return m_errorMsg.c_str();
 		}

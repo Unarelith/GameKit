@@ -53,6 +53,11 @@ class CoreApplication {
 		CoreApplication(int argc, char **argv);
 
 		////////////////////////////////////////////////////////////
+		/// \brief Virtual destructor
+		////////////////////////////////////////////////////////////
+		virtual ~CoreApplication() = default;
+
+		////////////////////////////////////////////////////////////
 		/// \brief Run the application
 		///
 		/// \param isProtected Exceptions are catched if this parameter is set to `true` (default)

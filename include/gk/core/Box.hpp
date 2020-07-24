@@ -77,9 +77,9 @@ class Box {
 			 * mispredicted branches, so we avoid && and use & instead, which
 			 * works fine on boolean conditions.
 			 */
-			return std::max(x, box.x) < std::min(x + sizeX, box.x + box.sizeX)
-			     & std::max(y, box.y) < std::min(y + sizeY, box.y + box.sizeY)
-			     & std::max(z, box.z) < std::min(z + sizeZ, box.z + box.sizeZ);
+			return (std::max(x, box.x) < std::min(x + sizeX, box.x + box.sizeX))
+			     & (std::max(y, box.y) < std::min(y + sizeY, box.y + box.sizeY))
+			     & (std::max(z, box.z) < std::min(z + sizeZ, box.z + box.sizeZ));
 		}
 
 		Vector3<T> position() const { return {x, y, z}; }

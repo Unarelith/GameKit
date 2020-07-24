@@ -46,7 +46,7 @@ Color::Color(u8 _r, u8 _g, u8 _b, u8 _a) {
 	a = _a / 255.0f;
 }
 
-Color &Color::mix(const Color &other, const float ratio) {
+Color Color::mix(const Color &other, float ratio) {
 	Color c;
 	c.r = lerp(r, other.r, ratio);
 	c.g = lerp(g, other.g, ratio);

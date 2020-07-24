@@ -155,8 +155,8 @@ class Rect {
 			 * mispredicted branches, so we avoid && and use & instead, which
 			 * works fine on boolean conditions.
 			 */
-			return std::max(x, rect.x) < std::min(x + sizeX, rect.x + rect.sizeX)
-			     & std::max(y, rect.y) < std::min(y + sizeY, rect.y + rect.sizeY);
+			return (std::max(x, rect.x) < std::min(x + sizeX, rect.x + rect.sizeX))
+			     & (std::max(y, rect.y) < std::min(y + sizeY, rect.y + rect.sizeY));
 		}
 
 		////////////////////////////////////////////////////////////

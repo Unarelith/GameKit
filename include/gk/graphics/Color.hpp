@@ -68,7 +68,7 @@ class Color {
 		/// color; a ratio of 1.0f gives the \p other color.
 		///
 		////////////////////////////////////////////////////////////
-		Color &mix(const Color &other, const float ratio);
+		Color mix(const Color &other, float ratio);
 
 		// Only used in Asylia
 		void invert() { r = 1 - r; g = 1 - g; b = 1 - b; }
