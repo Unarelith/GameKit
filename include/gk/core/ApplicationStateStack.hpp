@@ -52,10 +52,15 @@ class ApplicationStateStack {
 		////////////////////////////////////////////////////////////
 		template<typename T, typename... Args>
 		auto push(Args &&...args) -> typename std::enable_if<std::is_base_of<ApplicationState, T>::value, T&>::type {
+			if (!empty())
+				m_states.top()->onStateInactive();
+
 			m_states.emplace(std::make_shared<T>(std::forward<Args>(args)...));
+
 			m_states.top()->setStateStack(this);
 			m_states.top()->setEventHandler(m_eventHandler);
 			m_states.top()->init();
+
 			return static_cast<T&>(top());
 		}
 

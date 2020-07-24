@@ -119,6 +119,12 @@ class ApplicationState : public Drawable, public Transformable, public NonCopyab
 		////////////////////////////////////////////////////////////
 		void setEventHandler(EventHandler *eventHandler) { m_eventHandler = eventHandler; }
 
+		////////////////////////////////////////////////////////////
+		/// \brief Callback used on the previous state after a push
+		///
+		////////////////////////////////////////////////////////////
+		virtual void onStateInactive() {}
+
 	protected:
 		////////////////////////////////////////////////////////////
 		/// \brief Draw the sprite to a render target
