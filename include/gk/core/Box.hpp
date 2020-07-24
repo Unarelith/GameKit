@@ -69,28 +69,17 @@ class Box {
 		void move(Vector3<T> d) { move(d.x, d.y, d.z); }
 
 		bool intersects(const Box<T> &box) const {
-			T r1MinX = std::min(x, static_cast<T>(x + sizeX));
-			T r1MaxX = std::max(x, static_cast<T>(x + sizeX));
-			T r1MinY = std::min(y, static_cast<T>(y + sizeY));
-			T r1MaxY = std::max(y, static_cast<T>(y + sizeY));
-			T r1MinZ = std::min(z, static_cast<T>(z + sizeZ));
-			T r1MaxZ = std::max(z, static_cast<T>(z + sizeZ));
-
-			T r2MinX = std::min(box.x, static_cast<T>(box.x + box.sizeX));
-			T r2MaxX = std::max(box.x, static_cast<T>(box.x + box.sizeX));
-			T r2MinY = std::min(box.y, static_cast<T>(box.y + box.sizeY));
-			T r2MaxY = std::max(box.y, static_cast<T>(box.y + box.sizeY));
-			T r2MinZ = std::min(box.z, static_cast<T>(box.z + box.sizeZ));
-			T r2MaxZ = std::max(box.z, static_cast<T>(box.z + box.sizeZ));
-
-			T interLeft   = std::max(r1MinX, r2MinX);
-			T interRight  = std::min(r1MaxX, r2MaxX);
-			T interBottom = std::max(r1MinY, r2MinY);
-			T interTop    = std::min(r1MaxY, r2MaxY);
-			T interFront  = std::max(r1MinZ, r2MinZ);
-			T interBack   = std::min(r1MaxZ, r2MaxZ);
-
-			return interLeft < interRight && interBottom < interTop && interFront < interBack;
+			/*
+			 * Using && here implies short-circuit evaluation, which is
+			 * compiled in this case as a conditional branch. We assume that
+			 * the probability of an intersection is around 50%. Testing shows
+			 * that the impact of evaluating all terms is less than that of
+			 * mispredicted branches, so we avoid && and use & instead, which
+			 * works fine on boolean conditions.
+			 */
+			return std::max(x, box.x) < std::min(x + sizeX, box.x + box.sizeX)
+			     & std::max(y, box.y) < std::min(y + sizeY, box.y + box.sizeY)
+			     & std::max(z, box.z) < std::min(z + sizeZ, box.z + box.sizeZ);
 		}
 
 		Vector3<T> position() const { return {x, y, z}; }

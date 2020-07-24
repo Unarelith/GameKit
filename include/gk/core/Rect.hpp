@@ -95,8 +95,11 @@ class Rect {
 		////////////////////////////////////////////////////////////
 		/// \brief Check if a point is inside the rectangle's area
 		///
-		/// This check is non-inclusive. If the point lies on the
-		/// edge of the rectangle, this function will return false.
+		/// This check is partially inclusive. If the point lies on
+		/// the right or bottom edge of the rectangle, this function
+		/// will return false.
+		///
+		/// Assumes size is always positive.
 		///
 		/// \param _x X coordinate of the point to test
 		/// \param _y Y coordinate of the point to test
@@ -107,25 +110,24 @@ class Rect {
 		///
 		////////////////////////////////////////////////////////////
 		bool contains(T _x, T _y) const {
-			T minX = std::min(x, static_cast<T>(x + sizeX));
-			T maxX = std::max(x, static_cast<T>(x + sizeX));
-			T minY = std::min(y, static_cast<T>(y + sizeY));
-			T maxY = std::max(y, static_cast<T>(y + sizeY));
+			T x2 = x + sizeX;
+			T y2 = y + sizeY;
 
-			return (_x >= minX) && (_x < maxX) && (_y >= minY) && (_y < maxY);
+			return (_x >= x) && (_x < x2) && (_y >= y) && (_y < y2);
 		}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Check if a point is inside the rectangle's area
 		///
-		/// This check is non-inclusive. If the point lies on the
-		/// edge of the rectangle, this function will return false.
+		/// This check is partially inclusive. If the point lies on
+		/// the right or bottom edge of the rectangle, this function
+		/// will return false.
 		///
 		/// \param point Point to test
 		///
 		/// \return True if the point is inside, false otherwise
 		///
-		/// \see intersects, intersectionDirection
+		/// \see intersection, intersects, intersectionDirection
 		///
 		////////////////////////////////////////////////////////////
 		bool contains(const Vector2<T> &point) const {
@@ -135,57 +137,72 @@ class Rect {
 		////////////////////////////////////////////////////////////
 		/// \brief Check the intersection between two rectangles
 		///
+		/// Assumes size is always positive.
+		///
 		/// \param rect Rectangle to test
 		///
 		/// \return True if rectangles overlap, false otherwise
 		///
-		/// \see contains, intersectionDirection
+		/// \see intersection, contains, intersectionDirection
 		///
 		////////////////////////////////////////////////////////////
 		bool intersects(const Rect<T> &rect) const {
-			T r1MinX = std::min(x, static_cast<T>(x + sizeX));
-			T r1MaxX = std::max(x, static_cast<T>(x + sizeX));
-			T r1MinY = std::min(y, static_cast<T>(y + sizeY));
-			T r1MaxY = std::max(y, static_cast<T>(y + sizeY));
+			/*
+			 * Using && here implies short-circuit evaluation, which is
+			 * compiled in this case as a conditional branch. We assume that
+			 * the probability of an intersection is around 50%. Testing shows
+			 * that the impact of evaluating all terms is less than that of
+			 * mispredicted branches, so we avoid && and use & instead, which
+			 * works fine on boolean conditions.
+			 */
+			return std::max(x, rect.x) < std::min(x + sizeX, rect.x + rect.sizeX)
+			     & std::max(y, rect.y) < std::min(y + sizeY, rect.y + rect.sizeY);
+		}
 
-			T r2MinX = std::min(rect.x, static_cast<T>(rect.x + rect.sizeX));
-			T r2MaxX = std::max(rect.x, static_cast<T>(rect.x + rect.sizeX));
-			T r2MinY = std::min(rect.y, static_cast<T>(rect.y + rect.sizeY));
-			T r2MaxY = std::max(rect.y, static_cast<T>(rect.y + rect.sizeY));
-
-			T interLeft   = std::max(r1MinX, r2MinX);
-			T interTop    = std::max(r1MinY, r2MinY);
-			T interRight  = std::min(r1MaxX, r2MaxX);
-			T interBottom = std::min(r1MaxY, r2MaxY);
-
-			return interLeft < interRight && interTop < interBottom;
+		////////////////////////////////////////////////////////////
+		/// \brief Return the intersection between two rectangles
+		///
+		/// Assumes size is always positive.
+		///
+		/// \param rect Rectangle to test
+		///
+		/// \return The intersection if rectangles overlap, {0,0,0,0} otherwise.
+		///
+		/// \see intersects, contains, intersectionDirection
+		///
+		////////////////////////////////////////////////////////////
+		Rect<T> intersection(const Rect<T> &rect) {
+			T x1 = std::max(x, rect.x);
+			T y1 = std::max(y, rect.y);
+			T sx = std::min(x + sizeX, rect.x + rect.sizeX) - x1;
+			T sy = std::min(y + sizeY, rect.y + rect.sizeY) - y1;
+			if (sx <= 0 || sy <= 0) {
+				return Rect<T>{0, 0, 0, 0};
+			}
+			return Rect<T>{x1, y1, sx, sy};
 		}
 
 		////////////////////////////////////////////////////////////
 		/// \brief Check the intersection direction between two rectangles
 		///
+		/// Assumes size is always positive.
+		///
 		/// \param rect Rectangle to test
 		///
 		/// \return 1 for horizontal, 2 for vertical, 0 for no intersection
 		///
-		/// \see contains, intersects
+		/// \see contains, intersects, intersection
 		///
 		////////////////////////////////////////////////////////////
-		T intersectionDirection(const Rect<T> &rect) const {
-			T r1MinX = std::min(x, static_cast<T>(x + sizeX));
-			T r1MaxX = std::max(x, static_cast<T>(x + sizeX));
-			T r1MinY = std::min(y, static_cast<T>(y + sizeY));
-			T r1MaxY = std::max(y, static_cast<T>(y + sizeY));
-
-			T r2MinX = std::min(rect.x, static_cast<T>(rect.x + rect.sizeX));
-			T r2MaxX = std::max(rect.x, static_cast<T>(rect.x + rect.sizeX));
-			T r2MinY = std::min(rect.y, static_cast<T>(rect.y + rect.sizeY));
-			T r2MaxY = std::max(rect.y, static_cast<T>(rect.y + rect.sizeY));
-
-			T interLeft   = std::max(r1MinX, r2MinX);
-			T interTop    = std::max(r1MinY, r2MinY);
-			T interRight  = std::min(r1MaxX, r2MaxX);
-			T interBottom = std::min(r1MaxY, r2MaxY);
+		int intersectionDirection(const Rect<T> &rect) const {
+			T x2  = x + sizeX;
+			T rx2 = rect.x + rect.sizeX;
+			T y2  = y + sizeY;
+			T ry2 = rect.y + rect.sizeY;
+			T interLeft   = std::max(x, rect.x);
+			T interTop    = std::max(y, rect.y);
+			T interRight  = std::min(x2, rx2);
+			T interBottom = std::min(y2, ry2);
 
 			if(interLeft < interRight && interTop < interBottom) {
 				if(interRight - interLeft < interBottom - interTop) {
@@ -205,7 +222,7 @@ class Rect {
 		///
 		/// \param rect Rectangle to compare with
 		///
-		/// \return True if this rectangle is equal to \a rect
+		/// \return True if this rectangle is equal to \p rect
 		///
 		////////////////////////////////////////////////////////////
 		bool operator==(const Rect<T> &rect) const { return x == rect.x && y == rect.y && sizeX == rect.sizeX && sizeY == rect.sizeY; }
@@ -217,7 +234,7 @@ class Rect {
 		///
 		/// \param rect Rectangle to compare with
 		///
-		/// \return True if this rectangle is not equal to \a rect
+		/// \return True if this rectangle is not equal to \p rect
 		///
 		////////////////////////////////////////////////////////////
 		bool operator!=(const Rect<T> &rect) const { return !operator==(rect); }
@@ -247,7 +264,7 @@ using FloatRect = Rect<float>;
 ///
 /// A rectangle is defined by its top-left corner and its size.
 /// It is a very simple class defined for convenience, so
-/// its member variables (x, y, width and height) are public
+/// its member variables (x, y, sizeX and sizeY) are public
 /// and can be accessed directly, just like the vector classes
 /// (Vector2 and Vector3).
 ///
@@ -258,7 +275,7 @@ using FloatRect = Rect<float>;
 ///
 /// gk::Rect uses the usual rules for its boundaries:
 /// \li The left and top edges are included in the rectangle's area
-/// \li The right (left + width) and bottom (top + height) edges are excluded from the rectangle's area
+/// \li The right (x + sizeX) and bottom (y + sizeY) edges are excluded from the rectangle's area
 ///
 /// This means that gk::IntRect(0, 0, 1, 1) and gk::IntRect(1, 1, 1, 1)
 /// don't intersect.
