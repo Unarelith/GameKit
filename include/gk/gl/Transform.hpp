@@ -43,8 +43,16 @@ class Transform {
 		Transform& translate(float x, float y, float z = 0);
 		Transform& translate(const Vector3f& offset) { return translate(offset.x, offset.y, offset.z); }
 
+		// Intrinsic rotation (right multiplication)
 		Transform& rotate(float angle) { return rotate(angle, {0, 0, 1}); }
 		Transform& rotate(float angle, const Vector3f& axis);
+		Transform& rotateX(float angle);
+		Transform& rotateY(float angle);
+		Transform& rotateZ(float angle);
+		// Extrinsic rotation (left multiplication)
+		Transform& lrotateX(float angle);
+		Transform& lrotateY(float angle);
+		Transform& lrotateZ(float angle);
 
 		Transform& scale(float scaleX, float scaleY, float scaleZ = 1);
 		Transform& scale(const Vector3f& factors) { return scale(factors.x, factors.y, factors.z); }

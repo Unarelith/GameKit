@@ -48,6 +48,72 @@ Transform& Transform::rotate(float angle, const Vector3f& axis) {
 	return *this;
 }
 
+Transform& Transform::rotateX(float angle) {
+	float c = cosf(glm::radians(angle));
+	float s = sinf(glm::radians(angle));
+	for (int i = 0; i < 4; ++i) {
+		float tmp = m_matrix[1][i];
+		m_matrix[1][i] =  tmp * c + m_matrix[2][i] * s;
+		m_matrix[2][i] = -tmp * s + m_matrix[2][i] * c;
+	}
+	return *this;
+}
+
+Transform& Transform::rotateY(float angle) {
+	float c = cosf(glm::radians(angle));
+	float s = sinf(glm::radians(angle));
+	for (int i = 0; i < 4; ++i) {
+		float tmp = m_matrix[0][i];
+		m_matrix[0][i] = tmp * c - m_matrix[2][i] * s;
+		m_matrix[2][i] = tmp * s + m_matrix[2][i] * c;
+	}
+	return *this;
+}
+
+Transform& Transform::rotateZ(float angle) {
+	float c = cosf(glm::radians(angle));
+	float s = sinf(glm::radians(angle));
+	for (int i = 0; i < 4; ++i) {
+		float tmp = m_matrix[0][i];
+		m_matrix[0][i] =  tmp * c + m_matrix[1][i] * s;
+		m_matrix[1][i] = -tmp * s + m_matrix[1][i] * c;
+	}
+	return *this;
+}
+
+Transform& Transform::lrotateX(float angle) {
+	float c = cosf(glm::radians(angle));
+	float s = sinf(glm::radians(angle));
+	for (int i = 0; i < 4; ++i) {
+		float tmp = m_matrix[i][1];
+		m_matrix[i][1] = tmp * c - m_matrix[i][2] * s;
+		m_matrix[i][2] = tmp * s + m_matrix[i][2] * c;
+	}
+	return *this;
+}
+
+Transform& Transform::lrotateY(float angle) {
+	float c = cosf(glm::radians(angle));
+	float s = sinf(glm::radians(angle));
+	for (int i = 0; i < 4; ++i) {
+		float tmp = m_matrix[i][0];
+		m_matrix[i][0] =  tmp * c + m_matrix[i][2] * s;
+		m_matrix[i][2] = -tmp * s + m_matrix[i][2] * c;
+	}
+	return *this;
+}
+
+Transform& Transform::lrotateZ(float angle) {
+	float c = cosf(glm::radians(angle));
+	float s = sinf(glm::radians(angle));
+	for (int i = 0; i < 4; ++i) {
+		float tmp = m_matrix[i][0];
+		m_matrix[i][0] = tmp * c - m_matrix[i][1] * s;
+		m_matrix[i][1] = tmp * s + m_matrix[i][1] * c;
+	}
+	return *this;
+}
+
 Transform& Transform::scale(float scaleX, float scaleY, float scaleZ) {
 	m_matrix = glm::scale(m_matrix, {scaleX, scaleY, scaleZ});
 	return *this;
