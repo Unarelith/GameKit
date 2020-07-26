@@ -63,7 +63,7 @@ class Vector2 {
 		T y;
 
 		// Operators
-		auto cross(const Vector2<T> &vector2) const {
+		auto dot(const Vector2<T> &vector2) const {
 			return x * vector2.x + y * vector2.y;
 		}
 

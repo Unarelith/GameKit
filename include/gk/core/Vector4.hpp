@@ -72,7 +72,7 @@ class Vector4 {
 		T w;
 
 		// Operators
-		auto cross(const Vector4<T> &vector4) const {
+		auto dot(const Vector4<T> &vector4) const {
 			return x * vector4.x + y * vector4.y + z * vector4.z + w * vector4.w;
 		}
 
