@@ -26,9 +26,9 @@ addons:
 script:
   - mkdir build
   - cd build
-  - cmake ..
+  - cmake -DBUILD_TESTS:BOOL=ON ..
   - make -j8
-  # - ./gamekit_tests
+  - ./gamekit_tests
 
 notifications:
   email: false
