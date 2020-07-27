@@ -96,6 +96,22 @@ inline long double pfmodl(long double value, long double m) {
 	return value < 0 ? std::fmod(value, m) + m : std::fmod(value, m);
 }
 
+inline constexpr float abs(float f) {
+	return f < 0.f ? -f : f;
+}
+
+inline constexpr double abs(double f) {
+	return f < 0. ? -f : f;
+}
+
+inline constexpr int abs(int f) {
+	return f < 0 ? -f : f;
+}
+
+inline constexpr long long abs(long long f) {
+	return f < 0LL ? -f : f;
+}
+
 } // namespace gk
 
 #endif // GK_MATH_HPP_
