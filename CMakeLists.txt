@@ -9,7 +9,7 @@ project(${PROJECT_NAME})
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-option(BUILD_TESTS ON "Enable building tests if CxxTest is available")
+option(GK_BUILD_TESTS ON "Enable building tests if CxxTest is available")
 
 #------------------------------------------------------------------------------
 # Overwrite message function for clean output
@@ -98,7 +98,7 @@ add_subdirectory(source)
 #------------------------------------------------------------------------------
 # Unit testing
 #------------------------------------------------------------------------------
-if(BUILD_TESTS)
+if(GK_BUILD_TESTS)
 	find_package(CxxTest QUIET)
 
 	if(CXXTEST_FOUND)

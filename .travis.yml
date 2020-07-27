@@ -26,7 +26,7 @@ addons:
 script:
   - mkdir build
   - cd build
-  - cmake -DBUILD_TESTS:BOOL=ON ..
+  - cmake -DGK_BUILD_TESTS:BOOL=ON ..
   - make -j8
   - ./gamekit_tests
 
