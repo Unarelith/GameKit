@@ -24,45 +24,55 @@
  *
  * =====================================================================================
  */
-#ifndef GK_LOGGERHANDLER_HPP_
-#define GK_LOGGERHANDLER_HPP_
+#ifndef GK_LOGSTREAM_HPP_
+#define GK_LOGSTREAM_HPP_
 
-#include <thread>
-#include <unordered_map>
+#include <fstream>
+#include <iostream>
+#include <string>
 
-#include "gk/core/Logger.hpp"
-#include "gk/core/LogStream.hpp"
+namespace gk::priv {
 
-namespace gk {
-
-class LoggerHandler {
-	using InstanceMap = std::unordered_map<std::thread::id, LoggerHandler *>;
-
+class LogStream {
 	public:
-		LoggerHandler() = default;
+		void openFile(const std::string &filename) {
+			m_file.open(filename, std::ofstream::out | std::ofstream::trunc);
+			if (!m_file.is_open())
+				std::cerr << "Can't open log file: '" << filename << "'" << std::endl;
+		}
 
-		Logger print(LogLevel level, const char *file, int line);
+		LogStream &operator<<(const std::string &str) {
+			std::cout << str;
+			if (m_file.is_open())
+				m_file << str;
+			return *this;
+		}
 
-		LogLevel maxLevel() const { return m_maxLevel; }
-		void setMaxLevel(LogLevel maxLevel) { m_maxLevel = maxLevel; }
+		LogStream &operator<<(int i) {
+			std::cout << i;
+			if (m_file.is_open())
+				m_file << i;
+			return *this;
+		}
 
-		void setName(const std::string &name) { m_name = name; }
+		LogStream &operator<<(char c) {
+			std::cout << c;
+			if (m_file.is_open())
+				m_file << c;
+			return *this;
+		}
 
-		void openLogFile(const std::string &filename) { m_stream.openFile(filename); }
-
-		static LoggerHandler &getInstance();
-		static void setInstance(LoggerHandler &instance);
+		LogStream &operator<<(std::ostream &(*f)(std::ostream &)) {
+			f(std::cout);
+			if (m_file.is_open())
+				f(m_file);
+			return *this;
+		}
 
 	private:
-		static InstanceMap s_instanceMap;
-
-		std::string m_name;
-
-		LogLevel m_maxLevel = LogLevel::Debug;
-
-		priv::LogStream m_stream;
+		std::ofstream m_file;
 };
 
-} // namespace gk
+} // namespace gk::priv
 
-#endif // GK_LOGGERHANDLER_HPP_
+#endif // GK_LOGSTREAM_HPP_

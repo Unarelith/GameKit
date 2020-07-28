@@ -25,6 +25,7 @@
  * =====================================================================================
  */
 #include "gk/core/Logger.hpp"
+#include "gk/core/LogStream.hpp"
 
 namespace gk {
 
@@ -40,18 +41,18 @@ std::string Logger::textColor(LoggerColor color, bool bold) {
 void Logger::print() {
 	if (!isEnabled || m_level == LogLevel::None) return;
 
-	std::cout << textColor(m_color, m_isBold);
+	m_outStream << textColor(m_color, m_isBold);
 
 	char levels[4] = {'D', 'I', 'W', 'E'};
-	std::cout << "[" + getCurrentTime("%H:%M:%S") + "] [" << levels[m_level] << "] ";
+	m_outStream << "[" + getCurrentTime("%H:%M:%S") + "] [" << levels[m_level] << "] ";
 
 	if (printFileAndLine)
-		std::cout << m_file << ":" << m_line << ": ";
+		m_outStream << m_file << ":" << m_line << ": ";
 
 	if (!m_sourceName.empty())
-		std::cout << "[" + m_sourceName + "] ";
+		m_outStream << "[" + m_sourceName + "] ";
 
-	std::cout << m_stream.str() << LoggerColor::White << std::endl;
+	m_outStream << m_stream.str() << std::endl;
 }
 
 } // namespace gk
