@@ -60,6 +60,12 @@ class Transformable {
 
 		void rotate(float angle);
 		void rotate(float angle, const Vector3f &axis);
+		void rotateX(float angle);
+		void rotateY(float angle);
+		void rotateZ(float angle);
+		void lrotateX(float angle);
+		void lrotateY(float angle);
+		void lrotateZ(float angle);
 
 		const Transform &getTransform() const;
 		// const Transform &getInverseTransform() const;

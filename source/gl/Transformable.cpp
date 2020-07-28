@@ -92,6 +92,42 @@ void Transformable::rotate(float angle, const Vector3f &axis) {
 	m_transformNeedUpdate = true;
 }
 
+void Transformable::rotateX(float angle) {
+	m_rotationTransform.rotateX(angle);
+
+	m_transformNeedUpdate = true;
+}
+
+void Transformable::rotateY(float angle) {
+	m_rotationTransform.rotateY(angle);
+
+	m_transformNeedUpdate = true;
+}
+
+void Transformable::rotateZ(float angle) {
+	m_rotationTransform.rotateZ(angle);
+
+	m_transformNeedUpdate = true;
+}
+
+void Transformable::lrotateX(float angle) {
+	m_rotationTransform.lrotateX(angle);
+
+	m_transformNeedUpdate = true;
+}
+
+void Transformable::lrotateY(float angle) {
+	m_rotationTransform.lrotateY(angle);
+
+	m_transformNeedUpdate = true;
+}
+
+void Transformable::lrotateZ(float angle) {
+	m_rotationTransform.lrotateZ(angle);
+
+	m_transformNeedUpdate = true;
+}
+
 const Transform& Transformable::getTransform() const {
 	if (m_transformNeedUpdate) {
 		Transform originTransform;
