@@ -105,6 +105,24 @@ using Vector2u = Vector2<unsigned int>;
 using Vector2f = Vector2<float>;
 using Vector2d = Vector2<double>;
 
+template<typename T>
+inline void hash_combine(std::size_t &seed, const T &v) {
+    std::hash<T> hasher;
+    seed ^= std::hash<T>(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+}
+
 } // namespace gk
+
+namespace std {
+	template<typename T>
+	struct hash<gk::Vector2<T>> {
+		size_t operator()(const gk::Vector2<T> &vector2) const {
+			size_t hash = 0;
+			hash_combine(hash, vector2.x);
+			hash_combine(hash, vector2.y);
+			return hash;
+		}
+	};
+}
 
 #endif // GK_VECTOR2_HPP_
