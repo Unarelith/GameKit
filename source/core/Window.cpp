@@ -113,8 +113,12 @@ void Window::setWindowMode(Mode mode) {
 			SDL_SetWindowFullscreen(m_window.get(), (mode == Mode::Fullscreen) ? SDL_WINDOW_FULLSCREEN : SDL_WINDOW_FULLSCREEN_DESKTOP);
 
 			SDL_DisplayMode desktopMode;
-			if (SDL_GetDesktopDisplayMode(0, &desktopMode) == 0)
+			if (SDL_GetDesktopDisplayMode(0, &desktopMode) == 0) {
 				SDL_SetWindowDisplayMode(m_window.get(), &desktopMode);
+				SDL_SetWindowSize(m_window.get(), desktopMode.w, desktopMode.h);
+			}
+			else
+				gkError() << "Failed to set fullscreen mode";
 		}
 
 		m_windowMode = mode;

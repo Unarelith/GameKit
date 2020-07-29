@@ -14,4 +14,3 @@
 [submodule "external/SDL2_image"]
 	path = external/SDL2_image
 	url = https://github.com/Unarelith/SDL_image
-	ignore = dirty

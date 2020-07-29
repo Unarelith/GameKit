@@ -60,7 +60,7 @@ class Window : public RenderTarget {
 		Vector2u getSize() const override;
 		void resize(unsigned int width, unsigned int height);
 
-		void close() { m_isOpen = false; }
+		void close() { m_isOpen = false; m_window.reset(nullptr); }
 		bool isOpen() const { return m_isOpen; }
 
 		SDL_Window *window() const { return m_window.get(); }

@@ -90,6 +90,7 @@ int CoreApplication::run(bool isProtected) {
 		}
 		catch(const Exception &e) {
 			gkDebug() << "Fatal error" << e.what();
+			m_window.close();
 			return 1;
 		}
 		// catch(const std::exception &e) {
@@ -110,8 +111,12 @@ int CoreApplication::run(bool isProtected) {
 
 		m_resourceHandler.clear();
 
+		m_window.close();
+
 		return 0;
 	}
+
+	m_window.close();
 
 	return 1;
 }
