@@ -106,6 +106,9 @@ int CoreApplication::run(bool isProtected) {
 		runGame();
 	}
 
+	if (hasBeenInterrupted)
+		m_stateStack.clear();
+
 	if (isInitSuccessful) {
 		onExit();
 
