@@ -24,6 +24,7 @@
  *
  * =====================================================================================
  */
+#include "gk/core/Exception.hpp"
 #include "gk/core/LoggerHandler.hpp"
 
 namespace gk {
@@ -35,6 +36,9 @@ Logger LoggerHandler::print(LogLevel level, const char *file, int line) {
 }
 
 LoggerHandler &LoggerHandler::getInstance() {
+	if (s_instanceMap.empty())
+		throw EXCEPTION("LoggerHandler is not initialized");
+
 	return *s_instanceMap.at(std::this_thread::get_id());
 }
 
