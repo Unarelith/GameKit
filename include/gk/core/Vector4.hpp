@@ -31,7 +31,6 @@
 #include <utility>
 
 #include "gk/core/IntTypes.hpp"
-#include "gk/core/Vector2.hpp"
 #include "gk/core/Vector3.hpp"
 
 namespace gk {
@@ -50,6 +49,8 @@ class Vector4 {
 
 		template<typename U>
 		Vector4(const Vector4<U> &vector4) : x(vector4.x), y(vector4.y), z(vector4.z), w(vector4.w) {}
+
+		T length() { return sqrt(x * x + y * y + z * z + w * w); }
 
 		Vector4 operator-() const { return Vector4{-x, -y, -z, -w}; }
 

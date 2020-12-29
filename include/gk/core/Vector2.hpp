@@ -30,7 +30,7 @@
 #include <stdexcept>
 #include <utility>
 
-#include "IntTypes.hpp"
+#include "gk/core/IntTypes.hpp"
 
 namespace gk {
 
@@ -43,6 +43,8 @@ class Vector2 {
 
 		template<typename U>
 		Vector2(const Vector2<U> &vector2) : x(vector2.x), y(vector2.y) {}
+
+		T length() { return sqrt(x * x + y * y); }
 
 		Vector2 operator-() const { return Vector2{-x, -y}; }
 

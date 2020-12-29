@@ -47,6 +47,8 @@ class Vector3 {
 		template<typename U>
 		Vector3(const Vector3<U> &vector3) : x(vector3.x), y(vector3.y), z(vector3.z) {}
 
+		T length() { return sqrt(x * x + y * y + z * z); }
+
 		Vector3 operator-() const { return Vector3{-x, -y, -z}; }
 
 		Vector3 &operator=(T n)                     { x = n; y = n; z = n; return *this; }
