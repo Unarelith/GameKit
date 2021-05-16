@@ -76,10 +76,10 @@ class EventListenerList : public IEventListenerList {
 		void processEvents() override {
 			while (!m_events.empty()) {
 				const T &event = m_events.front();
-				m_events.pop();
 				for (auto &listener : m_listeners) {
 					listener.first(event);
 				}
+				m_events.pop();
 			}
 		}
 
