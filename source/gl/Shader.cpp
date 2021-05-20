@@ -107,9 +107,9 @@ void Shader::bindAttributeLocation(GLuint index, const std::string &name) {
 }
 
 void Shader::defaultAttributeLocationBinding() {
-	bindAttributeLocation(VertexAttribute::Coord3d, "coord3d");
-	bindAttributeLocation(VertexAttribute::TexCoord, "texCoord");
-	bindAttributeLocation(VertexAttribute::Color, "color");
+	bindAttributeLocation(0, "coord3d");
+	bindAttributeLocation(1, "texCoord");
+	bindAttributeLocation(2, "color");
 }
 
 void Shader::addShader(GLenum type, const std::string &filename) {

@@ -37,13 +37,13 @@ namespace gk {
 const RenderStates RenderStates::Default{};
 
 RenderTarget::RenderTarget() {
-	m_attributes.emplace_back(VertexAttribute::Coord3d, "coord3d", 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, coord3d)));
-	m_attributes.emplace_back(VertexAttribute::Color, "color", 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, color)));
-	m_attributes.emplace_back(VertexAttribute::TexCoord, "texCoord", 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, texCoord)));
+	m_attributes.emplace_back(VertexAttribute::Coord3d, 0, "coord3d", 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, coord3d)));
+	m_attributes.emplace_back(VertexAttribute::TexCoord, 1, "texCoord", 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, texCoord)));
+	m_attributes.emplace_back(VertexAttribute::Color, 2, "color", 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, color)));
 }
 
-void RenderTarget::addVertexAttribute(u16 id, const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer) {
-	m_attributes.emplace_back(id, name, size, type, normalized, stride, pointer);
+void RenderTarget::addVertexAttribute(u16 id, u16 shaderAttribID, const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer) {
+	m_attributes.emplace_back(id, shaderAttribID, name, size, type, normalized, stride, pointer);
 }
 
 void RenderTarget::clearVertexAttributes() {
@@ -85,9 +85,9 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 	states.shader->setUniform("u_modelMatrix", states.transform);
 
 	for (VertexAttributeData &attr : m_attributes) {
-		if (states.vertexAttributes & (1 << attr.id)) {
-			states.shader->enableVertexAttribArray(attr.id);
-			glCheck(glVertexAttribPointer(attr.id, attr.size, attr.type, attr.normalized, attr.stride, attr.pointer));
+		if (states.vertexAttributes & attr.id) {
+			states.shader->enableVertexAttribArray(attr.shaderAttribID);
+			glCheck(glVertexAttribPointer(attr.shaderAttribID, attr.size, attr.type, attr.normalized, attr.stride, attr.pointer));
 		}
 	}
 
@@ -101,8 +101,8 @@ void RenderTarget::endDrawing(const RenderStates &states) {
 	if (!states.shader) return;
 
 	for (VertexAttributeData &attr : m_attributes)
-		if (states.vertexAttributes & (1 << attr.id))
-			states.shader->disableVertexAttribArray(attr.id);
+		if (states.vertexAttributes & attr.id)
+			states.shader->disableVertexAttribArray(attr.shaderAttribID);
 
 	VertexBuffer::bind(nullptr);
 }

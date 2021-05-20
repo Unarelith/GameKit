@@ -39,11 +39,11 @@ class Texture;
 
 namespace VertexAttribute {
 	enum {
-		Coord3d          = 0,
-		TexCoord         = 1,
-		Color            = 2,
+		Coord3d          = 1,
+		TexCoord         = 2,
+		Color            = 4,
 
-		All              = (1 << Coord3d) | (1 << TexCoord) | (1 << Color),
+		All              = Coord3d | TexCoord | Color,
 	};
 }
 

@@ -41,10 +41,12 @@ class Drawable;
 class VertexBuffer;
 
 struct VertexAttributeData {
-	VertexAttributeData(u16 _id, const std::string &_name, GLint _size, GLenum _type, GLboolean _normalized, GLsizei _stride, const void *_pointer)
-		: id(_id), name(_name), size(_size), type(_type), normalized(_normalized), stride(_stride), pointer(_pointer) {}
+	VertexAttributeData(u16 _id, u64 _shaderAttribID, const std::string &_name, GLint _size, GLenum _type, GLboolean _normalized, GLsizei _stride, const void *_pointer)
+		: id(_id), shaderAttribID(_shaderAttribID), name(_name), size(_size),
+		type(_type), normalized(_normalized), stride(_stride), pointer(_pointer) {}
 
 	u16 id;
+	u16 shaderAttribID;
 	std::string name;
 	GLint size;
 	GLenum type;
@@ -58,7 +60,7 @@ class RenderTarget {
 		RenderTarget();
 		virtual ~RenderTarget() = default;
 
-		void addVertexAttribute(u16 id, const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer);
+		void addVertexAttribute(u16 id, u16 shaderAttribID, const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer);
 		void clearVertexAttributes();
 
 		void draw(const Drawable &drawable, const RenderStates &states = RenderStates::Default);
