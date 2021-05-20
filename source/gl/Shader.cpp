@@ -33,6 +33,7 @@
 #include "gk/gl/GLCheck.hpp"
 #include "gk/gl/Shader.hpp"
 #include "gk/gl/Transform.hpp"
+#include "gk/gl/RenderStates.hpp" // For VertexAttribute
 #include "gk/core/Exception.hpp"
 
 namespace gk {
@@ -44,12 +45,12 @@ Shader::Shader(const std::string &vertexFilename, const std::string &fragmentFil
 }
 
 Shader::~Shader() {
-	while(m_vertexShaders.size() != 0) {
+	while (m_vertexShaders.size() != 0) {
 		glCheck(glDeleteShader(m_vertexShaders.back()));
 		m_vertexShaders.pop_back();
 	}
 
-	while(m_fragmentShaders.size() != 0) {
+	while (m_fragmentShaders.size() != 0) {
 		glCheck(glDeleteShader(m_fragmentShaders.back()));
 		m_fragmentShaders.pop_back();
 	}
@@ -79,7 +80,7 @@ void Shader::linkProgram() {
 
 	GLint linkOK = GL_FALSE;
 	glCheck(glGetProgramiv(m_program, GL_LINK_STATUS, &linkOK));
-	if(!linkOK){
+	if (!linkOK) {
 		GLint errorSize = 0;
 		glCheck(glGetProgramiv(m_program, GL_INFO_LOG_LENGTH, &errorSize));
 
@@ -98,7 +99,7 @@ void Shader::linkProgram() {
 }
 
 void Shader::bindAttributeLocation(GLuint index, const std::string &name) {
-	if (attrib(name) == -1) {
+	if (m_attributes.find(name) == m_attributes.end()) {
 		glCheck(glBindAttribLocation(m_program, index, name.c_str()));
 
 		m_attributes.emplace(name, index);
@@ -106,12 +107,9 @@ void Shader::bindAttributeLocation(GLuint index, const std::string &name) {
 }
 
 void Shader::defaultAttributeLocationBinding() {
-	bindAttributeLocation(0, "coord3d");
-	bindAttributeLocation(1, "texCoord");
-	bindAttributeLocation(2, "color");
-	bindAttributeLocation(3, "normal");
-	bindAttributeLocation(4, "lightValue");
-	bindAttributeLocation(5, "ambientOcclusion");
+	bindAttributeLocation(VertexAttribute::Coord3d, "coord3d");
+	bindAttributeLocation(VertexAttribute::TexCoord, "texCoord");
+	bindAttributeLocation(VertexAttribute::Color, "color");
 }
 
 void Shader::addShader(GLenum type, const std::string &filename) {
@@ -166,11 +164,14 @@ void Shader::addShader(GLenum type, const std::string &filename) {
 }
 
 GLint Shader::attrib(const std::string &name) const {
-	auto it = m_attributes.find(name);
-	if (it == m_attributes.end())
-		return -1;
+	GLint attrib;
+	glCheck(attrib = glGetAttribLocation(m_program, name.c_str()));
 
-	return it->second;
+	if(attrib == -1) {
+		gkDebug() << "Could not bind attrib:" << name;
+	}
+
+	return attrib;
 }
 
 GLint Shader::uniform(const std::string &name) const {
@@ -184,12 +185,12 @@ GLint Shader::uniform(const std::string &name) const {
 	return uniform;
 }
 
-void Shader::enableVertexAttribArray(const std::string &name) const {
-	glCheck(glEnableVertexAttribArray(attrib(name)));
+void Shader::enableVertexAttribArray(GLuint attrib) const {
+	glCheck(glEnableVertexAttribArray(attrib));
 }
 
-void Shader::disableVertexAttribArray(const std::string &name) const {
-	glCheck(glDisableVertexAttribArray(attrib(name)));
+void Shader::disableVertexAttribArray(GLuint attrib) const {
+	glCheck(glDisableVertexAttribArray(attrib));
 }
 
 void Shader::setUniform(const std::string &name, int n) const {

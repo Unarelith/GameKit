@@ -121,3 +121,7 @@ else()
 endif()
 
 # target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)
+
+# target_compile_options(${PROJECT_NAME} PRIVATE -pg)
+# target_link_options(${PROJECT_NAME} PRIVATE -pg)
+

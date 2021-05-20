@@ -85,9 +85,9 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 	states.shader->setUniform("u_modelMatrix", states.transform);
 
 	for (VertexAttributeData &attr : m_attributes) {
-		if (states.vertexAttributes & attr.id) {
-			states.shader->enableVertexAttribArray(attr.name);
-			glCheck(glVertexAttribPointer(states.shader->attrib(attr.name), attr.size, attr.type, attr.normalized, attr.stride, attr.pointer));
+		if (states.vertexAttributes & (1 << attr.id)) {
+			states.shader->enableVertexAttribArray(attr.id);
+			glCheck(glVertexAttribPointer(attr.id, attr.size, attr.type, attr.normalized, attr.stride, attr.pointer));
 		}
 	}
 
@@ -100,11 +100,9 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 void RenderTarget::endDrawing(const RenderStates &states) {
 	if (!states.shader) return;
 
-	for (VertexAttributeData &attr : m_attributes) {
-		if (states.vertexAttributes & attr.id) {
-			states.shader->disableVertexAttribArray(attr.name);
-		}
-	}
+	for (VertexAttributeData &attr : m_attributes)
+		if (states.vertexAttributes & (1 << attr.id))
+			states.shader->disableVertexAttribArray(attr.id);
 
 	VertexBuffer::bind(nullptr);
 }

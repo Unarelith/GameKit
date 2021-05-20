@@ -59,8 +59,8 @@ class Shader {
 		GLint attrib(const std::string &name) const;
 		GLint uniform(const std::string &name) const;
 
-		void enableVertexAttribArray(const std::string &name) const;
-		void disableVertexAttribArray(const std::string &name) const;
+		void enableVertexAttribArray(GLuint attrib) const;
+		void disableVertexAttribArray(GLuint attrib) const;
 
 		void setUniform(const std::string &name, int n) const;
 		void setUniform(const std::string &name, float n) const;
