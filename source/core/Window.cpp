@@ -91,12 +91,17 @@ void Window::onEvent(const SDL_Event &event) {
 }
 
 void Window::setVerticalSyncEnabled(bool isVerticalSyncEnabled) {
-	if(SDL_GL_SetSwapInterval(isVerticalSyncEnabled) < 0) {
-		gkWarning() << "Can't enable VSync";
+	if (isVerticalSyncEnabled && !m_isVerticalSyncEnabled) {
+		if (SDL_GL_SetSwapInterval(-1) == -1 && SDL_GL_SetSwapInterval(1) == -1)
+			gkWarning() << "Can't enable VSync";
+
 	}
-	else {
-		m_isVerticalSyncEnabled = isVerticalSyncEnabled;
+	else if (!isVerticalSyncEnabled && m_isVerticalSyncEnabled) {
+		if (SDL_GL_SetSwapInterval(0) == -1)
+			gkWarning() << "Can't disable VSync";
 	}
+
+	m_isVerticalSyncEnabled = isVerticalSyncEnabled;
 }
 
 void Window::setWindowMode(Mode mode) {
