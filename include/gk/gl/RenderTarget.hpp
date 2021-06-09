@@ -67,6 +67,11 @@ class RenderTarget {
 		void draw(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount, const RenderStates &states = RenderStates::Default);
 		void drawElements(const VertexBuffer &vertexBuffer, GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, const RenderStates &states = RenderStates::Default);
 
+		void drawVertexBuffer(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount, const RenderStates &states = RenderStates::Default);
+
+		void beginSceneDraw(const RenderStates &states);
+		void endSceneDraw(const RenderStates &states);
+
 		virtual Vector2u getSize() const = 0;
 
 		virtual const View &getDefaultView() const = 0;

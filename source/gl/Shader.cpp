@@ -185,14 +185,6 @@ GLint Shader::uniform(const std::string &name) const {
 	return uniform;
 }
 
-void Shader::enableVertexAttribArray(GLuint attrib) const {
-	glCheck(glEnableVertexAttribArray(attrib));
-}
-
-void Shader::disableVertexAttribArray(GLuint attrib) const {
-	glCheck(glDisableVertexAttribArray(attrib));
-}
-
 void Shader::setUniform(const std::string &name, int n) const {
 	glCheck(glUniform1i(uniform(name), n));
 }

@@ -57,8 +57,9 @@ void RenderTarget::draw(const Drawable &drawable, const RenderStates &states) {
 void RenderTarget::draw(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount, const RenderStates &states) {
 	VertexBuffer::bind(&vertexBuffer);
 	beginDrawing(states);
-	glCheck(glDrawArrays(mode, firstVertex, vertexCount));
+	glCheck(::glDrawArrays(mode, firstVertex, vertexCount));
 	endDrawing(states);
+	VertexBuffer::bind(nullptr);
 }
 
 void RenderTarget::drawElements(const VertexBuffer &vertexBuffer, GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, const RenderStates &states) {
@@ -66,9 +67,25 @@ void RenderTarget::drawElements(const VertexBuffer &vertexBuffer, GLenum mode, G
 	beginDrawing(states);
 	glCheck(glDrawElements(mode, count, type, indices));
 	endDrawing(states);
+	VertexBuffer::bind(nullptr);
 }
 
-void RenderTarget::beginDrawing(const RenderStates &states) {
+void RenderTarget::drawVertexBuffer(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount, const RenderStates &states) {
+	VertexBuffer::bind(&vertexBuffer);
+
+	for (VertexAttributeData &attr : m_attributes)
+		if (states.vertexAttributes & attr.id)
+			glCheck(glVertexAttribPointer(attr.shaderAttribID, attr.size, attr.type, attr.normalized, attr.stride, attr.pointer));
+
+	glCheck(::glDrawArrays(mode, firstVertex, vertexCount));
+
+	VertexBuffer::bind(nullptr);
+}
+
+void RenderTarget::beginSceneDraw(const RenderStates &states) {
+	//----------------------------------------------------------------------------
+	// Shader & scene-bound uniforms
+	//----------------------------------------------------------------------------
 	if (!states.shader) return;
 
 	static const Shader *previousShader = nullptr;
@@ -82,29 +99,42 @@ void RenderTarget::beginDrawing(const RenderStates &states) {
 	else if (m_viewChanged || states.shader != previousShader)
 		applyCurrentView(states);
 
-	states.shader->setUniform("u_modelMatrix", states.transform);
+	previousShader = states.shader;
 
-	for (VertexAttributeData &attr : m_attributes) {
-		if (states.vertexAttributes & attr.id) {
-			states.shader->enableVertexAttribArray(attr.shaderAttribID);
-			glCheck(glVertexAttribPointer(attr.shaderAttribID, attr.size, attr.type, attr.normalized, attr.stride, attr.pointer));
-		}
-	}
-
+	//----------------------------------------------------------------------------
+	// Texture
+	//----------------------------------------------------------------------------
 	if (states.texture)
 		Texture::bind(states.texture);
 
-	previousShader = states.shader;
+	//----------------------------------------------------------------------------
+	// Vertex attributes
+	//----------------------------------------------------------------------------
+	for (VertexAttributeData &attr : m_attributes)
+		if (states.vertexAttributes & attr.id)
+			glCheck(glEnableVertexAttribArray(attr.shaderAttribID));
 }
 
-void RenderTarget::endDrawing(const RenderStates &states) {
+void RenderTarget::endSceneDraw(const RenderStates &states) {
 	if (!states.shader) return;
 
 	for (VertexAttributeData &attr : m_attributes)
 		if (states.vertexAttributes & attr.id)
-			states.shader->disableVertexAttribArray(attr.shaderAttribID);
+			glCheck(glDisableVertexAttribArray(attr.shaderAttribID));
+}
 
-	VertexBuffer::bind(nullptr);
+void RenderTarget::beginDrawing(const RenderStates &states) {
+	beginSceneDraw(states);
+
+	states.shader->setUniform("u_modelMatrix", states.transform);
+
+	for (VertexAttributeData &attr : m_attributes)
+		if (states.vertexAttributes & attr.id)
+			glCheck(glVertexAttribPointer(attr.shaderAttribID, attr.size, attr.type, attr.normalized, attr.stride, attr.pointer));
+}
+
+void RenderTarget::endDrawing(const RenderStates &states) {
+	endSceneDraw(states);
 }
 
 IntRect RenderTarget::getViewport(const View& view) const {
@@ -133,4 +163,3 @@ void RenderTarget::applyCurrentView(const RenderStates &states) {
 }
 
 } // namespace gk
-
