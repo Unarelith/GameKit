@@ -97,7 +97,7 @@ class Vector2 {
 			}
 		}
 
-		static constexpr Vector2<T> Zero{0, 0};
+		inline static const Vector2<T> Zero{0, 0};
 };
 
 template<typename T, typename U>

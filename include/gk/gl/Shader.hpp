@@ -66,7 +66,7 @@ class Shader {
 		void setUniform(const std::string &name, const glm::mat4 &matrix) const;
 		void setUniform(const std::string &name, const Transform &transform) const;
 
-		GLint program() const { return m_program; }
+		GLuint program() const { return m_program; }
 
 		static void bind(const Shader *shader);
 
