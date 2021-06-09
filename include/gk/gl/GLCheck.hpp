@@ -27,11 +27,11 @@
 #ifndef GK_GLCHECK_HPP_
 #define GK_GLCHECK_HPP_
 
-// #ifdef DEBUG_ENABLED
+#ifdef GK_DEBUG
 	#define glCheck(expr) do { expr; gk::priv::glCheckError(__FILE__, __LINE__, #expr); } while (false)
-// #else
-// 	#define glCheck(expr) (expr)
-// #endif
+#else
+	#define glCheck(expr) (expr)
+#endif
 
 namespace gk {
 	namespace priv {

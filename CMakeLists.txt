@@ -12,6 +12,50 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 option(GK_BUILD_TESTS ON "Enable building tests if CxxTest is available")
 
 #------------------------------------------------------------------------------
+# Compiler flags
+#------------------------------------------------------------------------------
+set(DEBUG_GCC_FLAGS
+	-g
+	-Wall -Wextra -Wconversion
+	-Wfatal-errors
+	-DGK_DEBUG
+)
+
+set(RELEASE_GCC_FLAGS
+	-O3
+	-Wall -Wextra -Wconversion
+	-Wfatal-errors
+)
+
+set(RELWITHDEB_GCC_FLAGS
+	-g -O3
+	-Wall -Wextra -Wconversion
+	-Wfatal-errors
+)
+
+set(PUBLIC_GCC_FLAGS
+	-D_USE_MATH_DEFINES
+	-pedantic
+	-Wno-variadic-macros
+	-Wnon-virtual-dtor
+)
+
+set(CMAKE_CXX_STANDARD 17)
+
+#------------------------------------------------------------------------------
+# Setting default build type
+#------------------------------------------------------------------------------
+set(DEFAULT_BUILD_TYPE RelWithDebInfo)
+
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+	message(STATUS "Setting build type to '${DEFAULT_BUILD_TYPE}' as none was specified.")
+	set(CMAKE_BUILD_TYPE "${DEFAULT_BUILD_TYPE}" CACHE STRING "Choose the type of build." FORCE)
+
+	# Set the possible values of build type for cmake-gui
+	set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
+
+#------------------------------------------------------------------------------
 # Overwrite message function for clean output
 #------------------------------------------------------------------------------
 function(message)

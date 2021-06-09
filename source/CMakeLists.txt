@@ -106,18 +106,12 @@ install(DIRECTORY include/gk DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 #------------------------------------------------------------------------------
 # Compiler flags
 #------------------------------------------------------------------------------
-target_compile_options(${PROJECT_NAME} PRIVATE -g)
-target_compile_options(${PROJECT_NAME} PRIVATE -DDEBUG_ENABLED -DDEBUG_COLOR)
-
 if(NOT MSVC)
-	target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wfatal-errors -Wconversion)
-	target_compile_options(${PROJECT_NAME} PUBLIC -Wno-variadic-macros -pedantic -Wnon-virtual-dtor)
-endif()
+	target_compile_options(${PROJECT_NAME} PRIVATE "$<$<CONFIG:DEBUG>:${DEBUG_GCC_FLAGS}>")
+	target_compile_options(${PROJECT_NAME} PRIVATE "$<$<CONFIG:RELEASE>:${RELEASE_GCC_FLAGS}>")
+	target_compile_options(${PROJECT_NAME} PRIVATE "$<$<CONFIG:RELWITHDEBINFO>:${RELWITHDEB_GCC_FLAGS}>")
 
-if(MSVC)
-	set(CMAKE_CXX_STANDARD 14)
-else()
-	target_compile_options(${PROJECT_NAME} PUBLIC -std=c++14)
+	target_compile_options(${PROJECT_NAME} PUBLIC ${PUBLIC_GCC_FLAGS})
 endif()
 
 # target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_14)

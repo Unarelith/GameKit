@@ -21,7 +21,7 @@ It's a small game engine built on top of SDL2 and OpenGL.
 ## How to compile
 
 - Dependencies:
-    - A compiler with C++14 support
+    - A compiler with C++17 support
     - `git` and [CMake](http://www.cmake.org/download/)
     - OpenGL >= 2.1
     - _Linux users: Check your distribution repositories for packages._
