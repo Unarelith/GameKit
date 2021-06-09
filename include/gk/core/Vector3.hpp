@@ -39,7 +39,7 @@ template<typename T>
 class Vector3 {
 	public:
 		Vector3() = default;
-		Vector3(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
+		constexpr Vector3(T _x, T _y, T _z) : x(_x), y(_y), z(_z) {}
 
 		template<typename U>
 		Vector3(const Vector2<U> &vector2, U _z) : x(vector2.x), y(vector2.y), z(_z) {}
@@ -103,6 +103,8 @@ class Vector3 {
 				throw std::overflow_error("Divide by zero exception");
 			}
 		}
+
+		static constexpr Vector3<T> Zero{0, 0, 0};
 };
 
 template<typename T, typename U>
