@@ -54,7 +54,7 @@ void RenderTarget::draw(const Drawable &drawable, const RenderStates &states) {
 	drawable.draw(*this, states);
 }
 
-void RenderTarget::draw(const VertexBuffer &vertexBuffer, GLenum mode, std::size_t firstVertex, std::size_t vertexCount, const RenderStates &states) {
+void RenderTarget::draw(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount, const RenderStates &states) {
 	VertexBuffer::bind(&vertexBuffer);
 	beginDrawing(states);
 	glCheck(glDrawArrays(mode, firstVertex, vertexCount));

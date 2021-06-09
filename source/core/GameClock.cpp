@@ -116,7 +116,7 @@ void GameClock::computeFramesPerSecond() {
 	std::unique_lock<std::mutex> lock(m_mutex);
 
 	if (currentTicks - m_fpsTimer > 1000) {
-		m_fps = floor(m_frames / ((currentTicks - m_fpsTimer) / 1000.0f) + 0.5f);
+		m_fps = u16(std::floor(m_frames / (float(currentTicks - m_fpsTimer) / 1000.0f) + 0.5f));
 		m_fpsTimer = currentTicks;
 
 		m_frames = 0;

@@ -47,16 +47,16 @@ void Tileset::load(const std::string &filename, const std::string &configFile) {
 
 	std::string name = tilesetElement->Attribute("name");
 
-	m_tileWidth = tilesetElement->UnsignedAttribute("tilewidth");
-	m_tileHeight = tilesetElement->UnsignedAttribute("tileheight");
+	m_tileWidth = (u16)tilesetElement->UnsignedAttribute("tilewidth");
+	m_tileHeight = (u16)tilesetElement->UnsignedAttribute("tileheight");
 
-	u16 tileCount = tilesetElement->UnsignedAttribute("tilecount");
+	u16 tileCount = (u16)tilesetElement->UnsignedAttribute("tilecount");
 	m_tiles.resize(tileCount, Tile{0});
 
 	tinyxml2::XMLElement *tileElement = tilesetElement->FirstChildElement("tile");
 	while (tileElement) {
-		u16 tileID = tileElement->UnsignedAttribute("id");
-		u16 tileType = tileElement->UnsignedAttribute("type");
+		u16 tileID = (u16)tileElement->UnsignedAttribute("id");
+		u16 tileType = (u16)tileElement->UnsignedAttribute("type");
 
 		Tile tile{tileType};
 
@@ -64,8 +64,8 @@ void Tileset::load(const std::string &filename, const std::string &configFile) {
 		if (animationElement) {
 			tinyxml2::XMLElement *frameElement = animationElement->FirstChildElement("frame");
 			while (frameElement) {
-				u16 frameTileID = frameElement->UnsignedAttribute("tileid");
-				u16 frameDuration = frameElement->UnsignedAttribute("duration");
+				u16 frameTileID = (u16)frameElement->UnsignedAttribute("tileid");
+				u16 frameDuration = (u16)frameElement->UnsignedAttribute("duration");
 
 				tile.addAnimationFrame(frameTileID, frameDuration);
 

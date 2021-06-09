@@ -37,7 +37,7 @@ namespace gk {
 RectangleShape::RectangleShape() {
 	for (u8 i = 1 ; i < 5 ; ++i) {
 		for (u8 j = 0 ; j < 6 ; ++j) {
-			m_indices[i * 6 + j] = m_indices[j] + 4 * i;
+			m_indices[i * 6 + j] = u8(m_indices[j] + 4 * i);
 		}
 	}
 }
@@ -49,7 +49,7 @@ RectangleShape::RectangleShape(float width, float height, const Color &color) : 
 }
 
 void RectangleShape::updateVertexBuffer() const {
-	float o = m_outlineThickness;
+	float o = (float)m_outlineThickness;
 	Vertex vertices[4 + 4 * 4] = {
 		// Rectangle vertices
 		{{m_width, 0,        0, -1}},

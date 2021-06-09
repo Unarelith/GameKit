@@ -41,7 +41,7 @@ class Drawable;
 class VertexBuffer;
 
 struct VertexAttributeData {
-	VertexAttributeData(u16 _id, u64 _shaderAttribID, const std::string &_name, GLint _size, GLenum _type, GLboolean _normalized, GLsizei _stride, const void *_pointer)
+	VertexAttributeData(u16 _id, u16 _shaderAttribID, const std::string &_name, GLint _size, GLenum _type, GLboolean _normalized, GLsizei _stride, const void *_pointer)
 		: id(_id), shaderAttribID(_shaderAttribID), name(_name), size(_size),
 		type(_type), normalized(_normalized), stride(_stride), pointer(_pointer) {}
 
@@ -64,7 +64,7 @@ class RenderTarget {
 		void clearVertexAttributes();
 
 		void draw(const Drawable &drawable, const RenderStates &states = RenderStates::Default);
-		void draw(const VertexBuffer &vertexBuffer, GLenum mode, std::size_t firstVertex, std::size_t vertexCount, const RenderStates &states = RenderStates::Default);
+		void draw(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount, const RenderStates &states = RenderStates::Default);
 		void drawElements(const VertexBuffer &vertexBuffer, GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, const RenderStates &states = RenderStates::Default);
 
 		virtual Vector2u getSize() const = 0;

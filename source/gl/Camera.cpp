@@ -46,7 +46,7 @@ void Camera::setPosition(const Vector3f &position) {
 
 void Camera::setDPosition(const Vector3d &position) {
 	m_position_d = position;
-	m_position = Vector3f(position.x, position.y, position.z);
+	m_position = Vector3f((float)position.x, (float)position.y, (float)position.z);
 	m_viewTransformUpdated = false;
 }
 

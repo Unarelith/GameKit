@@ -43,7 +43,7 @@ class Tile {
 			u16 duration;
 		};
 
-		u16 getFrameCount() const { return m_animation.size(); }
+		u16 getFrameCount() const { return (u16)m_animation.size(); }
 		const AnimationFrame &getFrame(u16 id) const { return m_animation.at(id); }
 		void addAnimationFrame(u16 tileID, u16 duration) { m_animation.emplace_back(AnimationFrame{tileID, duration}); }
 
@@ -71,7 +71,7 @@ class Tileset : public Texture {
 
 		u16 tileWidth() const { return m_tileWidth; }
 		u16 tileHeight() const { return m_tileHeight; }
-		u16 tileCount() const { return m_tiles.size(); }
+		u16 tileCount() const { return (u16)m_tiles.size(); }
 
 	private:
 		std::vector<u16> m_info;

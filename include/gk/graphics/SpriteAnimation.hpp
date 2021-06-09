@@ -53,7 +53,7 @@ class SpriteAnimation {
 		bool isPlaying() const { return m_timer.isStarted() && !m_isPaused; }
 		bool isFinished() const { return displayedFramesAmount() >= m_frames.size(); }
 
-		u32 size() const { return m_frames.size(); }
+		u16 size() const { return (u16)m_frames.size(); }
 
 		u16 delay() const { return m_delay; }
 

@@ -69,7 +69,7 @@ u16 SpriteAnimation::getFrame(u16 frameID) const {
 u16 SpriteAnimation::currentFrame() const {
 	u16 frameID = displayedFramesAmount();
 	if(frameID >= m_frames.size()) {
-		return getFrame(m_frames.size() - 1);
+		return getFrame((u16)m_frames.size() - 1);
 	} else {
 		return getFrame(frameID);
 	}
@@ -79,7 +79,7 @@ u16 SpriteAnimation::displayedFramesAmount() const {
 	if (m_delay == 0)
 		return 0;
 
-	return m_timer.time() / m_delay;
+	return u16(m_timer.time() / m_delay);
 }
 
 }

@@ -55,8 +55,8 @@ class Image : public Drawable, public Transformable {
 		const FloatRect &posRect() const { return m_posRect; }
 		void setPosRect(float x, float y, u16 width, u16 height);
 
-		u16 width() const { return m_width * getScale().x; }
-		u16 height() const { return m_height * getScale().y; }
+		u16 width() const { return u16(m_width * getScale().x); }
+		u16 height() const { return u16(m_height * getScale().y); }
 
 		void setColor(const Color &color) { m_color = color; updateVertexBuffer(); }
 		void setAlphaMod(u8 alpha) { m_color.a = alpha / 255.0f; updateVertexBuffer(); }

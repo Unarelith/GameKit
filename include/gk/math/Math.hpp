@@ -35,8 +35,8 @@
 
 namespace gk {
 
-constexpr double DEG_TO_RAD = M_PI / 180;
-constexpr float DEG_TO_RADf = M_PI / 180;
+constexpr double DEG_TO_RAD = M_PI / 180.0;
+constexpr float DEG_TO_RADf = (float)M_PI / 180.0f;
 
 // Quick lerp - might fail to return exactly b when t = 1.
 // Use only in cases where that doesn't matter.

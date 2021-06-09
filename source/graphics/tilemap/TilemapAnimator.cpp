@@ -34,8 +34,8 @@ void TilemapAnimator::init(Tilemap &map) {
 }
 
 void TilemapAnimator::animateTiles(Tilemap &map) {
-	for (size_t x = 0 ; x < map.width() ; ++x) {
-		for (size_t y = 0 ; y < map.height() ; ++y) {
+	for (u16 x = 0 ; x < map.width() ; ++x) {
+		for (u16 y = 0 ; y < map.height() ; ++y) {
 			const Tile &tile = map.tileset().getTile(map.getTile(x, y));
 			if (tile.getFrameCount()) {
 				TileAnimation &tileAnimation = m_tileAnimations.at(x + y * map.width());

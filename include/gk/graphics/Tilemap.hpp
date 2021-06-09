@@ -52,7 +52,7 @@ class Tilemap : public Drawable, public Transformable {
 		u16 width() const { return m_width; }
 		u16 height() const { return m_height; }
 
-		u8 layerCount() const { return m_data.size(); }
+		u8 layerCount() const { return (u8)m_data.size(); }
 
 		Tileset &tileset() { return m_tileset; }
 		void setTilesetOffset(u16 tilesetOffset) { m_tilesetOffset = tilesetOffset; }

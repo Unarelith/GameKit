@@ -45,17 +45,17 @@ void TilemapRenderer::updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap
 
 	VertexBuffer::bind(&m_vbo);
 
-	float tileWidth  = map.tileset().tileWidth();
-	float tileHeight = map.tileset().tileHeight();
+	u16 tileWidth  = map.tileset().tileWidth();
+	u16 tileHeight = map.tileset().tileHeight();
 
 	float x = tileX * tileWidth;
 	float y = tileY * tileHeight;
 
-	float texTileX = id % u16(map.tileset().getSize().x / tileWidth) * tileWidth  / map.tileset().getSize().x;
-	float texTileY = id / u16(map.tileset().getSize().x / tileWidth) * tileHeight / map.tileset().getSize().y;
+	float texTileX = id % u16(map.tileset().getSize().x / tileWidth) * tileWidth  / (float)map.tileset().getSize().x;
+	float texTileY = id / u16(map.tileset().getSize().x / tileWidth) * tileHeight / (float)map.tileset().getSize().y;
 
-	float texTileWidth  = tileWidth  / map.tileset().getSize().x;
-	float texTileHeight = tileHeight / map.tileset().getSize().y;
+	float texTileWidth  = tileWidth  / (float)map.tileset().getSize().x;
+	float texTileHeight = tileHeight / (float)map.tileset().getSize().y;
 
 	Vertex vertices[] = {
 		{{x            , y             , 0, 1}, {texTileX               , texTileY                }, {1.0f, 1.0f, 1.0f, 1.0f}},

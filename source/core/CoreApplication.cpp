@@ -54,7 +54,7 @@ CoreApplication::CoreApplication(int argc, char **argv) : m_argumentParser(argc,
 }
 
 bool CoreApplication::init() {
-	std::srand(std::time(nullptr));
+	std::srand((unsigned int)std::time(nullptr));
 
 	Mouse::setWindow(&m_window);
 

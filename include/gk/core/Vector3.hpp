@@ -124,7 +124,7 @@ namespace std {
 			auto h2 = hash(vector3.y);
 			auto h3 = hash(vector3.z);
 
-			return std::hash<T>{}(h1 ^ (h2 << h3) ^ h3);
+			return std::hash<T>{}(static_cast<T>(h1 ^ (h2 << h3) ^ h3));
 		}
 	};
 }

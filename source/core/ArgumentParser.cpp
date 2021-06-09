@@ -60,7 +60,7 @@ void ArgumentParser::printHelp() {
 	std::cout << "Usage: " << m_argv[0] << " [options]" << std::endl << std::endl;
 	std::cout << "Options:" << std::endl;
 
-	unsigned int maxLineLength = 0;
+	std::size_t maxLineLength = 0;
 	std::vector<std::pair<std::string, const Argument &>> args;
 	for (auto &it : m_arguments) {
 		std::string arg;
@@ -74,7 +74,7 @@ void ArgumentParser::printHelp() {
 
 		args.emplace_back(arg, it.second);
 
-		maxLineLength = std::max<unsigned int>(maxLineLength, arg.size());
+		maxLineLength = std::max<std::size_t>(maxLineLength, arg.size());
 	}
 
 	for (auto &it : args) {

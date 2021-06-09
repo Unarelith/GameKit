@@ -41,7 +41,7 @@ class Color {
 		/// \brief Default constructor
 		///
 		/// Constructs an opaque white color. It is equivalent to
-		/// gk::Color(255, 255, 255, 255).
+		/// gk::Color(1.f, 1.f, 1.f, 1.f).
 		///
 		////////////////////////////////////////////////////////////
 		Color() = default;
@@ -49,13 +49,13 @@ class Color {
 		////////////////////////////////////////////////////////////
 		/// \brief Construct the color from its 4 RGBA components
 		///
-		/// \param _r Red component (in the range [0, 255])
-		/// \param _g Green component (in the range [0, 255])
-		/// \param _b Blue component (in the range [0, 255])
-		/// \param _a Alpha (opacity) component (in the range [0, 255])
+		/// \param r Red component (in the range [0, 1])
+		/// \param g Green component (in the range [0, 1])
+		/// \param b Blue component (in the range [0, 1])
+		/// \param a Alpha (opacity) component (in the range [0, 1])
 		///
 		////////////////////////////////////////////////////////////
-		Color(u8 _r, u8 _g, u8 _b, u8 _a = 255);
+		Color(float r, float g, float b, float a = 1);
 
 		////////////////////////////////////////////////////////////
 		/// \brief Mix another color with a certain ratio
@@ -124,14 +124,25 @@ class Color {
 		///
 		////////////////////////////////////////////////////////////
 		bool operator!=(const Color &color) const {
-			return !(*this == color);
+			return !operator==(color);
 		}
 
+		////////////////////////////////////////////////////////////
+		/// \brief Construct the color from its 4 RGBA components
+		///
+		/// \param r Red component (in the range [0, 255])
+		/// \param g Green component (in the range [0, 255])
+		/// \param b Blue component (in the range [0, 255])
+		/// \param a Alpha (opacity) component (in the range [0, 255])
+		///
+		////////////////////////////////////////////////////////////
+		static Color fromRGBA32(u8 r, u8 g, u8 b, u8 a = 255);
+
 		// Only used in Asylia
-		u8 r255() const { return r * 255; }
-		u8 g255() const { return g * 255; }
-		u8 b255() const { return b * 255; }
-		u8 a255() const { return a * 255; }
+		u8 r255() const { return u8(r * 255.f); }
+		u8 g255() const { return u8(g * 255.f); }
+		u8 b255() const { return u8(b * 255.f); }
+		u8 a255() const { return u8(a * 255.f); }
 
 		// FIXME: Use u8 instead of float and normalize when sending to OpenGL
 		float r = 1.0f; ///< Red component
@@ -166,19 +177,19 @@ class Color {
 /// \li Blue
 /// \li Alpha (opacity)
 ///
-/// Each component is a public member, an unsigned integer in
-/// the range [0, 255]. Thus, colors can be constructed and
+/// Each component is a public member, a floating point number in
+/// the range [0, 1]. Thus, colors can be constructed and
 /// manipulated very easily:
 ///
 /// \code
-/// gk::Color color(255, 0, 0); // red
+/// gk::Color color(1, 0, 0); // red
 /// color.r = 0;                // make it black
 /// color.b = 0.5f;             // make it dark blue
 /// \endcode
 ///
 /// The fourth component of colors, named "alpha", represents
 /// the opacity of the color. A color with an alpha value of
-/// 255 will be fully opaque, while an alpha value of 0 will
+/// 1 will be fully opaque, while an alpha value of 0 will
 /// make a color fully transparent, whatever the value of the
 /// other components is.
 ///

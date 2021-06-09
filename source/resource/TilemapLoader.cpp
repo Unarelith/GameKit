@@ -50,8 +50,8 @@ void TilemapLoader::loadMap(const std::string &name, Tileset &tileset, ResourceH
 
 	tinyxml2::XMLElement *mapElement = doc.FirstChildElement("map").ToElement();
 
-	u16 width = mapElement->IntAttribute("width");
-	u16 height = mapElement->IntAttribute("height");
+	u16 width = (u16)mapElement->UnsignedAttribute("width");
+	u16 height = (u16)mapElement->UnsignedAttribute("height");
 
 	std::vector<std::vector<u16>> data;
 	tinyxml2::XMLElement *layerElement = mapElement->FirstChildElement("layer");
@@ -60,7 +60,7 @@ void TilemapLoader::loadMap(const std::string &name, Tileset &tileset, ResourceH
 
 		std::vector<u16> layer;
 		while(tileElement) {
-			s16 tileID = tileElement->IntAttribute("gid") - 1;
+			s16 tileID = s16(tileElement->IntAttribute("gid") - 1);
 
 			layer.push_back((tileID >= 0) ? tileID : 0);
 

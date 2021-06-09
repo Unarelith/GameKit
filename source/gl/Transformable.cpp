@@ -55,7 +55,7 @@ void Transformable::setScale(float factorX, float factorY, float factorZ) {
 }
 
 void Transformable::setRotation(float angle, const Vector3f &axis) {
-	m_rotation = std::fmod(angle, 360);
+	m_rotation = std::fmod<float>(angle, 360.f);
 	if (m_rotation < 0)
 		m_rotation += 360.f;
 

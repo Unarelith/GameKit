@@ -70,8 +70,6 @@ class Window : public RenderTarget {
 		static bool saveScreenshot(int x, int y, int w, int h, const std::string &filename) noexcept;
 
 	private:
-		static void initOpenGL();
-
 		using SDL_WindowPtr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;
 		using SDL_GLContextPtr = std::unique_ptr<void, decltype(&SDL_GL_DeleteContext)>;
 
