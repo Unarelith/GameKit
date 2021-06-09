@@ -40,6 +40,13 @@ set(PUBLIC_GCC_FLAGS
 	-Wnon-virtual-dtor
 )
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+	set(CLANG_FLAGS
+		-Wno-sign-conversion
+		-Wno-implicit-int-float-conversion
+	)
+endif()
+
 set(CMAKE_CXX_STANDARD 17)
 
 #------------------------------------------------------------------------------

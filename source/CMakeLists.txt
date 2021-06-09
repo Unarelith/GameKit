@@ -110,6 +110,7 @@ if(NOT MSVC)
 	target_compile_options(${PROJECT_NAME} PRIVATE "$<$<CONFIG:DEBUG>:${DEBUG_GCC_FLAGS}>")
 	target_compile_options(${PROJECT_NAME} PRIVATE "$<$<CONFIG:RELEASE>:${RELEASE_GCC_FLAGS}>")
 	target_compile_options(${PROJECT_NAME} PRIVATE "$<$<CONFIG:RELWITHDEBINFO>:${RELWITHDEB_GCC_FLAGS}>")
+	target_compile_options(${PROJECT_NAME} PRIVATE ${CLANG_FLAGS})
 
 	target_compile_options(${PROJECT_NAME} PUBLIC ${PUBLIC_GCC_FLAGS})
 endif()
