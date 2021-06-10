@@ -67,6 +67,8 @@ class CoreApplication {
 		////////////////////////////////////////////////////////////
 		int run(bool isProtected = true);
 
+		static bool hasBeenInterrupted; ///< Set to true if interrupted by SIGINT
+
 	protected:
 		////////////////////////////////////////////////////////////
 		/// \brief Initialization function

@@ -31,7 +31,7 @@
 #include "gk/core/Mouse.hpp"
 #include "gk/core/Exception.hpp"
 
-static bool hasBeenInterrupted = false;
+bool gk::CoreApplication::hasBeenInterrupted = false;
 
 #ifdef GK_SYSTEM_LINUX
 
@@ -40,7 +40,7 @@ static bool hasBeenInterrupted = false;
 
 static void sigintHandler(int) {
 	signal(SIGINT, sigintHandler);
-	hasBeenInterrupted = true;
+	gk::CoreApplication::hasBeenInterrupted = true;
 }
 
 #endif // GK_SYSTEM_LINUX
