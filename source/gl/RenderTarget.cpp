@@ -69,16 +69,8 @@ void RenderTarget::drawElements(const VertexBuffer &vertexBuffer, GLenum mode, G
 	VertexBuffer::bind(nullptr);
 }
 
-void RenderTarget::drawVertexBuffer(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount) {
-	VertexBuffer::bind(&vertexBuffer);
-
-	vertexBuffer.layout().enableLayout();
-
+void RenderTarget::drawArrays(GLenum mode, GLint firstVertex, GLsizei vertexCount) {
 	glCheck(::glDrawArrays(mode, firstVertex, vertexCount));
-
-	vertexBuffer.layout().disableLayout();
-
-	VertexBuffer::bind(nullptr);
 }
 
 void RenderTarget::beginDrawing(const RenderStates &states) {

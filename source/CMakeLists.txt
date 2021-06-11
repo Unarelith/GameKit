@@ -28,6 +28,7 @@ set(SOURCE_FILES
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/Texture.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/Transform.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/Transformable.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/gl/VertexArray.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/VertexBuffer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/VertexBufferLayout.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/gl/View.cpp

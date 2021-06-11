@@ -45,7 +45,7 @@ class RenderTarget {
 		void draw(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount, const RenderStates &states = RenderStates::Default);
 		void drawElements(const VertexBuffer &vertexBuffer, GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, const RenderStates &states = RenderStates::Default);
 
-		void drawVertexBuffer(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount);
+		void drawArrays(GLenum mode, GLint firstVertex, GLsizei vertexCount);
 
 		void beginDrawing(const RenderStates &states);
 
