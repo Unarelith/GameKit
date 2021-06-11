@@ -36,6 +36,8 @@ VertexBuffer::VertexBuffer() {
 VertexBuffer::VertexBuffer(VertexBuffer &&vertexBuffer) {
 	m_id = vertexBuffer.m_id;
 	vertexBuffer.m_id = 0;
+
+	m_layout = std::move(vertexBuffer.m_layout);
 }
 
 VertexBuffer::~VertexBuffer() noexcept {
@@ -46,6 +48,9 @@ VertexBuffer::~VertexBuffer() noexcept {
 VertexBuffer &VertexBuffer::operator=(VertexBuffer &&vertexBuffer) {
 	m_id = vertexBuffer.m_id;
 	vertexBuffer.m_id = 0;
+
+	m_layout = std::move(vertexBuffer.m_layout);
+
 	return *this;
 }
 

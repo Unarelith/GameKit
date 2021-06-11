@@ -38,6 +38,8 @@ void VertexBufferLayout::setupDefaultLayout() {
 }
 
 void VertexBufferLayout::enableLayout() const {
+	assert(!m_attributes.empty());
+
 	for (auto &attr : m_attributes) {
 		glCheck(glEnableVertexAttribArray(attr.id));
 		glCheck(glVertexAttribPointer(attr.id, attr.size, attr.type, attr.normalized, attr.stride, attr.offset));
