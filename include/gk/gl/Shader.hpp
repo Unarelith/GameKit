@@ -59,12 +59,15 @@ class Shader {
 		GLint attrib(const std::string &name) const;
 		GLint uniform(const std::string &name) const;
 
-		void setUniform(const std::string &name, int n) const;
-		void setUniform(const std::string &name, float n) const;
-		void setUniform(const std::string &name, float x, float y) const;
-		void setUniform(const std::string &name, const gk::Color &color) const;
-		void setUniform(const std::string &name, const glm::mat4 &matrix) const;
-		void setUniform(const std::string &name, const Transform &transform) const;
+		void setUniform(GLint uniform, int n) const;
+		void setUniform(GLint uniform, float n) const;
+		void setUniform(GLint uniform, float x, float y) const;
+		void setUniform(GLint uniform, const gk::Color &color) const;
+		void setUniform(GLint uniform, const glm::mat4 &matrix) const;
+		void setUniform(GLint uniform, const Transform &transform) const;
+
+		template<typename T>
+		void setUniform(const std::string &name, const T &value) const { setUniform(uniform(name), value); }
 
 		GLuint program() const { return m_program; }
 

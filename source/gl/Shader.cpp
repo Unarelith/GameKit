@@ -185,28 +185,28 @@ GLint Shader::uniform(const std::string &name) const {
 	return uniform;
 }
 
-void Shader::setUniform(const std::string &name, int n) const {
-	glCheck(glUniform1i(uniform(name), n));
+void Shader::setUniform(GLint uniform, int n) const {
+	glCheck(glUniform1i(uniform, n));
 }
 
-void Shader::setUniform(const std::string &name, float n) const {
-	glCheck(glUniform1f(uniform(name), n));
+void Shader::setUniform(GLint uniform, float n) const {
+	glCheck(glUniform1f(uniform, n));
 }
 
-void Shader::setUniform(const std::string &name, float x, float y) const {
-	glCheck(glUniform2f(uniform(name), x, y));
+void Shader::setUniform(GLint uniform, float x, float y) const {
+	glCheck(glUniform2f(uniform, x, y));
 }
 
-void Shader::setUniform(const std::string &name, const gk::Color &color) const {
-	glCheck(glUniform4f(uniform(name), color.r, color.g, color.b, color.a));
+void Shader::setUniform(GLint uniform, const gk::Color &color) const {
+	glCheck(glUniform4f(uniform, color.r, color.g, color.b, color.a));
 }
 
-void Shader::setUniform(const std::string &name, const glm::mat4 &matrix) const {
-	glCheck(glUniformMatrix4fv(uniform(name), 1, GL_FALSE, glm::value_ptr(matrix)));
+void Shader::setUniform(GLint uniform, const glm::mat4 &matrix) const {
+	glCheck(glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(matrix)));
 }
 
-void Shader::setUniform(const std::string &name, const Transform &transform) const {
-	glCheck(glUniformMatrix4fv(uniform(name), 1, GL_FALSE, transform.getRawMatrix()));
+void Shader::setUniform(GLint uniform, const Transform &transform) const {
+	glCheck(glUniformMatrix4fv(uniform, 1, GL_FALSE, transform.getRawMatrix()));
 }
 
 void Shader::bind(const Shader *shader) {
