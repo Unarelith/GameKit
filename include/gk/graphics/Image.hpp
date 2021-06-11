@@ -38,7 +38,7 @@ namespace gk {
 
 class Image : public Drawable, public Transformable {
 	public:
-		Image() = default;
+		Image();
 		Image(const std::string &textureName);
 		Image(const Texture &texture);
 

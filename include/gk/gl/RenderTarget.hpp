@@ -27,9 +27,6 @@
 #ifndef GK_RENDERTARGET_HPP_
 #define GK_RENDERTARGET_HPP_
 
-#include <string>
-#include <vector>
-
 #include "gk/core/Rect.hpp"
 #include "gk/gl/OpenGL.hpp"
 #include "gk/gl/RenderStates.hpp"
@@ -40,37 +37,17 @@ namespace gk {
 class Drawable;
 class VertexBuffer;
 
-struct VertexAttributeData {
-	VertexAttributeData(u16 _id, u16 _shaderAttribID, const std::string &_name, GLint _size, GLenum _type, GLboolean _normalized, GLsizei _stride, const void *_pointer)
-		: id(_id), shaderAttribID(_shaderAttribID), name(_name), size(_size),
-		type(_type), normalized(_normalized), stride(_stride), pointer(_pointer) {}
-
-	u16 id;
-	u16 shaderAttribID;
-	std::string name;
-	GLint size;
-	GLenum type;
-	GLboolean normalized;
-	GLsizei stride;
-	const void *pointer;
-};
-
 class RenderTarget {
 	public:
-		RenderTarget();
 		virtual ~RenderTarget() = default;
-
-		void addVertexAttribute(u16 id, u16 shaderAttribID, const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer);
-		void clearVertexAttributes();
 
 		void draw(const Drawable &drawable, const RenderStates &states = RenderStates::Default);
 		void draw(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount, const RenderStates &states = RenderStates::Default);
 		void drawElements(const VertexBuffer &vertexBuffer, GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, const RenderStates &states = RenderStates::Default);
 
-		void drawVertexBuffer(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount, const RenderStates &states = RenderStates::Default);
+		void drawVertexBuffer(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount);
 
-		void beginSceneDraw(const RenderStates &states);
-		void endSceneDraw(const RenderStates &states);
+		void beginDrawing(const RenderStates &states);
 
 		virtual Vector2u getSize() const = 0;
 
@@ -83,9 +60,6 @@ class RenderTarget {
 		void disableView() { m_view = nullptr; }
 
 	private:
-		void beginDrawing(const RenderStates &states);
-		void endDrawing(const RenderStates &states);
-
 		IntRect getViewport(const View &view) const;
 
 		void applyCurrentView(const RenderStates &states);
@@ -94,8 +68,6 @@ class RenderTarget {
 		View *m_view = nullptr;
 
 		IntRect m_previousViewport;
-
-		std::vector<VertexAttributeData> m_attributes;
 };
 
 } // namespace gk

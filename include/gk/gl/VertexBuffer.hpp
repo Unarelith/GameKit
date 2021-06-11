@@ -27,7 +27,7 @@
 #ifndef GK_VERTEXBUFFER_HPP_
 #define GK_VERTEXBUFFER_HPP_
 
-#include "gk/gl/OpenGL.hpp"
+#include "gk/gl/VertexBufferLayout.hpp"
 #include "gk/utils/NonCopyable.hpp"
 
 namespace gk {
@@ -43,12 +43,15 @@ class VertexBuffer : public NonCopyable {
 		void setData(GLsizeiptr size, const GLvoid *data, GLenum usage) const;
 		void updateData(GLintptr offset, GLsizeiptr size, const GLvoid *data) const;
 
-		void setAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer) const;
-
 		static void bind(const VertexBuffer *vertexBuffer);
+
+		VertexBufferLayout &layout() { return m_layout; }
+		const VertexBufferLayout &layout() const { return m_layout; }
 
 	private:
 		GLuint m_id = 0;
+
+		VertexBufferLayout m_layout;
 };
 
 } // namespace gk

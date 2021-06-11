@@ -24,30 +24,30 @@
  *
  * =====================================================================================
  */
-#ifndef GK_RENDERSTATES_HPP_
-#define GK_RENDERSTATES_HPP_
-
-#include <glm/matrix.hpp>
-
-#include "gk/core/IntTypes.hpp"
-#include "gk/gl/Transform.hpp"
+#include "gk/gl/GLCheck.hpp"
+#include "gk/gl/RenderStates.hpp"
+#include "gk/gl/Vertex.hpp"
+#include "gk/gl/VertexBufferLayout.hpp"
 
 namespace gk {
 
-class Shader;
-class Texture;
+void VertexBufferLayout::setupDefaultLayout() {
+	addAttribute(0, "coord3d", 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, coord3d)));
+	addAttribute(1, "texCoord", 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, texCoord)));
+	addAttribute(2, "color", 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, color)));
+}
 
-struct RenderStates {
-	Transform projectionMatrix;
-	Transform viewMatrix;
-	Transform transform;
+void VertexBufferLayout::enableLayout() const {
+	for (auto &attr : m_attributes) {
+		glCheck(glEnableVertexAttribArray(attr.id));
+		glCheck(glVertexAttribPointer(attr.id, attr.size, attr.type, attr.normalized, attr.stride, attr.offset));
+	}
+}
 
-	const Texture *texture = nullptr;
-	const Shader *shader = nullptr;
-
-	static const RenderStates Default; // Defined in RenderTarget.cpp
-};
+void VertexBufferLayout::disableLayout() const {
+	for (auto &attr : m_attributes)
+		glCheck(glDisableVertexAttribArray(attr.id));
+}
 
 } // namespace gk
 
-#endif // GK_RENDERSTATES_HPP_

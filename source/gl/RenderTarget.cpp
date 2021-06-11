@@ -29,62 +29,61 @@
 #include "gk/gl/RenderTarget.hpp"
 #include "gk/gl/Shader.hpp"
 #include "gk/gl/Texture.hpp"
-#include "gk/gl/Vertex.hpp"
 #include "gk/gl/VertexBuffer.hpp"
 
 namespace gk {
 
 const RenderStates RenderStates::Default{};
 
-RenderTarget::RenderTarget() {
-	m_attributes.emplace_back(VertexAttribute::Coord3d, 0, "coord3d", 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, coord3d)));
-	m_attributes.emplace_back(VertexAttribute::TexCoord, 1, "texCoord", 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, texCoord)));
-	m_attributes.emplace_back(VertexAttribute::Color, 2, "color", 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), reinterpret_cast<GLvoid *>(offsetof(Vertex, color)));
-}
-
-void RenderTarget::addVertexAttribute(u16 id, u16 shaderAttribID, const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer) {
-	m_attributes.emplace_back(id, shaderAttribID, name, size, type, normalized, stride, pointer);
-}
-
-void RenderTarget::clearVertexAttributes() {
-	m_attributes.clear();
-}
-
 void RenderTarget::draw(const Drawable &drawable, const RenderStates &states) {
 	drawable.draw(*this, states);
 }
 
 void RenderTarget::draw(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount, const RenderStates &states) {
-	VertexBuffer::bind(&vertexBuffer);
 	beginDrawing(states);
+
+	VertexBuffer::bind(&vertexBuffer);
+
+	vertexBuffer.layout().enableLayout();
+	states.shader->setUniform("u_modelMatrix", states.transform);
+
 	glCheck(::glDrawArrays(mode, firstVertex, vertexCount));
-	endDrawing(states);
+
+	vertexBuffer.layout().disableLayout();
+
 	VertexBuffer::bind(nullptr);
 }
 
 void RenderTarget::drawElements(const VertexBuffer &vertexBuffer, GLenum mode, GLsizei count, GLenum type, const GLvoid *indices, const RenderStates &states) {
-	VertexBuffer::bind(&vertexBuffer);
 	beginDrawing(states);
+
+	VertexBuffer::bind(&vertexBuffer);
+
+	vertexBuffer.layout().enableLayout();
+	states.shader->setUniform("u_modelMatrix", states.transform);
+
 	glCheck(glDrawElements(mode, count, type, indices));
-	endDrawing(states);
+
+	vertexBuffer.layout().disableLayout();
+
 	VertexBuffer::bind(nullptr);
 }
 
-void RenderTarget::drawVertexBuffer(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount, const RenderStates &states) {
+void RenderTarget::drawVertexBuffer(const VertexBuffer &vertexBuffer, GLenum mode, GLint firstVertex, GLsizei vertexCount) {
 	VertexBuffer::bind(&vertexBuffer);
 
-	for (VertexAttributeData &attr : m_attributes)
-		if (states.vertexAttributes & attr.id)
-			glCheck(glVertexAttribPointer(attr.shaderAttribID, attr.size, attr.type, attr.normalized, attr.stride, attr.pointer));
+	vertexBuffer.layout().enableLayout();
 
 	glCheck(::glDrawArrays(mode, firstVertex, vertexCount));
 
+	vertexBuffer.layout().disableLayout();
+
 	VertexBuffer::bind(nullptr);
 }
 
-void RenderTarget::beginSceneDraw(const RenderStates &states) {
+void RenderTarget::beginDrawing(const RenderStates &states) {
 	//----------------------------------------------------------------------------
-	// Shader & scene-bound uniforms
+	// Shader & uniforms
 	//----------------------------------------------------------------------------
 	if (!states.shader) return;
 
@@ -106,35 +105,6 @@ void RenderTarget::beginSceneDraw(const RenderStates &states) {
 	//----------------------------------------------------------------------------
 	if (states.texture)
 		Texture::bind(states.texture);
-
-	//----------------------------------------------------------------------------
-	// Vertex attributes
-	//----------------------------------------------------------------------------
-	for (VertexAttributeData &attr : m_attributes)
-		if (states.vertexAttributes & attr.id)
-			glCheck(glEnableVertexAttribArray(attr.shaderAttribID));
-}
-
-void RenderTarget::endSceneDraw(const RenderStates &states) {
-	if (!states.shader) return;
-
-	for (VertexAttributeData &attr : m_attributes)
-		if (states.vertexAttributes & attr.id)
-			glCheck(glDisableVertexAttribArray(attr.shaderAttribID));
-}
-
-void RenderTarget::beginDrawing(const RenderStates &states) {
-	beginSceneDraw(states);
-
-	states.shader->setUniform("u_modelMatrix", states.transform);
-
-	for (VertexAttributeData &attr : m_attributes)
-		if (states.vertexAttributes & attr.id)
-			glCheck(glVertexAttribPointer(attr.shaderAttribID, attr.size, attr.type, attr.normalized, attr.stride, attr.pointer));
-}
-
-void RenderTarget::endDrawing(const RenderStates &states) {
-	endSceneDraw(states);
 }
 
 IntRect RenderTarget::getViewport(const View& view) const {

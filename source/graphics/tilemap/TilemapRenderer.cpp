@@ -32,6 +32,10 @@
 
 namespace gk {
 
+TilemapRenderer::TilemapRenderer() {
+	m_vbo.layout().setupDefaultLayout();
+}
+
 void TilemapRenderer::init(Tilemap *map, u16 mapWidth, u16 mapHeight, u8 mapLayers) {
 	m_map = map;
 
@@ -75,7 +79,6 @@ void TilemapRenderer::draw(RenderTarget &target, RenderStates states) const {
 	if (!m_map) return;
 
 	states.texture = &m_map->tileset();
-	states.vertexAttributes = VertexAttribute::All;
 
 	glCheck(glDisable(GL_CULL_FACE));
 	glCheck(glDisable(GL_DEPTH_TEST));

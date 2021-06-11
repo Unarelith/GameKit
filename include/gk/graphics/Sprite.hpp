@@ -34,7 +34,7 @@ namespace gk {
 
 class Sprite : public Image {
 	public:
-		Sprite() = default;
+		Sprite() : Image() {}
 		Sprite(const std::string &textureName, u16 frameWidth, u16 frameHeight, bool isAnimated = false);
 
 		void load(const Sprite &sprite);

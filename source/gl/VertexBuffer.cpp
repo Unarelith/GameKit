@@ -57,10 +57,6 @@ void VertexBuffer::updateData(GLintptr offset, GLsizeiptr size, const GLvoid *da
 	glCheck(glBufferSubData(GL_ARRAY_BUFFER, offset, size, data));
 }
 
-void VertexBuffer::setAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void *pointer) const {
-	glCheck(glVertexAttribPointer(index, size, type, normalized, stride, pointer));
-}
-
 void VertexBuffer::bind(const VertexBuffer *vertexBuffer) {
 	if(vertexBuffer) {
 		glCheck(glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer->m_id));

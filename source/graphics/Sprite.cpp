@@ -29,7 +29,7 @@
 
 namespace gk {
 
-Sprite::Sprite(const std::string &textureName, u16 frameWidth, u16 frameHeight, bool isAnimated) {
+Sprite::Sprite(const std::string &textureName, u16 frameWidth, u16 frameHeight, bool isAnimated) : Image() {
 	load(textureName, frameWidth, frameHeight, isAnimated);
 }
 

@@ -31,11 +31,15 @@
 
 namespace gk {
 
-Image::Image(const std::string &textureName) {
+Image::Image() {
+	m_vbo.layout().setupDefaultLayout();
+}
+
+Image::Image(const std::string &textureName) : Image() {
 	load(ResourceHandler::getInstance().get<Texture>(textureName));
 }
 
-Image::Image(const Texture &texture) {
+Image::Image(const Texture &texture) : Image() {
 	load(texture);
 }
 
@@ -138,7 +142,6 @@ void Image::draw(RenderTarget &target, RenderStates states) const {
 	states.transform *= getTransform();
 
 	states.texture = m_texture;
-	states.vertexAttributes = VertexAttribute::All;
 
 	glCheck(glDisable(GL_CULL_FACE));
 	glCheck(glDisable(GL_DEPTH_TEST));

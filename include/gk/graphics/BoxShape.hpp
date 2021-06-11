@@ -36,7 +36,7 @@ namespace gk {
 
 class BoxShape : public Drawable, public Transformable {
 	public:
-		BoxShape() = default;
+		BoxShape();
 		BoxShape(float sizeX, float sizeY, float sizeZ, const Color &color = Color::White)
 			: m_size(sizeX, sizeY, sizeZ), m_color(color) {}
 

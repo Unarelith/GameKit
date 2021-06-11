@@ -35,6 +35,8 @@
 namespace gk {
 
 RectangleShape::RectangleShape() {
+	m_vbo.layout().setupDefaultLayout();
+
 	for (u8 i = 1 ; i < 5 ; ++i) {
 		for (u8 j = 0 ; j < 6 ; ++j) {
 			m_indices[i * 6 + j] = u8(m_indices[j] + 4 * i);
@@ -103,8 +105,6 @@ void RectangleShape::updateVertexBuffer() const {
 
 void RectangleShape::draw(RenderTarget &target, RenderStates states) const {
 	states.transform *= getTransform();
-
-	states.vertexAttributes = VertexAttribute::All;
 
 	glCheck(glDisable(GL_CULL_FACE));
 	glCheck(glDisable(GL_DEPTH_TEST));

@@ -37,6 +37,8 @@ class Tilemap;
 
 class TilemapRenderer : public Drawable {
 	public:
+		TilemapRenderer();
+
 		void init(Tilemap *map, u16 mapWidth, u16 mapHeight, u8 mapLayers);
 
 		void updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap &map);

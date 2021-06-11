@@ -30,6 +30,10 @@
 
 namespace gk {
 
+BoxShape::BoxShape() {
+	m_vbo.layout().setupDefaultLayout();
+}
+
 void BoxShape::updateVertexBuffer() const {
 	constexpr u8f cubeVerts[6][4]{
 		// Vertex numbers are encoded according to their binary digits,
@@ -82,7 +86,6 @@ void BoxShape::draw(RenderTarget &target, RenderStates states) const {
 
 	states.texture = nullptr;
 	states.transform *= getTransform();
-	states.vertexAttributes = VertexAttribute::All;
 
 	glCheck(glEnable(GL_CULL_FACE));
 	glCheck(glEnable(GL_DEPTH_TEST));
