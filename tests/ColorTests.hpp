@@ -36,7 +36,9 @@ using namespace gk;
 class ColorTests : public CxxTest::TestSuite  {
 	public:
 		void testMix() {
-			Color c1{7, 15, 225, 123}, c2{192, 192, 192, 192}, c3;
+			Color c1 = Color::fromRGBA32(7, 15, 225, 123);
+			Color c2 = Color::fromRGBA32(192, 192, 192, 192);
+			Color c3;
 			TS_ASSERT_EQUALS(c1.mix(c2, 0.0f), c1);
 			TS_ASSERT_EQUALS(c1.mix(c2, 1.0f), c2);
 			c3.r = (  7/255.f+192/255.f)*0.5f;
@@ -48,7 +50,9 @@ class ColorTests : public CxxTest::TestSuite  {
 
 		// Currently disabled because the current code is buggy
 		void xtestAddition() {
-			Color c1{7, 15, 225, 123}, c2{192, 192, 192, 192}, c3;
+			Color c1 = Color::fromRGBA32(7, 15, 225, 123);
+			Color c2 = Color::fromRGBA32(192, 192, 192, 192);
+			Color c3;
 			// Should addition clamp?
 			c3.r = (  7/255.f+192/255.f);
 			c3.g = ( 15/255.f+192/255.f);
@@ -58,7 +62,9 @@ class ColorTests : public CxxTest::TestSuite  {
 		}
 
 		void xtestSubtraction() {
-			Color c1{7, 15, 225, 123}, c2{192, 192, 192, 192}, c3;
+			Color c1 = Color::fromRGBA32(7, 15, 225, 123);
+			Color c2 = Color::fromRGBA32(192, 192, 192, 192);
+			Color c3;
 			// Should subtraction clamp?
 			c3.r = (  7/255.f-192/255.f);
 			c3.g = ( 15/255.f-192/255.f);
