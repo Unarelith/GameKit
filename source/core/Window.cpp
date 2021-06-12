@@ -92,7 +92,8 @@ void Window::onEvent(const SDL_Event &event) {
 
 void Window::setVerticalSyncEnabled(bool isVerticalSyncEnabled) {
 	if (isVerticalSyncEnabled && !m_isVerticalSyncEnabled) {
-		if (SDL_GL_SetSwapInterval(-1) == -1 && SDL_GL_SetSwapInterval(1) == -1)
+		// Note: Adaptative sync (-1) causes stuttering in some cases
+		if (/* SDL_GL_SetSwapInterval(-1) == -1 && */ SDL_GL_SetSwapInterval(1) == -1)
 			gkWarning() << "Can't enable VSync";
 
 	}
