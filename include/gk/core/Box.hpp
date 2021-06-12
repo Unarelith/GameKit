@@ -59,14 +59,14 @@ class Box {
 			sizeZ = _sizeZ;
 		}
 
-		void reset(Box<T> box) { reset(box.x, box.y, box.z, box.sizeX, box.sizeY, box.sizeZ); }
+		void reset(const Box<T> &box) { reset(box.x, box.y, box.z, box.sizeX, box.sizeY, box.sizeZ); }
 
-		void reset(Vector3<T> _position, Vector3<T> _size) {
+		void reset(const Vector3<T> &_position, const Vector3<T> &_size) {
 			reset(_position.x, _position.y, _position.z, _size.x, _size.y, _size.z);
 		}
 
 		void move(T _x, T _y, T _z) { x += _x; y += _y; z += _z; }
-		void move(Vector3<T> d) { move(d.x, d.y, d.z); }
+		void move(const Vector3<T> &d) { move(d.x, d.y, d.z); }
 
 		bool intersects(const Box<T> &box) const {
 			/*
@@ -85,8 +85,8 @@ class Box {
 		Vector3<T> position() const { return {x, y, z}; }
 		Vector3<T> size() const { return {sizeX, sizeY, sizeZ}; }
 
-		void setPosition(Vector3<T> vector3) { x = vector3.x; y = vector3.y; z = vector3.z; }
-		void setSize(Vector3<T> vector3) { sizeX = vector3.x; sizeY = vector3.y; sizeZ = vector3.z; }
+		void setPosition(const Vector3<T> &vector3) { x = vector3.x; y = vector3.y; z = vector3.z; }
+		void setSize(const Vector3<T> &vector3) { sizeX = vector3.x; sizeY = vector3.y; sizeZ = vector3.z; }
 
 		Box &operator+=(const Vector3<T> &vector3) { *this = operator+(vector3); return *this; }
 		Box &operator-=(const Vector3<T> &vector3) { *this = operator-(vector3); return *this; }
