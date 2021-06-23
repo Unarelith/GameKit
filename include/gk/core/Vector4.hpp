@@ -72,6 +72,8 @@ class Vector4 {
 		T z;
 		T w;
 
+		bool isZero() const { return x == 0 && y == 0 && z == 0 && w == 0; }
+
 		// Operators
 		auto dot(const Vector4<T> &vector4) const {
 			return x * vector4.x + y * vector4.y + z * vector4.z + w * vector4.w;
@@ -105,8 +107,6 @@ class Vector4 {
 				throw std::overflow_error("Divide by zero exception");
 			}
 		}
-
-		inline static const Vector4<T> Zero{0, 0, 0, 0};
 };
 
 template<typename T, typename U>

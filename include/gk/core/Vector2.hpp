@@ -63,6 +63,8 @@ class Vector2 {
 		T x;
 		T y;
 
+		bool isZero() const { return x == 0 && y == 0; }
+
 		// Operators
 		auto dot(const Vector2<T> &vector2) const {
 			return x * vector2.x + y * vector2.y;
@@ -96,8 +98,6 @@ class Vector2 {
 				throw std::overflow_error("Divide by zero exception");
 			}
 		}
-
-		inline static const Vector2<T> Zero{0, 0};
 };
 
 template<typename T, typename U>

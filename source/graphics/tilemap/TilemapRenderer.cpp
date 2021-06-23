@@ -52,8 +52,8 @@ void TilemapRenderer::updateTile(u8 layer, u16 tileX, u16 tileY, u16 id, Tilemap
 	u16 tileWidth  = map.tileset().tileWidth();
 	u16 tileHeight = map.tileset().tileHeight();
 
-	float x = tileX * tileWidth;
-	float y = tileY * tileHeight;
+	float x = float(tileX * tileWidth);
+	float y = float(tileY * tileHeight);
 
 	float texTileX = id % u16(map.tileset().getSize().x / tileWidth) * tileWidth  / (float)map.tileset().getSize().x;
 	float texTileY = id / u16(map.tileset().getSize().x / tileWidth) * tileHeight / (float)map.tileset().getSize().y;
