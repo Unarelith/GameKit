@@ -70,7 +70,7 @@ class Vector3 {
 		T y;
 		T z;
 
-		void reset(T _x, T _y, T _z) { x = _y; y = _y; z = _z; }
+		void reset(T _x, T _y, T _z) { x = _x; y = _y; z = _z; }
 		bool isZero() const { return x == 0 && y == 0 && z == 0; }
 
 		// Operators
